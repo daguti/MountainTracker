@@ -37,4 +37,3 @@ public class HibernateInitialProcess {
         return sessionFactory;
     }
 }
-

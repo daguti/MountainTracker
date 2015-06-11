@@ -41,7 +41,7 @@
         </bean>
 
         <!--  Contenedor para los servicios necesarios durante la
-                 construccion del flujo, asi como la creación de factorias de vista
+                 construccion del flujo, asi como la creaciÃ³n de factorias de vista
                  del ViewFactoryCreator -->
         <!--<webflow:flow-builder-services id="flowBuilderServices"
                                           view-factory-creator="viewFactoryCreator"/>-->
@@ -76,7 +76,7 @@
             <property name="flowExecutor" ref="flowExecutor" />
         </bean>-->
 
-        <!-- SimpleUrlHandlerMapping permite que a través de una url
+        <!-- SimpleUrlHandlerMapping permite que a travÃ©s de una url
                 entremos en el flujo -->
        <!-- <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
             <property name="mappings">

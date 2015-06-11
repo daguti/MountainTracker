@@ -11,7 +11,6 @@ import MountainTracker.Beans.Route;
 import MountainTracker.Beans.User;
 import MountainTracker.Persistance.Connection.ConnectionBuilder;
 import MountainTracker.Persistance.InterfaceUserPersistance;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import org.apache.log4j.Level;

@@ -126,6 +126,4 @@ public class Route {
   public void setNewList(List<New> newList) {
     this.newList = newList;
   }
-  
-  
 }

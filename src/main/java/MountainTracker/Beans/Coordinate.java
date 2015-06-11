@@ -65,5 +65,4 @@ public class Coordinate {
   public void setRoute(Route route) {
     this.route = route;
   }
-
 }

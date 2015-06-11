@@ -78,7 +78,4 @@ public class New {
   public void setTrack(Route track) {
     this.track = track;
   }
-  
-  
-  
 }

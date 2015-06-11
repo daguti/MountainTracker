@@ -131,6 +131,4 @@ public class User {
   public void setNewList(Set<New> newList) {
     this.newList = newList;
   }
-  
-  
 }
