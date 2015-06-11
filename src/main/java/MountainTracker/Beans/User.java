@@ -7,7 +7,6 @@
 package MountainTracker.Beans;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -132,3 +131,4 @@ public class User {
     this.newList = newList;
   }
 }
+
