@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+  <class name="MountainTracker.Beans.Route" table="ROUTES" catalog="MountainTracker">
+      <id name="refRoute" column="REF_ROUTE" type="int">
+          <generator class="native" />
+      </id>
+
+      <property name="routeName" column="ROUTE_NAME" type="string" />
+      <property name="description" column="DESCRIPTION" type="string" />
+      <property name="trackDistance" column="DISTANCE" type="double" />
+      <property name="totalAscend" column="TOTAL_ASCEND" type="double" />
+      <property name="totalDescend" column="TOTAL_DESCEND" type="double" />
+      <property name="minHeight" column="MIN_HEIGHT" type="double" />
+      <property name="maxHeight" column="MAX_HEIGHT" type="double" />
+      <many-to-one name="user" class="MountainTracker.Beans.User" column="USERNAME"/> 
+      <set name="coordinates" table="ROUTE_COORDINATES" inverse="true" lazy="true" fetch="select">
+          <key column="REF_ROUTE" />  <!-- FK de Telefono -->
+          <one-to-many class="MountainTracker.Beans.Coordinate" />
+      </set>
+      <set name="newList" table="ROUTE_NEWS" inverse="true" lazy="true" fetch="select">
+          <key column="REF_ROUTE" /> 
+          <one-to-many class="MountainTracker.Beans.New" />
+      </set>
+  </class>
+
+</hibernate-mapping>
