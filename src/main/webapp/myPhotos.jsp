@@ -1,5 +1,5 @@
 <%-- 
-    Document   : routes
+    Document   : photos
     Created on : Jun 10, 2015, 2:33:09 PM
     Author     : ESa10969
 --%>
@@ -13,25 +13,49 @@
         <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
         <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.js"></script>
-        <script src="//cdn.datatables.net/1.10.6/js/jquery.dataTables.min.js"></script>
-        <script src="//cdn.datatables.net/plug-ins/1.10.6/integration/bootstrap/3/dataTables.bootstrap.js"></script>
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/1.10.6/integration/bootstrap/3/dataTables.bootstrap.css"/>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="css/MyStyles.css"/>
         <title>MOUNTAIN TRACKER</title>
-        <script src="js/FormsValidations.js"> </script>
         <script src="js/WaitingDialog.js"></script>
-        <script src="js/TableLoad.js"></script>
         <script src="js/MapsScript.js"></script>
+        <script>
+            $(document).ready(function() {
+                waitingDialog.show();
+                $.ajax({
+                    url : 'photos?mine=1',
+                    async: false,
+                    type: "GET",
+                    dataType: "text",
+                    success: function(responseText) {
+                        $("#photoGallery").append(responseText);
+                    }
+                });
+                $.ajax({
+                    url : 'photos?carousel=1&mine=1',
+                    async: false,
+                    type: "GET",
+                    dataType: "text",
+                    success: function(responseText) {
+                        $("#myCarousel").append(responseText);
+                    }
+                });
+                waitingDialog.hide();
+            });
+        </script>
     </head>
     <body>
         <%@include file='static/header.jsp'%>
         <sec:authorize access="hasRole('ROLE_USER')">
-            <%@include file='upload/routeUploader.jsp'%>
+            <%@include file='upload/photoUploader.jsp'%>
         </sec:authorize>
-        <%@include file='tables/routesTable.jsp'%>
+        <%@include file='ImageView/carousel.jsp'%>
+        <div id="photoGallery" class="container">
+            <h2>Photo Gallery</h2>
+
+        </div>
+
         <%@include file='static/footer.jsp'%>
     </body>
 </html>

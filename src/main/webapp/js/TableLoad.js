@@ -6,14 +6,14 @@
 $(document).ready(function() {
     
     table = $('#routesTab').dataTable({
-    "bFilter": false,
-    "processing": true,
-    "async": false,
-    "ajax": {
-        "url": "RoutesTableLoader",
-        "dataSrc": "routes",
-        "type": "GET"
-    }
+        "bFilter": false,
+        "processing": true,
+        "async": false,
+        "ajax": {
+            "url": "RoutesTableLoader",
+            "dataSrc": "routes",
+            "type": "GET"
+        }
     });
     $('#routesTab tbody').on( 'click', 'tr', function () {
         if ( $(this).hasClass('selected') ) {

@@ -1,13 +1,20 @@
 package MountainTracker.Servlet;
 
 
+import MountainTracker.Beans.Photo;
+import MountainTracker.Beans.User;
 import MountainTracker.GpxFiles.GpxFileReader;
+import MountainTracker.Persistance.DAO.PhotoPersistanceDAO;
+import MountainTracker.Persistance.DAO.UserPersistanceDAO;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
-import java.util.Iterator;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -20,6 +27,8 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @WebServlet("/UploadDownloadFileServlet")
 public class UploadDownloadFileServlet extends HttpServlet {
@@ -63,40 +72,83 @@ public class UploadDownloadFileServlet extends HttpServlet {
 
         @Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            GpxFileReader reader = new GpxFileReader();
-            File file = null;
-            
-            if(!ServletFileUpload.isMultipartContent(request)){
-                    throw new ServletException("Content type is not multipart/form-data");
-            }
+      if(!ServletFileUpload.isMultipartContent(request)){
+              throw new ServletException("Content type is not multipart/form-data");
+      }
 
-            response.setContentType("text/html");
-            PrintWriter out = response.getWriter();
-            try {
-                List<FileItem> fileItemsList = uploader.parseRequest(request);
-                FileItem fileItem = fileItemsList.get(0);
-                System.out.println("FieldName="+fileItem.getFieldName());
-                System.out.println("FileName="+fileItem.getName());
-                System.out.println("ContentType="+fileItem.getContentType());
-                System.out.println("Size in bytes="+fileItem.getSize());
+      response.setContentType("text/html");
+      PrintWriter out = response.getWriter();
+      try {
+        List<FileItem> fileItemsList = uploader.parseRequest(request);
 
-                file = new File(request.getServletContext().getAttribute("FILES_DIR")+File.separator+fileItem.getName());
-                System.out.println("Absolute Path at server="+file.getAbsolutePath());
-                fileItem.write(file);
-                reader.processFile(file);
-                request.getSession().setAttribute("result", "ok");
-                request.getRequestDispatcher("/routes.jsp").forward(request, response);
-                
-                
-            } catch (FileUploadException e) {
-                System.out.println(e);
-                out.write("Exception in uploading file.");
-            } catch (Exception e) {
-                System.out.println(e);
-                out.write("Exception in uploading file.");
-            } finally {
-                out.close();
-            }
+        if(request.getParameter("img") != null) {
+          loadImages(request, fileItemsList);
+          request.getRequestDispatcher("/photos.jsp").forward(request, response);
+        } else {
+          loadRouteFile(request, fileItemsList);
+          request.getRequestDispatcher("/routes.jsp").forward(request, response);
+        }
+
+      } catch (FileUploadException e) {
+          System.out.println(e);
+          out.write("Exception in uploading file.");
+      } catch (Exception e) {
+          System.out.println(e);
+          out.write("Exception in uploading file.");
+      } finally {
+          out.close();
+      }
 	}
+    
+    private void loadImages(HttpServletRequest request, List<FileItem> fileItemsList) throws Exception {
+      //Variable definition
+      File file = null;
+      List<Photo> imgList = new ArrayList<Photo>();
+      Photo img;
+      PhotoPersistanceDAO dao = new PhotoPersistanceDAO();
+      Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+      String name = auth.getName(); //get logged in username
+      UserPersistanceDAO userDao = new UserPersistanceDAO();
+      User user;
+    
+      user = userDao.retrieveByUserUsername(name);
+      for(FileItem fileItem : fileItemsList) {
+        if(fileItem.getFieldName().equals("_csrf")) {
+          break;
+        }
+        img = new Photo();
+        img.setUser(user);
+        System.out.println("FieldName="+fileItem.getFieldName());
+        System.out.println("FileName="+fileItem.getName());
+        System.out.println("ContentType="+fileItem.getContentType());
+        System.out.println("Size in bytes="+fileItem.getSize());
+        img.setDesription("");
+        file = new File(request.getServletContext().getAttribute("FILES_DIR")+File.separator+fileItem.getName());
+        System.out.println("Absolute Path at server="+file.getAbsolutePath());
+        fileItem.write(file);
+        img.setImage(Files.readAllBytes(Paths.get(file.getPath())));
+        imgList.add(img);
+      }
+      dao.storePhotos(imgList);
+      request.getSession().setAttribute("result", "ok");
+    }
+    
+    private void loadRouteFile(HttpServletRequest request, List<FileItem> fileItemsList) throws Exception {
+      //Variable definition
+      File file = null;
+      GpxFileReader reader = new GpxFileReader();
+      
+      FileItem fileItem = fileItemsList.get(0);
+      System.out.println("FieldName="+fileItem.getFieldName());
+      System.out.println("FileName="+fileItem.getName());
+      System.out.println("ContentType="+fileItem.getContentType());
+      System.out.println("Size in bytes="+fileItem.getSize());
+
+      file = new File(request.getServletContext().getAttribute("FILES_DIR")+File.separator+fileItem.getName());
+      System.out.println("Absolute Path at server="+file.getAbsolutePath());
+      fileItem.write(file);
+      reader.processFile(file);
+      request.getSession().setAttribute("result", "ok");
+    }
 }
 

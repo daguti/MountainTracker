@@ -18,12 +18,44 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="css/MyStyles.css"/>
         <title>MOUNTAIN TRACKER</title>
-        <script src="js/FormsValidations.js"> </script>
         <script src="js/WaitingDialog.js"></script>
         <script src="js/MapsScript.js"></script>
+        <script>
+            $(document).ready(function() {
+                waitingDialog.show();
+                $.ajax({
+                    url : 'photos',
+                    async: false,
+                    type: "GET",
+                    dataType: "text",
+                    success: function(responseText) {
+                        $("#photoGallery").append(responseText);
+                    }
+                });
+                $.ajax({
+                    url : 'photos?carousel=1',
+                    async: false,
+                    type: "GET",
+                    dataType: "text",
+                    success: function(responseText) {
+                        $("#myCarousel").append(responseText);
+                    }
+                });
+                waitingDialog.hide();
+            });
+        </script>
     </head>
     <body>
         <%@include file='static/header.jsp'%>
+        <sec:authorize access="hasRole('ROLE_USER')">
+            <%@include file='upload/photoUploader.jsp'%>
+        </sec:authorize>
+        <%@include file='ImageView/carousel.jsp'%>
+        <div id="photoGallery" class="container">
+            <h2>Photo Gallery</h2>
+
+        </div>
+
         <%@include file='static/footer.jsp'%>
     </body>
 </html>

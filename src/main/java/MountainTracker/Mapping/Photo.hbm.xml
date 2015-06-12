@@ -6,14 +6,14 @@
 
 <hibernate-mapping>
 
-  <class name="MountainTracker.Beans.Coordinate" table="COORDINATES" catalog="MountainTracker">
+  <class name="MountainTracker.Beans.Photo" table="PHOTOS" catalog="MountainTracker">
 
   
       <id name="imageId" column="REF_IMAGE" type="int">
           <generator class="native" />
       </id>
 
-      <property name="image" column="IMAGE" type="binary" />
+      <property name="image" column="IMAGE" type="binary" length="42996700" />
       <property name="desription" column="DESCRIPTION" type="string" />
       <many-to-one name="user" class="MountainTracker.Beans.User" column="USERNAME"/> 
     
