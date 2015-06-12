@@ -61,6 +61,24 @@ $(document).ready(function() {
     $( "#birthday" ).datepicker({
         dateFormat:"dd-mm-yy"
     });
+    $( "#creaNew" ).validate({
+          rules:{
+             title: {
+                required: true
+              },
+              text: {
+                required: true
+              }
+          },
+          messages: {
+            title: "Title is mandatory",
+            text: "New Text is mandatory",
+          },
+          submitHandler: function(form) {
+            $("#text").val(CKEDITOR.instances.editor.getData());
+            $(form).submit();
+          }
+      });
 });
 
 

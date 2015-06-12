@@ -27,6 +27,10 @@
           <key column="USERNAME" /> 
           <one-to-many class="MountainTracker.Beans.New" />
       </set>
+      <set name="imageList" table="USER_PHOTOS" inverse="true" lazy="true" fetch="select">
+          <key column="USERNAME" /> 
+          <one-to-many class="MountainTracker.Beans.Photo" />
+      </set>
   </class>
 
 </hibernate-mapping>

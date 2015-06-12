@@ -7,6 +7,7 @@
 package MountainTracker.Beans;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -21,14 +22,14 @@ public class Route {
   private Double totalDescend;
   private Double minHeight;
   private Double maxHeight;
-  private List<Coordinate> coordinates;
-  private List<New> newList;
+  private Set<Coordinate> coordinates;
+  private Set<New> newList;
   private User user;
   
   public Route() {
   }
 
-  public Route(String routeName, String description, Double trackDistance, Double totalAscend, Double totalDescend, Double minHeight, Double maxHeight, List<Coordinate> coordinates, List<New> newList) {
+  public Route(String routeName, String description, Double trackDistance, Double totalAscend, Double totalDescend, Double minHeight, Double maxHeight, Set<Coordinate> coordinates, Set<New> newList) {
     this.routeName = routeName;
     this.trackDistance = trackDistance;
     this.totalAscend = totalAscend;
@@ -103,11 +104,11 @@ public class Route {
     this.maxHeight = maxHeight;
   }
 
-  public List<Coordinate> getCoordinates() {
+  public Set<Coordinate> getCoordinates() {
     return coordinates;
   }
 
-  public void setCoordinates(List<Coordinate> coordinates) {
+  public void setCoordinates(Set<Coordinate> coordinates) {
     this.coordinates = coordinates;
   }
 
@@ -119,11 +120,11 @@ public class Route {
     this.user = user;
   }
 
-  public List<New> getNewList() {
+  public Set<New> getNewList() {
     return newList;
   }
 
-  public void setNewList(List<New> newList) {
+  public void setNewList(Set<New> newList) {
     this.newList = newList;
   }
 }

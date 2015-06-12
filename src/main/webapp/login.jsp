@@ -73,7 +73,7 @@
             </div>
             <div id="signupbox" style="display:none; margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
                         <div class="panel panel-inverse">
-                            <div class="panel-heading" style="background-color: #222;border-color: #080808;">
+                            <div id="inverse-heading" class="panel-heading">
                                 <div class="panel-inverse-title">Registrar</div>
                                 <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink" style="color: white;" href="#" onclick="$('#signupbox').hide(); $('#loginbox').show()">Login</a></div>
                             </div>  

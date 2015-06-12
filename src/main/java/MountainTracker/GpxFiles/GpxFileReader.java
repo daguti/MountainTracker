@@ -8,14 +8,21 @@ package MountainTracker.GpxFiles;
 
 import MountainTracker.Beans.Coordinate;
 import MountainTracker.Beans.Route;
+import MountainTracker.Beans.User;
+import MountainTracker.Persistance.DAO.TrackPersistanceDAO;
+import MountainTracker.Persistance.DAO.UserPersistanceDAO;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -31,11 +38,18 @@ public class GpxFileReader {
   public void processFile(File file) throws FileNotFoundException, SAXException, IOException, ParserConfigurationException {
     //Variable definition
     Route track = new Route();
-    List<Coordinate> coordinates = new ArrayList<Coordinate>();
+    Set<Coordinate> coordinates = new HashSet<Coordinate>();
     DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 	DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 	Document doc = dBuilder.parse(file);
- 
+    TrackPersistanceDAO dao = new TrackPersistanceDAO();
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    String name = auth.getName(); //get logged in username
+    UserPersistanceDAO userDao = new UserPersistanceDAO();
+    User user;
+    
+    user = userDao.retrieveByUserUsername(name);
+    track.setUser(user);
 	//optional, but recommended
 	//read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
 	doc.getDocumentElement().normalize();
@@ -72,5 +86,6 @@ public class GpxFileReader {
       }
 	}
     track.setCoordinates(coordinates);
+    dao.storeRoute(track);
   }
 }

@@ -25,11 +25,13 @@ public class User {
   private String email;
   private Set<Route> routeList;
   private Set<New> newList;
+  private Set<Photo> imageList;
   
   public User() {
   }
 
-  public User(int userType, String username, String pass, Date birthday, String name, String surname, String city, String country, String email, Set<Route> routeList, Set<New> newList) {
+  public User(int userType, String username, String pass, Date birthday, String name, String surname, 
+              String city, String country, String email, Set<Route> routeList, Set<New> newList, Set<New> photoList) {
     this.userType = userType;
     this.username = username;
     this.pass = pass;
@@ -41,6 +43,7 @@ public class User {
     this.email = email;
     this.routeList = routeList;
     this.newList = newList;
+    this.imageList = imageList;
   }
 
   public int getUserType() {
@@ -129,6 +132,14 @@ public class User {
 
   public void setNewList(Set<New> newList) {
     this.newList = newList;
+  }
+
+  public Set<Photo> getImageList() {
+    return imageList;
+  }
+
+  public void setImageList(Set<Photo> imageList) {
+    this.imageList = imageList;
   }
 }
 

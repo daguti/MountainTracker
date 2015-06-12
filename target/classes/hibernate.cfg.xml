@@ -17,5 +17,6 @@
     <mapping resource="MountainTracker/Mapping/Coordinate.hbm.xml"/> 
     <mapping resource="MountainTracker/Mapping/User.hbm.xml"/>
     <mapping resource="MountainTracker/Mapping/New.hbm.xml"/>
+    <mapping resource="MountainTracker/Mapping/Photo.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

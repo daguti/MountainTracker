@@ -35,10 +35,18 @@
 </div>
 <nav class="navbar navbar-inverse">
     <ul class="nav navbar-nav">
-        <li><a href="news.jsp">News</a></li>
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">News
+            <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <sec:authorize access="hasRole('ROLE_USER')">
+                    <li><a href="creaModNews.jsp">Create New</a></li>
+                </sec:authorize>  
+              <li><a href="news.jsp">View News</a></li>
+            </ul>
+        </li>
         <li><a href="routes.jsp">Routes</a></li>
         <li><a href="photos.jsp">Photos</a></li>
-        
         <sec:authorize access="hasRole('ROLE_USER')">
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">Profile

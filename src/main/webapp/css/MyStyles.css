@@ -24,3 +24,7 @@ and open the template in the editor.
 .panel-inverse-title {
     color: white;
 }
+#inverse-heading {
+    background-color: #222;
+    border-color: #080808;
+}

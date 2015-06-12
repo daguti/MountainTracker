@@ -1,5 +1,5 @@
 <%-- 
-    Document   : news
+    Document   : photos
     Created on : Jun 10, 2015, 2:33:09 PM
     Author     : ESa10969
 --%>
@@ -21,33 +21,9 @@
         <script src="js/FormsValidations.js"> </script>
         <script src="js/WaitingDialog.js"></script>
         <script src="js/MapsScript.js"></script>
-        <script>
-            $(document).ready(function() {
-                waitingDialog.show();
-                if(<%=session.getAttribute("publicNews")%> === null) {
-                    $.ajax({
-                        url : 'news',
-                        async: true,
-                        type: "GET",
-                        dataType: "text",
-                        success: function(responseText) {
-                            location.reload();
-                            waitingDialog.hide();
-                        }
-                    });
-                } else {
-                    waitingDialog.hide();
-                }
-            });
-        </script>
     </head>
-    
     <body>
         <%@include file='static/header.jsp'%>
-        <div class="container-fluid">
-            <%=session.getAttribute("publicNews")%>
-            <%session.setAttribute("publicNews", null);%>
-        </div>
         <%@include file='static/footer.jsp'%>
     </body>
 </html>

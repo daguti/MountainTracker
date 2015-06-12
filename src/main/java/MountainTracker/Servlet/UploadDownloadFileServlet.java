@@ -74,21 +74,18 @@ public class UploadDownloadFileServlet extends HttpServlet {
             PrintWriter out = response.getWriter();
             try {
                 List<FileItem> fileItemsList = uploader.parseRequest(request);
-                Iterator<FileItem> fileItemsIterator = fileItemsList.iterator();
-                while(fileItemsIterator.hasNext()){
-                    FileItem fileItem = fileItemsIterator.next();
-                    System.out.println("FieldName="+fileItem.getFieldName());
-                    System.out.println("FileName="+fileItem.getName());
-                    System.out.println("ContentType="+fileItem.getContentType());
-                    System.out.println("Size in bytes="+fileItem.getSize());
+                FileItem fileItem = fileItemsList.get(0);
+                System.out.println("FieldName="+fileItem.getFieldName());
+                System.out.println("FileName="+fileItem.getName());
+                System.out.println("ContentType="+fileItem.getContentType());
+                System.out.println("Size in bytes="+fileItem.getSize());
 
-                    file = new File(request.getServletContext().getAttribute("FILES_DIR")+File.separator+fileItem.getName());
-                    System.out.println("Absolute Path at server="+file.getAbsolutePath());
-                    fileItem.write(file);
-                }
+                file = new File(request.getServletContext().getAttribute("FILES_DIR")+File.separator+fileItem.getName());
+                System.out.println("Absolute Path at server="+file.getAbsolutePath());
+                fileItem.write(file);
                 reader.processFile(file);
                 request.getSession().setAttribute("result", "ok");
-                request.getRequestDispatcher("/gestionAviones.jsp").forward(request, response);
+                request.getRequestDispatcher("/routes.jsp").forward(request, response);
                 
                 
             } catch (FileUploadException e) {

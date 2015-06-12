@@ -12,6 +12,7 @@ import MountainTracker.Persistance.InterfaceTrackPersistance;
 import java.util.List;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Transaction;
@@ -66,5 +67,28 @@ public class TrackPersistanceDAO implements InterfaceTrackPersistance {
     } finally {
       con.closeSession();
     }
+  }
+
+  @Override
+  public List<Route> getAllRoutes() {
+    //Variable definition
+    String qryStr = "select a from Route a";
+    Query qry;
+    List<Route> routeList = null;
+    
+    try {
+      con.openSession();
+
+      qry = con.session.createQuery(qryStr);
+      routeList = qry.list();
+
+      for(Route route : routeList) Hibernate.initialize(route.getUser());
+      return routeList;
+    } catch(HibernateException ex) {
+      Logger.getLogger(this.getClass()).log(Level.ERROR, ex);
+    } finally {
+      con.closeSession();
+    }
+    return null;
   }
 }
