@@ -4,29 +4,25 @@
  * and open the template in the editor.
  */
 
-package MountainTracker.Servlet.TableLoaders;
+package MountainTracker.Servlet.Routes;
 
+import MountainTracker.Beans.Coordinate;
 import MountainTracker.Beans.Route;
-import MountainTracker.Beans.User;
 import MountainTracker.Persistance.DAO.TrackPersistanceDAO;
-import MountainTracker.Persistance.DAO.UserPersistanceDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  *
  * @author ESa10969
  */
-@WebServlet(name = "RoutesTableLoader", urlPatterns = {"/RoutesTableLoader"})
-public class RoutesTableLoader extends HttpServlet {
+@WebServlet(name = "RoutesServlet", urlPatterns = {"/routes"})
+public class RoutesServlet extends HttpServlet {
 
   /**
    * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -40,36 +36,25 @@ public class RoutesTableLoader extends HttpServlet {
       throws ServletException, IOException {
     //Variable definition
     TrackPersistanceDAO dao = new TrackPersistanceDAO();
-    List<Route> routeList;
-    String data = "{ \"routes\":[";
-    boolean fst = true;
     
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
     try {
-      if(request.getParameter("mine") == null) routeList = dao.getAllRoutes();
-      else {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String name = auth.getName(); //get logged in username
-        UserPersistanceDAO userDao = new UserPersistanceDAO();
-        User user;
-
-        user = userDao.retrieveByUserUsername(name);
-        routeList = dao.getRoutesByUsername(user);
-      }
+      boolean fst = true;
       
-      for(Route route: routeList) {
-        if(!fst) {
-            data +=",";
+      if(request.getParameter("detail") != null) {
+        Route track = dao.getRoute(Integer.valueOf(request.getParameter("routeId")));
+        String coordinates = "";
+        
+        for(Coordinate coord : track.getCoordinates()) {
+          if(!fst) {
+            coordinates += "|";
+          }
+          coordinates += coord.getLatitude() + "," + coord.getLongitude();
+          fst = false;
         }
-        data +="[\"" + route.getRefRoute() + "\", \"" + route.getRouteName() + "\", \"" + route.getDescription()
-                + "\", \"" + Math.round(route.getTrackDistance() * 100) / 100 + "\", \"" + route.getTotalAscend() + "\", \"" + route.getTotalDescend() 
-              + "\", \"" + route.getMinHeight() + "\", \"" + route.getMaxHeight() + "\"]";
-        fst = false;
+        out.write(coordinates);
       }
-      data += "]}";
-      System.out.println("Respuesta = " + data);
-      out.write(data);
     } finally {
       out.close();
     }

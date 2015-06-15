@@ -13,10 +13,10 @@
           <generator class="native" />
       </id>
 
-      <property name="latitude" column="DISTANCE" type="double" />
-      <property name="longitude" column="TOTAL_ASCEND" type="double" />
-      <property name="elevation" column="TOTAL_DESCEND" type="double" />
-      <many-to-one name="route" class="MountainTracker.Beans.Route" column="REF_ROUTE"/> 
+      <property name="latitude" column="LATITUDE" type="double" />
+      <property name="longitude" column="LONGITUDE" type="double" />
+      <property name="elevation" column="ELEVATION" type="double" />
+      <many-to-one name="route" class="MountainTracker.Beans.Route" column="REF_ROUTE" fetch="select" not-null="true"/> 
     
   </class>
 

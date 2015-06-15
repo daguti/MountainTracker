@@ -7,6 +7,7 @@
 package MountainTracker.Persistance.DAO;
 
 import MountainTracker.Beans.Route;
+import MountainTracker.Beans.User;
 import MountainTracker.Persistance.Connection.ConnectionBuilder;
 import MountainTracker.Persistance.InterfaceTrackPersistance;
 import java.util.List;
@@ -38,7 +39,10 @@ public class TrackPersistanceDAO implements InterfaceTrackPersistance {
       qry.setInteger("ref", routeId);
       routeList = qry.list();
 
-      if(routeList != null && routeList.size() > 0) return routeList.get(0);
+      if(routeList != null && routeList.size() > 0) {
+        Hibernate.initialize(routeList.get(0).getCoordinates());
+        return routeList.get(0);
+      }
     } catch(HibernateException ex) {
       Logger.getLogger(this.getClass()).log(Level.ERROR, ex);
     } finally {
@@ -59,7 +63,6 @@ public class TrackPersistanceDAO implements InterfaceTrackPersistance {
       trans.begin();
       con.session.save(route);
       trans.commit();
-      
     } catch(HibernateException ex) {
       if(trans != null) trans.rollback();
       con.closeSession();
@@ -83,6 +86,30 @@ public class TrackPersistanceDAO implements InterfaceTrackPersistance {
       routeList = qry.list();
 
       for(Route route : routeList) Hibernate.initialize(route.getUser());
+      return routeList;
+    } catch(HibernateException ex) {
+      Logger.getLogger(this.getClass()).log(Level.ERROR, ex);
+    } finally {
+      con.closeSession();
+    }
+    return null;
+  }
+
+  @Override
+  public List<Route> getRoutesByUsername(User user) {
+    //Variable definition
+    String qryStr = "select a from Route a where a.user = :user";
+    Query qry;
+    List<Route> routeList = null;
+    
+    try {
+      con.openSession();
+
+      qry = con.session.createQuery(qryStr);
+      qry.setEntity("user", user);
+      routeList = qry.list();
+
+      for(Route track : routeList)Hibernate.initialize(track.getCoordinates());
       return routeList;
     } catch(HibernateException ex) {
       Logger.getLogger(this.getClass()).log(Level.ERROR, ex);

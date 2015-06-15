@@ -7,6 +7,7 @@
 package MountainTracker.Persistance;
 
 import MountainTracker.Beans.Route;
+import MountainTracker.Beans.User;
 import java.util.List;
 
 /**
@@ -17,5 +18,6 @@ public interface InterfaceTrackPersistance {
   public Route getRoute(int routeId);
   public List<Route> getAllRoutes();
   public void storeRoute(Route route);
+  public List<Route> getRoutesByUsername(User user);
 }
 

@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -69,8 +71,21 @@ public class NewsServlet extends HttpServlet {
   }
   
   private void showNews(HttpServletRequest request, HttpServletResponse response, NewsPersistanceDAO dao) throws ServletException, IOException {
+    //Variable definition
     String htmlRespond = "";
-    for(New cliNew : dao.getAllNews()) {
+    List<New> newList;
+    
+    if(request.getParameter("mine") == null) newList = dao.getAllNews();
+    else {
+      Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+      String name = auth.getName(); //get logged in username
+      UserPersistanceDAO userDao = new UserPersistanceDAO();
+      User user;
+
+      user = userDao.retrieveByUserUsername(name);
+      newList = dao.getNewsByUsername(user);
+    }
+    for(New cliNew : newList) {
       htmlRespond += newTemplate(cliNew.getTitle(), 
                                  cliNew.getWriteDate(), 
                                  cliNew.getAuthor().getName() + " " + cliNew.getAuthor().getSurname(),

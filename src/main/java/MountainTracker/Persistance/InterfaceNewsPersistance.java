@@ -7,6 +7,7 @@
 package MountainTracker.Persistance;
 
 import MountainTracker.Beans.New;
+import MountainTracker.Beans.User;
 import java.util.List;
 
 /**
@@ -16,4 +17,5 @@ import java.util.List;
 public interface InterfaceNewsPersistance {
   public void storeNew(New cliNew);
   public List<New> getAllNews();
+  public List<New> getNewsByUsername(User user);
 }

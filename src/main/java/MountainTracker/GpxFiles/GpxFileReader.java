@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -36,7 +37,7 @@ public class GpxFileReader {
   public void processFile(File file) throws FileNotFoundException, SAXException, IOException, ParserConfigurationException {
     //Variable definition
     Route track = new Route();
-    Set<Coordinate> coordinates = new HashSet<Coordinate>();
+    Set<Coordinate> coordinates = new LinkedHashSet<Coordinate>();
     DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 	DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 	Document doc = dBuilder.parse(file);
@@ -53,20 +54,27 @@ public class GpxFileReader {
 	doc.getDocumentElement().normalize();
   
     NodeList list = doc.getElementsByTagName("name");
-    track.setRouteName(list.item(0).getTextContent());
+    if(list != null && list.getLength() > 0)track.setRouteName(list.item(0).getTextContent());
+    else track.setRouteName("");
     list = doc.getElementsByTagName("desc");
-    track.setDescription(list.item(0).getTextContent());
+    if(list != null && list.getLength() > 0)track.setDescription(list.item(0).getTextContent());
+    else track.setDescription("");
     list = doc.getElementsByTagName("gpsies:trackLengthMeter");
-    track.setTrackDistance(Double.valueOf(list.item(0).getTextContent()));
+    if(list != null && list.getLength() > 0)track.setTrackDistance(Double.valueOf(list.item(0).getTextContent()));
+    else track.setTrackDistance(0.0);
     list = doc.getElementsByTagName("gpsies:totalAscentMeter");
-    track.setTotalAscend(Double.valueOf(list.item(0).getTextContent()));
+    if(list != null && list.getLength() > 0)track.setTotalAscend(Double.valueOf(list.item(0).getTextContent()));
+    else track.setTotalAscend(0.0);
     list = doc.getElementsByTagName("gpsies:totalDescentMeter");
-    track.setTotalDescend(Double.valueOf(list.item(0).getTextContent()));
+    if(list != null && list.getLength() > 0)track.setTotalDescend(Double.valueOf(list.item(0).getTextContent()));
+    else track.setTotalDescend(0.0);
     list = doc.getElementsByTagName("gpsies:minHeightMeter");
-    track.setMinHeight(Double.valueOf(list.item(0).getTextContent()));
+    if(list != null && list.getLength() > 0)track.setMinHeight(Double.valueOf(list.item(0).getTextContent()));
+    else track.setMinHeight(0.0);
     list = doc.getElementsByTagName("gpsies:maxHeightMeter");
-    track.setMaxHeight(Double.valueOf(list.item(0).getTextContent()));
- 
+    if(list != null && list.getLength() > 0)track.setMaxHeight(Double.valueOf(list.item(0).getTextContent()));
+    else track.setMaxHeight(0.0);
+    
     list = doc.getElementsByTagName("trkpt");
 	for (int temp = 0; temp < list.getLength(); temp++) {
       Coordinate cord = new Coordinate();
@@ -80,6 +88,7 @@ public class GpxFileReader {
         if(eElement.getElementsByTagName("ele").item(0) != null) {
           cord.setElevation(Double.valueOf(eElement.getElementsByTagName("ele").item(0).getTextContent()));
         }
+        cord.setRoute(track);
         coordinates.add(cord);
       }
 	}

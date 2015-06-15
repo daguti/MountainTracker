@@ -8,7 +8,7 @@
 
   <class name="MountainTracker.Beans.Route" table="ROUTES" catalog="MountainTracker">
       <id name="refRoute" column="REF_ROUTE" type="int">
-          <generator class="native" />
+          <generator class="identity" />
       </id>
 
       <property name="routeName" column="ROUTE_NAME" type="string" />
@@ -19,12 +19,12 @@
       <property name="minHeight" column="MIN_HEIGHT" type="double" />
       <property name="maxHeight" column="MAX_HEIGHT" type="double" />
       <many-to-one name="user" class="MountainTracker.Beans.User" column="USERNAME"/> 
-      <set name="coordinates" table="ROUTE_COORDINATES" inverse="true" lazy="true" fetch="select">
-          <key column="REF_ROUTE" />  <!-- FK de Telefono -->
+      <set name="coordinates" table="ROUTE_COORDINATES" cascade="all" inverse="true" lazy="true" fetch="select" order-by="lower(REF_COORDINATE) asc">
+          <key column="REF_ROUTE" not-null="true"/>
           <one-to-many class="MountainTracker.Beans.Coordinate" />
       </set>
       <set name="newList" table="ROUTE_NEWS" inverse="true" lazy="true" fetch="select">
-          <key column="REF_ROUTE" /> 
+          <key column="REF_ROUTE"/> 
           <one-to-many class="MountainTracker.Beans.New" />
       </set>
   </class>

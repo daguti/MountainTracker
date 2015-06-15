@@ -7,6 +7,7 @@
 package MountainTracker.Persistance.DAO;
 
 import MountainTracker.Beans.New;
+import MountainTracker.Beans.User;
 import MountainTracker.Persistance.Connection.ConnectionBuilder;
 import MountainTracker.Persistance.InterfaceNewsPersistance;
 import java.util.List;
@@ -59,6 +60,30 @@ private final ConnectionBuilder con = new ConnectionBuilder();
       qry = con.session.createQuery(qryStr);
       newList = qry.list();
       for(New nw : newList) Hibernate.initialize(nw.getAuthor()); 
+      return newList;
+    } catch(HibernateException ex) {
+      Logger.getLogger(this.getClass()).log(Level.ERROR, ex);
+    } finally {
+      con.closeSession();
+    }
+    return null;
+  }
+
+  @Override
+  public List<New> getNewsByUsername(User user) {
+    //Variable definition
+    String qryStr = "select a from New a where a.author = :user";
+    Query qry;
+    List<New> newList = null;
+    
+    try {
+      con.openSession();
+
+      qry = con.session.createQuery(qryStr);
+      qry.setEntity("user", user);
+      newList = qry.list();
+
+      for(New cliNew : newList)Hibernate.initialize(cliNew.getAuthor());
       return newList;
     } catch(HibernateException ex) {
       Logger.getLogger(this.getClass()).log(Level.ERROR, ex);

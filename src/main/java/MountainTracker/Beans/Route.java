@@ -6,7 +6,6 @@
 
 package MountainTracker.Beans;
 
-import java.util.List;
 import java.util.Set;
 
 /**
