@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+  <class name="MountainTracker.Beans.User" table="Users" catalog="MountainTracker">
+
+      <id name="username" column="USERNAME" type="string"/>
+         
+      
+      <property name="name" column="NAME" type="string" />
+      <property name="surname" column="SURNAME" type="string" />
+      <property name="city" column="CITY" type="string" />
+      <property name="country" column="COUNTRY" type="string" />
+      <property name="birthday" column="BIRTHDAY" type="date" />
+      <property name="pass" column="PASS" type="string" />
+      <property name="email" column="EMAIL" type="string" />
+      <property name="userType" column="USERTYPE" type="int" />
+      <set name="routeList" table="USER_ROUTES" inverse="true" lazy="true" fetch="select">
+          <key column="USERNAME" />  <!-- FK de Telefono -->
+          <one-to-many class="MountainTracker.Beans.Route" />
+      </set>
+      <set name="newList" table="USER_NEWS" inverse="true" lazy="true" fetch="select">
+          <key column="USERNAME" /> 
+          <one-to-many class="MountainTracker.Beans.New" />
+      </set>
+      <set name="imageList" table="USER_PHOTOS" inverse="true" lazy="true" fetch="select">
+          <key column="USERNAME" /> 
+          <one-to-many class="MountainTracker.Beans.Photo" />
+      </set>
+  </class>
+
+</hibernate-mapping>

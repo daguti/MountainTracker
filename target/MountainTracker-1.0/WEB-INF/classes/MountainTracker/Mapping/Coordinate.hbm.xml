@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+  <class name="MountainTracker.Beans.Coordinate" table="COORDINATES" catalog="MountainTracker">
+
+  
+      <id name="refCoordinate" column="REF_COORDINATE" type="int">
+          <generator class="native" />
+      </id>
+
+      <property name="latitude" column="LATITUDE" type="double" />
+      <property name="longitude" column="LONGITUDE" type="double" />
+      <property name="elevation" column="ELEVATION" type="double" />
+      <many-to-one name="route" class="MountainTracker.Beans.Route" column="REF_ROUTE" fetch="select" not-null="true"/> 
+    
+  </class>
+
+</hibernate-mapping>

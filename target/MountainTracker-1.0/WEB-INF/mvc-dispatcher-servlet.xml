@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:webflow="http://www.springframework.org/schema/webflow-config"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                           http://www.springframework.org/schema/mvc
+                           http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+                           http://www.springframework.org/schema/context
+                            http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/webflow-config
+                           http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.0.xsd"
+       xmlns:context="http://www.springframework.org/schema/context">
+
+	<context:component-scan base-package="agencia" />
+
+        <bean id="multipartResolver"
+            class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+
+             <!-- setting maximum upload size -->
+            <property name="maxUploadSize" value="100000" />
+ 
+        </bean>
+        <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+          <!--  Crea factorias de vista apoyandose en Spring MVC   -->
+        <bean id="viewFactoryCreator"
+                 class="org.springframework.webflow.mvc.builder.MvcViewFactoryCreator">
+            <property name="viewResolvers">
+                <list>
+                    <ref bean="viewResolver" />
+                </list>
+            </property>
+        </bean>
+
+        <!--  Contenedor para los servicios necesarios durante la
+                 construccion del flujo, asi como la creaciÃ³n de factorias de vista
+                 del ViewFactoryCreator -->
+        <!--<webflow:flow-builder-services id="flowBuilderServices"
+                                          view-factory-creator="viewFactoryCreator"/>-->
+
+        <!--  El registro de flujos se encarga de buscar los flujos .xml
+                 en la ruta especificada -->
+       <!-- <webflow:flow-registry id="flowRegistry"
+                                  flow-builder-services="flowBuilderServices">
+            <webflow:flow-location id="inicio"
+                                   path="/WEB-INF/flujos/principal-flow.xml" />
+        </webflow:flow-registry>-->
+
+
+        <!--  El ejecutor de flujos se encarga de crear y ejecutar una instancia
+                 de flujo para cada usuario -->
+        <!--<webflow:flow-executor id="flowExecutor" flow-registry="flowRegistry" />-->
+
+        <!--  FlowHandlerMapping dirige las peticiones desde el DispatcherServlet
+                 al flujo  -->
+        <!--<bean class="org.springframework.webflow.mvc.servlet.FlowHandlerMapping">
+            <property name="flowRegistry" ref="flowRegistry" />
+        </bean>-->
+
+        <!-- FlowHandlerAdapter responde a las peticiones -->
+       <!-- <bean class="org.springframework.webflow.mvc.servlet.FlowHandlerAdapter">
+            <property name="flowExecutor" ref="flowExecutor" />
+        </bean>-->
+
+        <!-- FlowController es el controller para manejar flujos  -->
+        <!--<bean id="flowController"
+                 class="org.springframework.webflow.mvc.servlet.FlowController">
+            <property name="flowExecutor" ref="flowExecutor" />
+        </bean>-->
+
+        <!-- SimpleUrlHandlerMapping permite que a travÃ©s de una url
+                entremos en el flujo -->
+       <!-- <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+            <property name="mappings">
+                <value>inicio.flow=flowController</value>
+            </property>
+            <property name="alwaysUseFullPath" value="true"/>
+        </bean>-->
+</beans>
