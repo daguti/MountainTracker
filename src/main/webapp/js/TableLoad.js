@@ -5,17 +5,17 @@
  */
 $(document).ready(function() {
     var URL;
-    if(location.href.indexOf("myRoutes") !== -1) {
+    /*if(location.href.indexOf("myRoutes") !== -1) {
         URL = "RoutesTableLoader?mine=1";
     } else {
         URL = "RoutesTableLoader";
-    }
+    }*/
     table = $('#routesTab').dataTable({
         "bFilter": false,
         "processing": true,
         "async": false,
         "ajax": {
-            "url": URL,
+            "url": "RoutesTableLoader",
             "dataSrc": "routes",
             "type": "GET"
         }

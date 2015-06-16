@@ -5,12 +5,13 @@
  */
 
 var coordinates = [];
+var panorama;
 
 function initialize() {
   var myCenter=coordinates[0];
   var mapProp = {
     center:myCenter,
-    zoom:6,
+    zoom:8,
     disableDefaultUI:true,
     mapTypeId:google.maps.MapTypeId.HYBRID
   };
@@ -32,15 +33,35 @@ function initialize() {
     markerOrig.setMap(map);
     markerDest.setMap(map);
     flightPath.setMap(map);
-    // Zoom to 9 when clicking on marker
-    google.maps.event.addListener(marker,'click',function() {
-        map.setZoom(9);
-        map.setCenter(marker.getPosition());
+    panorama = map.getStreetView();
+    
+    panorama.setPov(/** @type {google.maps.StreetViewPov} */({
+      heading: 265,
+      pitch: 0
+    }));
+
+    // TOGGLE STREET VIEW ON MARKER ORIG OR MARKER DEST
+    google.maps.event.addListener(markerOrig,'click',function() {
+        panorama.setPosition(markerOrig.getPosition());
+        toggleStreetView();
+    });
+    google.maps.event.addListener(markerDest,'click',function() {
+        panorama.setPosition(markerDest.getPosition());
+        toggleStreetView();
     });
     /*google.maps.event.addListener(map, 'click', function(event) {
         placeMarker(event.latLng, map);
     });*/
 }
+function toggleStreetView() {
+  var toggle = panorama.getVisible();
+  if (toggle == false) {
+    panorama.setVisible(true);
+  } else {
+    panorama.setVisible(false);
+  }
+}
+
 function placeMarker(location, map) {
   var marker = new google.maps.Marker({
     position: location,
