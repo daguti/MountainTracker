@@ -18,4 +18,5 @@ public interface InterfaceNewsPersistance {
   public void storeNew(New cliNew);
   public List<New> getAllNews();
   public List<New> getNewsByUsername(User user);
+  public New getNewById(int id);
 }

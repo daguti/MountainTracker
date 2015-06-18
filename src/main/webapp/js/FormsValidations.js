@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    waitingDialog.show();
       $( "#signupform" ).validate({
           rules:{
              username: {
@@ -54,7 +53,6 @@ $(document).ready(function() {
             $(form).submit();
           }*/
       });
-      waitingDialog.hide();
     $("form").submit(function() {
         waitingDialog.show(); 
     });

@@ -23,30 +23,29 @@
         <script src="js/MapsScript.js"></script>
         <script>
             $(document).ready(function() {
-                waitingDialog.show();
-                if(<%=session.getAttribute("publicNews")%> === null) {
-                    $.ajax({
-                        url : 'news?mine=1',
-                        async: true,
-                        type: "GET",
-                        dataType: "text",
-                        success: function(responseText) {
-                            location.reload();
-                            waitingDialog.hide();
-                        }
-                    });
-                } else {
-                    waitingDialog.hide();
-                }
+                $.ajax({
+                    url : 'news?mine=1',
+                    async: true,
+                    type: "GET",
+                    dataType: "text",
+                    beforeSend: function() {
+                    waitingDialog.show();
+                    },
+                    success: function(responseText) {
+                        //location.reload(); 
+                        $("#myNews").append(responseText);
+                        waitingDialog.hide();
+                    }
+                });
+               
             });
         </script>
     </head>
     
     <body>
         <%@include file='static/header.jsp'%>
-        <div class="container-fluid">
-            <%=session.getAttribute("publicNews")%>
-            <%session.setAttribute("publicNews", null);%>
+        <div class="container-fluid" id="myNews">
+
         </div>
         <%@include file='static/footer.jsp'%>
     </body>

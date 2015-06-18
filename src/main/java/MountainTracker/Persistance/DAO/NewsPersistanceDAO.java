@@ -92,5 +92,32 @@ private final ConnectionBuilder con = new ConnectionBuilder();
     }
     return null;
   }
+
+  @Override
+  public New getNewById(int id) {
+    //Variable definition
+    String qryStr = "select a from New a where a.newId = :id";
+    Query qry;
+    List<New> newList = null;
+    
+    try {
+      con.openSession();
+
+      qry = con.session.createQuery(qryStr);
+      qry.setInteger("id", id);
+      newList = qry.list();
+
+      if(newList.size() > 0){
+        Hibernate.initialize(newList.get(0).getAuthor());
+        return newList.get(0);
+      }
+      
+    } catch(HibernateException ex) {
+      Logger.getLogger(this.getClass()).log(Level.ERROR, ex);
+    } finally {
+      con.closeSession();
+    }
+    return null;
+  }
   
 }

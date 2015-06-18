@@ -226,7 +226,7 @@
                             <goal>copy</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>/target/MountainTracker-1.0/endorsed</outputDirectory>
+                            <outputDirectory>${endorsed.dir}</outputDirectory>
                             <silent>true</silent>
                             <artifactItems>
                                 <artifactItem>

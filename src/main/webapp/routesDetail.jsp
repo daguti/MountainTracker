@@ -42,8 +42,12 @@
                     async: false,
                     type: "GET",
                     dataType: "text",
+                    beforeSend: function(responseText) {
+                        waitingDialog.show();
+                    },
                     success: function(responseText) {
                         createMap(responseText);
+                        waitingDialog.hide();
                     }
                 });
             });

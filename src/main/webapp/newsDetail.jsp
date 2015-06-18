@@ -23,40 +23,31 @@
         <script src="js/MapsScript.js"></script>
         <script>
             $(document).ready(function() {
-                $.ajax({
-                    url : 'news',
-                    async: false,
-                    type: "GET",
-                    dataType: "text",
-                    beforeSend: function() {
-                        waitingDialog.show();
-                    },
-                    success: function(responseText) {
-                        //location.reload(); 
-                        $("#allNews").append(responseText);
-                        waitingDialog.hide();
-                    }
-                });
+                waitingDialog.show();
+                if(<%=session.getAttribute("publicNews")%> === null) {
+                    $.ajax({
+                        url : 'news',
+                        async: true,
+                        type: "GET",
+                        dataType: "text",
+                        success: function(responseText) {
+                            location.reload();
+                            waitingDialog.hide();
+                        }
+                    });
+                } else {
+                    waitingDialog.hide();
+                }
+                
             });
-            function openNewDetail(newId) {
-                $.ajax({
-                    url : 'news?detail=1&id=' + newId,
-                    async: true,
-                    type: "GET",
-                    dataType: "text",
-                    beforeSend: function(responseText) {
-                        waitingDialog.show();
-                    }
-                });
-            }
         </script>
     </head>
     
     <body>
         <%@include file='static/header.jsp'%>
-        <div class="container-fluid" id="allNews">
-            
-            
+        <div class="container-fluid">
+            <%=session.getAttribute("detailNew")%>
+            <%session.setAttribute("detailNew", null);%>
         </div>
         <%@include file='static/footer.jsp'%>
     </body>

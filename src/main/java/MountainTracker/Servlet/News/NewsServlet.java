@@ -13,6 +13,7 @@ import MountainTracker.Persistance.DAO.UserPersistanceDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -61,9 +62,11 @@ public class NewsServlet extends HttpServlet {
         cliNew.setWriteDate(new Date());
         dao.storeNew(cliNew);
         showNews(request, response, dao);
+      } else if(request.getParameter("detail") != null && request.getParameter("id") != null) {
+      
       } else {
         showNews(request, response, dao);
-        out.write("OK");
+        //out.write("OK");
       }
     } finally {
       out.close();
@@ -74,9 +77,13 @@ public class NewsServlet extends HttpServlet {
     //Variable definition
     String htmlRespond = "";
     List<New> newList;
+    String text;
     
     if(request.getParameter("mine") == null) newList = dao.getAllNews();
-    else {
+    else if(request.getParameter("detail") != null) {
+      newList = new ArrayList<New>();
+      newList.add(dao.getNewById(Integer.valueOf(request.getParameter("id"))));
+    } else {
       Authentication auth = SecurityContextHolder.getContext().getAuthentication();
       String name = auth.getName(); //get logged in username
       UserPersistanceDAO userDao = new UserPersistanceDAO();
@@ -85,21 +92,26 @@ public class NewsServlet extends HttpServlet {
       user = userDao.retrieveByUserUsername(name);
       newList = dao.getNewsByUsername(user);
     }
+    
     for(New cliNew : newList) {
+      int length = cliNew.getText().length() > 100 ? 100 : cliNew.getText().length();
+      
+      text = request.getParameter("detail") != null ? cliNew.getText() : cliNew.getText().substring(0, length - 1) + "";
       htmlRespond += newTemplate(cliNew.getTitle(), 
                                  cliNew.getWriteDate(), 
                                  cliNew.getAuthor().getName() + " " + cliNew.getAuthor().getSurname(),
-                                 cliNew.getText(), 
+                                 text, 
                                  cliNew.getNewId());
     }
-    
-    request.getSession().setAttribute("publicNews", htmlRespond);
+    response.getWriter().write(htmlRespond);
+    response.getWriter().flush();
+    //request.getSession().setAttribute("publicNews", htmlRespond);
     //request.getRequestDispatcher("news.jsp").forward(request, response);
   }
   
   private String newTemplate(String title, Date date, String author, String text, int newId) {    
     return "<div class='panel panel-inverse'>" +
-           "<a onClick(openNewDetail(" + newId + "))><div id='inverse-heading' class='panel-heading' style='padding:1px 15px;'>" +
+           "<a style='cursor:pointer;' onClick(openNewDetail(" + newId + "))><div id='inverse-heading' class='panel-heading' style='padding:1px 15px;'>" +
            "<div class='panel-inverse-title' style='font-size:30px;'>" + title + "</div>" +
            "<div style='float:right; font-size: 85%; position: relative; top:-30px; color:white;'>" + author + "</div></br>" +
            "<div style='float:right; font-size: 85%; position: relative; top:-30px; color:white;'>" + new SimpleDateFormat("dd/MM/yyyy").format(date) + "</div>" +

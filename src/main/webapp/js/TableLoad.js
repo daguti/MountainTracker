@@ -4,23 +4,30 @@
  * and open the template in the editor.
  */
 $(document).ready(function() {
-    var URL;
-    /*if(location.href.indexOf("myRoutes") !== -1) {
-        URL = "RoutesTableLoader?mine=1";
+    var pat;
+    if(location.href.indexOf("myRoutes") !== -1) {
+        pat = "RoutesTableLoader?mine=1";
     } else {
-        URL = "RoutesTableLoader";
-    }*/
+        pat = "RoutesTableLoader";
+    }
     table = $('#routesTab').dataTable({
         "bFilter": false,
         "processing": true,
         "async": false,
         "ajax": {
-            "url": "RoutesTableLoader",
+            "url": pat,
             "dataSrc": "routes",
-            "type": "GET"
+            "type": "GET",
+            beforeSend: function(responseText) {
+                waitingDialog.show();
+            }
         }
     });
+    $('#routesTab').on('draw.dt', function() {
+       waitingDialog.hide(); 
+    });
     $('#routesTab tbody').on( 'hover', 'tr', function () {
+        $(this).css("cursor", "pointer");
         if ( $(this).hasClass('selected') ) {
             $(this).removeClass('selected');
         }
