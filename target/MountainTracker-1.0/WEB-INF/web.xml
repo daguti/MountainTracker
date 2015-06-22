@@ -10,7 +10,7 @@
     </context-param>
     <servlet>
         <servlet-name>UploadDownloadFileServlet</servlet-name>
-        <servlet-class>MountainTracker.Servlet.UploadFileServlet</servlet-class>
+        <servlet-class>MountainTracker.Servlet.UploadDownloadFileServlet</servlet-class>
     </servlet>
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

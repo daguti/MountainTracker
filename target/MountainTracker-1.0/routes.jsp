@@ -28,10 +28,14 @@
     </head>
     <body>
         <%@include file='static/header.jsp'%>
-        <sec:authorize access="hasRole('ROLE_USER')">
-            <%@include file='upload/routeUploader.jsp'%>
-        </sec:authorize>
-        <%@include file='tables/routesTable.jsp'%>
+        <div class="container-fluid" style="margin-bottom: 30px;">
+            <sec:authorize access="hasRole('ROLE_USER')">
+                <%@include file='upload/routeUploader.jsp'%>
+            </sec:authorize>
+            <div class="row">
+                <%@include file='tables/routesTable.jsp'%>
+            </div>
+        </div>
         <%@include file='static/footer.jsp'%>
     </body>
 </html>

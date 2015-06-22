@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  *
@@ -41,18 +43,33 @@ public class UserStorageServlet extends HttpServlet {
     PrintWriter out = response.getWriter();
     try {
       UserPersistanceDAO dao = new UserPersistanceDAO();
-      User user = new User();
-      user.setUsername(request.getParameter("username"));
-      user.setPass(request.getParameter("password"));
-      user.setName(request.getParameter("name"));
-      user.setSurname(request.getParameter("surname"));
-      user.setCity(request.getParameter("city"));
-      user.setCountry(request.getParameter("country"));
-      user.setBirthday(new SimpleDateFormat("dd-MM-yyyy").parse(request.getParameter("birthday")));
-      user.setEmail(request.getParameter("email"));
-      user.setUserType(1);
-      dao.storeUser(user);
-      request.getRequestDispatcher("login.jsp").forward(request, response);
+      User user;
+      
+      if(request.getParameter("profile") != null) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName(); //get logged in username
+        UserPersistanceDAO userDao = new UserPersistanceDAO();
+
+        user = userDao.retrieveByUserUsername(name);
+        out.write(user.getUsername() + ";" + user.getPass() + ";" + user.getName() + ";" 
+                  + user.getSurname() + ";" + user.getBirthday() + ";" + user.getEmail() + ";" 
+                  + user.getCity() + ";" + user.getCountry());
+        out.flush();
+      } else {
+        user = dao.retrieveByUserUsername(request.getParameter("username")) != null ? dao.retrieveByUserUsername(request.getParameter("username")) : new User();
+
+        user.setUsername(request.getParameter("username"));
+        user.setPass(request.getParameter("password"));
+        user.setName(request.getParameter("name"));
+        user.setSurname(request.getParameter("surname"));
+        user.setCity(request.getParameter("city"));
+        user.setCountry(request.getParameter("country"));
+        user.setBirthday(new SimpleDateFormat("dd-MM-yyyy").parse(request.getParameter("birthday")));
+        user.setEmail(request.getParameter("email"));
+        user.setUserType(1);
+        dao.storeUser(user);
+        request.getRequestDispatcher("login.jsp").forward(request, response);
+      }
     } catch(ParseException ex) {
       Logger.getLogger(this.getClass()).log(Level.ERROR, ex);
     } finally {

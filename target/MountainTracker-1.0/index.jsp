@@ -24,12 +24,8 @@
     <body>
         <%@include file='static/header.jsp'%>
         <div id="wrap">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-sm-offset-2 col-sm-3">
-                        <div id="googleMap" style="width:500px;height:380px;"></div>
-                    </div>
-                </div>
+            <div class="container-fluid" style="margin-bottom: 30px;">
+                
             </div>
         </div>
         <%@include file='static/footer.jsp'%>

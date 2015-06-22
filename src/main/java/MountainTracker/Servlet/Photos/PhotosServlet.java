@@ -47,8 +47,10 @@ public class PhotosServlet extends HttpServlet {
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
     try {
-      if(request.getParameter("mine") == null) imageList = dao.getAllPhotos();
-      else {
+      if(request.getParameter("mine") == null && request.getParameter("newId") == null) imageList = dao.getAllPhotos();
+      else if(request.getParameter("newId") != null) {
+        imageList = dao.getPhotosByNew(Integer.valueOf(request.getParameter("newId")));
+      } else {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
         UserPersistanceDAO userDao = new UserPersistanceDAO();
@@ -67,7 +69,7 @@ public class PhotosServlet extends HttpServlet {
     }
   }
 
-  private String addImagesToCarousel(List<Photo> imageList) {
+  public String addImagesToCarousel(List<Photo> imageList) {
     //Variable definition
     String html = "<ol class=\"carousel-indicators\">";
     boolean fst = true;
@@ -89,7 +91,7 @@ public class PhotosServlet extends HttpServlet {
     return html;
   }
   
-  private String addImagesToGallery(List<Photo> imageList) {
+  public String addImagesToGallery(List<Photo> imageList) {
     //Variable definition
     String html = "<div class=\"row\">";
     int count = 0;

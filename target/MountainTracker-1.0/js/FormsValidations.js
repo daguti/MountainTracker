@@ -53,12 +53,6 @@ $(document).ready(function() {
             $(form).submit();
           }*/
       });
-    $("form").submit(function() {
-        waitingDialog.show(); 
-    });
-    $( "#birthday" ).datepicker({
-        dateFormat:"dd-mm-yy"
-    });
     $( "#creaNew" ).validate({
           rules:{
              title: {
@@ -74,9 +68,38 @@ $(document).ready(function() {
           },
           submitHandler: function(form) {
             $("#text").val(CKEDITOR.instances.editor.getData());
-            $(form).submit();
+            form.submit();
           }
       });
+      $( "#sendMessage" ).validate({
+          rules:{
+             userTo: {
+                required: true
+              },
+              subject: {
+                required: true
+              },
+              text: {
+                required: true
+              }
+          },
+          messages: {
+            userTo: "Destinatatry is mandatory.",
+            Subaject: "Subject is mandatory",
+            text: "Message body/text is mandatory",
+          },
+          submitHandler: function(form) {
+            $("#text").val(CKEDITOR.instances.editor.getData());
+            form.submit();
+          }
+      });
+    $("form").submit(function() {
+        waitingDialog.show(); 
+    });
+    $( "#birthday" ).datepicker({
+        dateFormat:"dd-mm-yy"
+    });
+    
 });
 
 

@@ -37,14 +37,24 @@
                         waitingDialog.hide();
                     }
                 });
-               
             });
+            function openNewDetail(newId) {
+                $.ajax({
+                    url : 'news?detail=1&id=' + newId,
+                    async: true,
+                    type: "GET",
+                    dataType: "text",
+                    beforeSend: function(responseText) {
+                        waitingDialog.show();
+                    }
+                });
+            }
         </script>
     </head>
     
     <body>
         <%@include file='static/header.jsp'%>
-        <div class="container-fluid" id="myNews">
+        <div class="container-fluid" id="myNews" style="margin-bottom: 30px;">
 
         </div>
         <%@include file='static/footer.jsp'%>

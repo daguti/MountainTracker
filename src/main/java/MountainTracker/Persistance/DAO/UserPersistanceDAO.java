@@ -83,4 +83,25 @@ public class UserPersistanceDAO implements InterfaceUserPersistance {
       con.closeSession();
     }
   }
+
+  @Override
+  public List<User> getAllUsers() {
+    //Variable definition
+    String qryStr = "select a from User a";
+    Query qry;
+    List<User> userList = null;
+    
+    try {
+      con.openSession();
+
+      qry = con.session.createQuery(qryStr);
+      userList = qry.list();
+      return userList;
+    } catch(HibernateException ex) {
+      Logger.getLogger(this.getClass()).log(Level.ERROR, ex);
+    } finally {
+      con.closeSession();
+    }
+    return null;
+  }
 }

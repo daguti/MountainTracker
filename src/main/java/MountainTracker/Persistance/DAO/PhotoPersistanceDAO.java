@@ -6,6 +6,7 @@
 
 package MountainTracker.Persistance.DAO;
 
+import MountainTracker.Beans.New;
 import MountainTracker.Beans.Photo;
 import MountainTracker.Beans.User;
 import MountainTracker.Persistance.Connection.ConnectionBuilder;
@@ -116,6 +117,32 @@ public class PhotoPersistanceDAO implements InterfacePhotoPersistance {
 
       qry = con.session.createQuery(qryStr);
       qry.setEntity("user", user);
+      imaegeList = qry.list();
+
+      for(Photo img : imaegeList)Hibernate.initialize(img.getUser());
+      return imaegeList;
+    } catch(HibernateException ex) {
+      Logger.getLogger(this.getClass()).log(Level.ERROR, ex);
+    } finally {
+      con.closeSession();
+    }
+    return null;
+  }
+
+  @Override
+  public List<Photo> getPhotosByNew(int newId) {
+    //Variable definition
+    String qryStr = "select a from Photo a where a.userNew = :newId";
+    Query qry;
+    List<Photo> imaegeList = null;
+    NewsPersistanceDAO dao = new NewsPersistanceDAO();
+    
+    try {
+      New cliNew = dao.getNewById(newId);
+      con.openSession();
+      
+      qry = con.session.createQuery(qryStr);
+      qry.setEntity("newId", cliNew);
       imaegeList = qry.list();
 
       for(Photo img : imaegeList)Hibernate.initialize(img.getUser());

@@ -30,6 +30,7 @@
                             <value>/MountainTracker/Mapping/User.hbm.xml</value>
                             <value>/MountainTracker/Mapping/New.hbm.xml</value>
                             <value>/MountainTracker/Mapping/Photo.hbm.xml</value>
+                            <value>/MountainTracker/Mapping/Message.hbm.xml</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

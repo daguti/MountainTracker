@@ -46,6 +46,10 @@
                     dataType: "text",
                     beforeSend: function(responseText) {
                         waitingDialog.show();
+                    },
+                    success: function(responseText) {
+                        waitingDialog.hide();
+                        location.href = "/MountainTracker/newsDetail.jsp";
                     }
                 });
             }
@@ -54,7 +58,7 @@
     
     <body>
         <%@include file='static/header.jsp'%>
-        <div class="container-fluid" id="allNews">
+        <div class="container-fluid" id="allNews" style="margin-bottom: 30px;">
             
             
         </div>

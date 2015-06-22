@@ -48,6 +48,94 @@ $(document).ready(function() {
                                         + "&maxHeight='" +$("td:eq(7)", "tbody tr.selected").text() + "'" ;
         }
     });
-   
+   receivedTable = $('#receivedTab').dataTable({
+       "columnDefs": [
+            {
+                "targets": [ 4 ],
+                "sClass": "hide_me"
+            },
+            {
+                "targets": [ 5 ],
+                "sClass": "hide_me"
+            }
+        ],
+        "bFilter": false,
+        "processing": true,
+        "async": false,
+        "ajax": {
+            "url": "MessageLoader",
+            "dataSrc": "messages",
+            "type": "GET",
+            beforeSend: function(responseText) {
+                waitingDialog.show();
+            }
+        }
+    });
+    $('#receivedTab').on('draw.dt', function() {
+       waitingDialog.hide(); 
+    });
+    $('#receivedTab tbody').on( 'hover', 'tr', function () {
+        $(this).css("cursor", "pointer");
+        if ( $(this).hasClass('selected') ) {
+            $(this).removeClass('selected');
+        }
+        else {
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+    });
+    $('#receivedTab tbody').on( 'click', 'tr', function () {
+        if ( $(this).hasClass('selected') ) {
+            waitingDialog.show();
+            location.href="messageDetail.jsp?userFrom='" + $("td:eq(0)", "tbody tr.selected").text() + "'" 
+                                        + "&userTo='"+$("td:eq(1)", "tbody tr.selected").text() + "'" 
+                                        + "&date='" +$("td:eq(2)", "tbody tr.selected").text() + "'" 
+                                        + "&subject='" +$("td:eq(3)", "tbody tr.selected").text() + "'" 
+                                        + "&text='" +$("td:eq(4)", "tbody tr.selected").text() + "'" 
+        }
+    });
+    
+    sendedTable = $('#sendedTab').dataTable({
+        "columnDefs": [
+            {
+                "targets": [ 4 ],
+                "sClass": "hide_me"
+            }
+        ],
+        "bFilter": false,
+        "processing": true,
+        "async": false,
+        "ajax": {
+            "url": "MessageLoader?sended=1",
+            "dataSrc": "messages",
+            "type": "GET",
+            beforeSend: function(responseText) {
+                waitingDialog.show();
+            }
+        }
+    });
+    $('#sendedTab').on('draw.dt', function() {
+       waitingDialog.hide(); 
+    });
+    $('#sendedTab tbody').on( 'hover', 'tr', function () {
+        $(this).css("cursor", "pointer");
+        if ( $(this).hasClass('selected') ) {
+            $(this).removeClass('selected');
+        }
+        else {
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+    });
+    $('#sendedTab tbody').on( 'click', 'tr', function () {
+        if ( $(this).hasClass('selected') ) {
+            waitingDialog.show();
+            location.href="messageDetail.jsp?userFrom='" + $("td:eq(0)", "tbody tr.selected").text() + "'" 
+                                        + "&userTo='"+$("td:eq(1)", "tbody tr.selected").text() + "'" 
+                                        + "&date='" +$("td:eq(2)", "tbody tr.selected").text() + "'" 
+                                        + "&subject='" +$("td:eq(3)", "tbody tr.selected").text() + "'" 
+                                        + "&text='" +$("td:eq(4)", "tbody tr.selected").text() + "'" 
+        }
+    });
 });
 

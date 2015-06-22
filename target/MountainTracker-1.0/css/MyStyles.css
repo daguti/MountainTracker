@@ -28,3 +28,6 @@ and open the template in the editor.
     background-color: #222;
     border-color: #080808;
 }
+th.hide_me, td.hide_me {
+    display: none;
+}

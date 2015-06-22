@@ -26,6 +26,8 @@ public class User {
   private Set<Route> routeList;
   private Set<New> newList;
   private Set<Photo> imageList;
+  private Set<Photo> receivedMessages;
+  private Set<Photo> sendedMessages;
   
   public User() {
   }
@@ -141,5 +143,23 @@ public class User {
   public void setImageList(Set<Photo> imageList) {
     this.imageList = imageList;
   }
+
+  public Set<Photo> getReceivedMessages() {
+    return receivedMessages;
+  }
+
+  public void setReceivedMessages(Set<Photo> receivedMessages) {
+    this.receivedMessages = receivedMessages;
+  }
+
+  public Set<Photo> getSendedMessages() {
+    return sendedMessages;
+  }
+
+  public void setSendedMessages(Set<Photo> sendedMessages) {
+    this.sendedMessages = sendedMessages;
+  }
+  
+  
 }
 

@@ -15,6 +15,7 @@ public class Photo {
   private byte[] image;
   private String desription;
   private User user;
+  private New userNew;
 
   public Photo() {
   }
@@ -54,4 +55,13 @@ public class Photo {
   public void setUser(User user) {
     this.user = user;
   }
+
+  public New getUserNew() {
+    return userNew;
+  }
+
+  public void setUserNew(New userNew) {
+    this.userNew = userNew;
+  }
+ 
 }

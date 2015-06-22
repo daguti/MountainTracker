@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+  <class name="MountainTracker.Beans.Message" table="MESSAGES" catalog="MountainTracker">
+
+      <id name="messageRef" column="MESSAGE_REF" type="int">
+          <generator class="native" />
+      </id>
+         
+      <property name="subject" column="SUBJECT" type="string" />
+      <property name="text" column="TEXT" type="text" />
+      <property name="sendDate" column="SEND_DATE" type="date" />
+      <property name="timeMilis" column="TIME_MILIS" type="long" />
+      <property name="isRead" column="IS_READ" type="boolean"/>
+      <many-to-one name="userTo" class="MountainTracker.Beans.User" column="USERNAME_TO"/>
+      <many-to-one name="userFrom" class="MountainTracker.Beans.User" column="USERNAME_FROM"/>
+  </class>
+
+</hibernate-mapping>

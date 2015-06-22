@@ -37,6 +37,14 @@
                 $("#minHeight").val(<%=request.getParameter("minHeight")%>);
                 $("#maxHeight").val(<%=request.getParameter("maxHeight")%>);
                 
+                $("#routeName").prop("disabled", true);
+                $("#description").prop("disabled", true);
+                $("#distance").prop("disabled", true);
+                $("#totalAscend").prop("disabled", true);
+                $("#totalDescend").prop("disabled", true);
+                $("#minHeight").prop("disabled", true);
+                $("#maxHeight").prop("disabled", true);
+                
                 $.ajax({
                     url : 'routes?detail=1&routeId=' + <%=request.getParameter("id")%>,
                     async: false,
@@ -55,7 +63,7 @@
     </head>
     <body>
         <%@include file='static/header.jsp'%>
-        <div class="container-fluid">
+        <div class="container-fluid" style="margin-bottom: 30px;">
             <div class='panel panel-inverse'>
                 <div class='panel-inverse-title' style='font-size:30px;'>
                     

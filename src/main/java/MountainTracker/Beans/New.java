@@ -7,6 +7,7 @@
 package MountainTracker.Beans;
 
 import java.util.Date;
+import java.util.Set;
 
 /**
  *
@@ -19,7 +20,8 @@ public class New {
   private Date writeDate;
   private User author;
   private Route track;
-
+  private Set<Photo> imageList;
+  
   public New() {
   }
 
@@ -77,6 +79,14 @@ public class New {
 
   public void setTrack(Route track) {
     this.track = track;
+  }
+
+  public Set<Photo> getImageList() {
+    return imageList;
+  }
+
+  public void setImageList(Set<Photo> imageList) {
+    this.imageList = imageList;
   }
 }
 

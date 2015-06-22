@@ -22,16 +22,24 @@
         <script src="js/FormsValidations.js"> </script>
         <script src="js/WaitingDialog.js"></script>
         <script src="js/MapsScript.js"></script>
+        <script>
+            $(document).ready(function() {
+               $("#uploadBtn").hide();
+               
+               
+            });
+        </script>
     </head>
     <body>
         <%@include file='static/header.jsp'%>
-        <div class="container-fluid">
+        <div class="container-fluid" style="margin-bottom: 30px;">
            <div class='panel panel-inverse'>
             <div class='panel-heading' style='background-color: #222;border-color: #080808;'>
                 <div class='panel-inverse-title'>Create New</div>
             </div>
             <div class='panel-body'>
-                <form id="creaNew" novalidate="novalidate" class="form-horizontal" role="form" action="<c:url value='/news?crea=1'/>" method="post">
+                
+                <form id="creaNew" novalidate="novalidate" class="form-horizontal" role="form" action="<c:url value='/news?${_csrf.parameterName}=${_csrf.token}&crea=1'/>" method="post" enctype="multipart/form-data">
                     <div id="signupalert" style="display:none" class="alert alert-danger">
                         <p>Error:</p>
                         <span></span>
@@ -47,6 +55,12 @@
                         <div class="col-md-9">
                             <%@include file='editors/textEditor.jsp'%>
                             <input type="text" class="form-control" id="text" name="text" style="display: none;">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            Selecciona Fotos importar:
+                            <input id="file" type="file" name="fileName" multiple>
                         </div>
                     </div>
                     <div class="form-group">

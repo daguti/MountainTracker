@@ -3,6 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+function goBack() {
+    window.history.back();
+}
 var waitingDialog = (function ($) {
     // Creating modal dialog's DOM
     var $dialog = $(

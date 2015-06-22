@@ -9,7 +9,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-1">
-                    <input type="submit" value="Upload" class="btn btn-primary">
+                    <input type="submit" id="uploadBtn" value="Upload" class="btn btn-primary">
                 </div>
             </div>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />

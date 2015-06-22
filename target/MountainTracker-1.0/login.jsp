@@ -36,7 +36,7 @@
         <c:if test="${not empty msg}">
             <div class="msg">${msg}</div>
         </c:if>
-        <div class="container">    
+        <div class="container" style="margin-bottom: 30px;">    
             <div id="loginbox" style="margin-top:10px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
                 <div class="panel panel-inverse" > 
                         <div style="padding-top:30px" class="panel-body" >
@@ -72,75 +72,15 @@
                         </div>  
             </div>
             <div id="signupbox" style="display:none; margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-                        <div class="panel panel-inverse">
-                            <div id="inverse-heading" class="panel-heading">
-                                <div class="panel-inverse-title">Registrar</div>
-                                <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink" style="color: white;" href="#" onclick="$('#signupbox').hide(); $('#loginbox').show()">Login</a></div>
-                            </div>  
-                            <div class="panel-body" >
-                                <form id="signupform" class="form-horizontal" role="form" action="<c:url value='/userStorage'/>" method="post">
-                                    <div id="signupalert" style="display:none" class="alert alert-danger">
-                                        <p>Error:</p>
-                                        <span></span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="username" class="col-md-3 control-label">Username</label>
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control" id="username" name="username" placeholder="Username">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="password" class="col-md-3 control-label">Password</label>
-                                        <div class="col-md-9">
-                                            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="nombre" class="col-md-3 control-label">Nombre</label>
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control" id="nombre" name="name" placeholder="Nombre">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="apellidos" class="col-md-3 control-label">Apellidos</label>
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control" id="apellidos" name="surname" placeholder="Apellidos">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="birthday" class="col-md-3 control-label">Nacimiento</label>
-                                        <div class="col-md-9">
-                                            <input type="text" id="birthday" class="form-control" name="birthday" placeholder="Nacimiento">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email" class="col-md-3 control-label">Email</label>
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control" id="email" name="email" placeholder="Email">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="city" class="col-md-3 control-label">Ciudad</label>
-                                        <div class="col-md-9">
-                                            <input type="text" id="direccion" class="form-control" name="city" placeholder="Ciudad">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="pais" class="col-md-3 control-label">País</label>
-                                        <div class="col-md-9">
-                                            <input type="text" id="pais" class="form-control" name="country" placeholder="País">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <!-- Button -->                                        
-                                        <div class="col-md-offset-3 col-md-9">
-                                            <input id="btn-signup" name="submit" type="submit" value="Registrar" class="btn btn-info"/>
-                                        </div>
-                                    </div>
-                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                                </form>
-                             </div>
-                        </div>   
+                <div class="panel panel-inverse">
+                    <div id="inverse-heading" class="panel-heading">
+                        <div class="panel-inverse-title">Registrar</div>
+                        <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink" style="color: white;" href="#" onclick="$('#signupbox').hide(); $('#loginbox').show()">Login</a></div>
+                    </div>  
+                    <div class="panel-body" >
+                        <%@include file='profile/signupForm.jsp'%>
+                     </div>
+                </div>   
              </div> 
         </div>
         <footer class="footer">

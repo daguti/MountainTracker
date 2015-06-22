@@ -7,6 +7,7 @@
 package MountainTracker.Persistance;
 
 import MountainTracker.Beans.User;
+import java.util.List;
 
 /**
  *
@@ -15,4 +16,5 @@ import MountainTracker.Beans.User;
 public interface InterfaceUserPersistance {
   public User retrieveByUserUsername(String username);
   public void storeUser(User user);
+  public List<User> getAllUsers();
 }

@@ -14,10 +14,14 @@
       </id>
 
       <property name="title" column="TITLE" type="string" />
-      <property name="text" column="TEXT" type="string" />
+      <property name="text" column="TEXT" type="text" />
       <property name="writeDate" column="WRITE_DATE" type="date" />
       <many-to-one name="track" class="MountainTracker.Beans.Route" column="REF_ROUTE"/> 
-      <many-to-one name="author" class="MountainTracker.Beans.User" column="USERNAME"/> 
+      <many-to-one name="author" class="MountainTracker.Beans.User" column="USERNAME"/>
+      <set name="imageList" table="NEWS_IMAGES" cascade="all" inverse="true" lazy="true" fetch="select">
+          <key column="NEW_ID" not-null="true"/>
+          <one-to-many class="MountainTracker.Beans.Photo" />
+      </set>
   </class>
 
 </hibernate-mapping>

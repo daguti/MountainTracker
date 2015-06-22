@@ -51,7 +51,7 @@
             <%@include file='upload/photoUploader.jsp'%>
         </sec:authorize>
         <%@include file='ImageView/carousel.jsp'%>
-        <div id="photoGallery" class="container">
+        <div id="photoGallery" class="container" style="margin-bottom: 30px;">
             <h2>Photo Gallery</h2>
 
         </div>

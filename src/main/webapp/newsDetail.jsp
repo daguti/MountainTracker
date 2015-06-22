@@ -23,29 +23,28 @@
         <script src="js/MapsScript.js"></script>
         <script>
             $(document).ready(function() {
-                waitingDialog.show();
-                if(<%=session.getAttribute("publicNews")%> === null) {
-                    $.ajax({
-                        url : 'news',
-                        async: true,
+                $.ajax({
+                        url : 'photos?carousel=1&newId=' + $("#newId").text(),
+                        async: false,
                         type: "GET",
                         dataType: "text",
+                        beforeSend: function() {
+                            waitingDialog.show();
+                        },
                         success: function(responseText) {
-                            location.reload();
+                            $("#myCarousel").append(responseText);
                             waitingDialog.hide();
                         }
                     });
-                } else {
-                    waitingDialog.hide();
-                }
-                
-            });
+                    
+                });
         </script>
     </head>
     
     <body>
         <%@include file='static/header.jsp'%>
-        <div class="container-fluid">
+        <%@include file='ImageView/carousel.jsp'%>
+        <div class="container-fluid" style="margin-bottom: 30px;">
             <%=session.getAttribute("detailNew")%>
             <%session.setAttribute("detailNew", null);%>
         </div>

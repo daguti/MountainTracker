@@ -109,6 +109,7 @@ private final ConnectionBuilder con = new ConnectionBuilder();
 
       if(newList.size() > 0){
         Hibernate.initialize(newList.get(0).getAuthor());
+        Hibernate.initialize(newList.get(0).getImageList());
         return newList.get(0);
       }
       

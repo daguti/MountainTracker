@@ -52,7 +52,7 @@
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">Profile
               <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="account.jsp">My Account</a></li>
+                <li><a href="perfil.jsp">My Account</a></li>
                 <li><a href="myNews.jsp">My News</a></li>
                 <li><a href="myRoutes.jsp">My Routes</a></li>
                 <li><a href="myPhotos.jsp">My Photos</a></li>

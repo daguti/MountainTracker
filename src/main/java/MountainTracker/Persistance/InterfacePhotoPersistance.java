@@ -18,5 +18,7 @@ public interface InterfacePhotoPersistance {
   public Photo getPhotoById(int refImage);
   public List<Photo> getAllPhotos();
   public List<Photo> getPhotosByUsername(User user);
+  public List<Photo> getPhotosByNew(int newId);
   public void storePhotos(List<Photo> imgList);
+  
 }
