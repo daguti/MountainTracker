@@ -29,8 +29,12 @@
     <body>
         <%@include file='static/header.jsp'%>
         <div class="container-fluid" style="margin-bottom: 30px;">
+            <div class="row" style="text-align:center; border-bottom:1px dashed black;  padding:0 0 20px 0; margin-bottom:40px;">
+                <h3 style="font-family:arial; font-weight:bold; font-size:30px;">ROUTES</h3>
+            </div>
             <sec:authorize access="hasRole('ROLE_USER')">
                 <%@include file='upload/routeUploader.jsp'%>
+                <div class="row" style="text-align:center; border-bottom:1px dashed black;  padding:0 0 20px 0; margin-bottom:40px;"></div>
             </sec:authorize>
             <div class="row">
                 <%@include file='tables/routesTable.jsp'%>

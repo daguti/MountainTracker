@@ -1,21 +1,52 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-<script>
-    function formSubmit() {
-        document.getElementById("logoutForm").submit();
-    }
-</script>
+<sec:authorize access="hasRole('ROLE_USER')">
+    <script>
+        function formSubmit() {
+            document.getElementById("logoutForm").submit();
+        }
+        $(document).ready(function() {
+            if('<%=session.getAttribute("unreadMsg")%>' !== 'null') {
+                if('<%=session.getAttribute("unreadMsg")%>' === '0') {
+                    $(".badge").hide();
+                } else {
+                    $(".badge").text(<%=session.getAttribute("unreadMsg")%>);
+                }
+            } else {
+                $.ajax({
+                    url : 'MessageLoader?unread=1',
+                    async: false,
+                    type: "GET",
+                    dataType: "text",
+                    beforeSend: function() {
+                        waitingDialog.show();
+                    },
+                    success: function(responseText) {
+                        //location.reload();
+                        if(responseText === '0') {
+                            $(".badge").hide();
+                        } else {
+                            $(".badge").text(responseText);
+                        }
+                        waitingDialog.hide();
+                    }
+                });
+            }
+            
+        });
+    </script>
+</sec:authorize>
 <c:url value="/logout" var="logoutUrl" />
 <form action="${logoutUrl}" method="post" id="logoutForm">
         <input type="hidden" name="${_csrf.parameterName}"
                 value="${_csrf.token}" />
 </form>
-<div class="top">
+<div id="header" class="top">
     <div class="container-fluid">
         <div class="row" style="padding-top: 30px;">
             <div class="col-sm-7">
                 <!--<a href="index.jsp"><img src="css/img/logoAgencia.gif"/></a>-->
-                <h1>MOUNTAIN TRACKER</h1>
+                <h1 id="headTitle">MOUNTAIN TRACKER</h1>
             </div>
             <div class="col-sm-3 col-sm-offset-1">
                 <c:if test="${pageContext.request.userPrincipal.name != null}">
@@ -49,14 +80,14 @@
         <li><a href="photos.jsp">Photos</a></li>
         <sec:authorize access="hasRole('ROLE_USER')">
             <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Profile
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Profile<span class="badge"></span>
               <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="perfil.jsp">My Account</a></li>
                 <li><a href="myNews.jsp">My News</a></li>
                 <li><a href="myRoutes.jsp">My Routes</a></li>
                 <li><a href="myPhotos.jsp">My Photos</a></li>
-                <li><a href="messages.jsp">Messages</a></li>
+                <li><a href="messages.jsp">Messages<span class="badge"></span></a></li>
               </ul>
             </li>
         </sec:authorize>

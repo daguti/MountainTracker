@@ -6,6 +6,8 @@
 
 package MountainTracker.Beans;
 
+import java.util.Date;
+
 /**
  *
  * @author ESa10969
@@ -16,6 +18,7 @@ public class Photo {
   private String desription;
   private User user;
   private New userNew;
+  private Date uploadDate;
 
   public Photo() {
   }
@@ -62,6 +65,14 @@ public class Photo {
 
   public void setUserNew(New userNew) {
     this.userNew = userNew;
+  }
+
+  public Date getUploadDate() {
+    return uploadDate;
+  }
+
+  public void setUploadDate(Date uploadDate) {
+    this.uploadDate = uploadDate;
   }
  
 }

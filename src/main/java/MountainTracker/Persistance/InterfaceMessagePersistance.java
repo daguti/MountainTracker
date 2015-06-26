@@ -18,4 +18,6 @@ public interface InterfaceMessagePersistance {
   public List<Message> getSendedMessages(User userFrom);
   public List<Message> getReceivedMessages(User userTo);
   public void storeMessage(Message message);
+  public String getUnreadMessages(User user);
+  public void setMessageToRead(int msgId);
 }

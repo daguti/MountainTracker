@@ -18,26 +18,14 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="css/MyStyles.css"/>
         <title>MOUNTAIN TRACKER</title>
-        <script src="js/FormsValidations.js"> </script>
         <script src="js/WaitingDialog.js"></script>
-        <script src="js/MapsScript.js"></script>
+        <script src="js/photo-gallery.js"></script>
         <script>
             $(document).ready(function() {
-                $.ajax({
-                        url : 'photos?carousel=1&newId=' + $("#newId").text(),
-                        async: false,
-                        type: "GET",
-                        dataType: "text",
-                        beforeSend: function() {
-                            waitingDialog.show();
-                        },
-                        success: function(responseText) {
-                            $("#myCarousel").append(responseText);
-                            waitingDialog.hide();
-                        }
-                    });
-                    
-                });
+               $('li img').on('click',function(){
+                    openImageModal(this);
+                });        
+            });
         </script>
     </head>
     

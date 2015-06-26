@@ -11,6 +11,7 @@ import MountainTracker.Beans.Photo;
 import MountainTracker.Beans.User;
 import MountainTracker.Persistance.Connection.ConnectionBuilder;
 import MountainTracker.Persistance.InterfacePhotoPersistance;
+import java.util.Date;
 import java.util.List;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -70,7 +71,10 @@ public class PhotoPersistanceDAO implements InterfacePhotoPersistance {
       
       trans = con.session.getTransaction();
       trans.begin();
-      for(Photo image : imgList) con.session.save(image);
+      for(Photo image : imgList) {
+        image.setUploadDate(new Date());
+        con.session.save(image);
+      }
       trans.commit();
       
     } catch(HibernateException ex) {

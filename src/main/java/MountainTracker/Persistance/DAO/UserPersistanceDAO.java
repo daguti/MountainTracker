@@ -48,7 +48,7 @@ public class UserPersistanceDAO implements InterfaceUserPersistance {
       con.openSession();
 
       qry = con.session.createQuery(qryStr);
-      qry.setString("username", username);
+      qry.setString("username", username.trim());
       userList = qry.list();
 
       if(userList != null && userList.size() > 0) return userList.get(0);

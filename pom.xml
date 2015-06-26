@@ -7,7 +7,7 @@
     <version>1.0</version>
     <packaging>war</packaging>
 
-    <name>MountainTracker</name>
+    <name>MountainTrackerLocal</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>

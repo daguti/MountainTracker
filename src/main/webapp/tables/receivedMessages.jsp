@@ -2,6 +2,9 @@
     .table-striped>tbody>tr:nth-of-type(odd).selected{background-color:red}
     .table-striped>tbody>tr:nth-of-type(even).selected{background-color:red}
 </style>
+
+Search Box : <input type="text" id="searchbox">
+
 <div class="panel panel-inverse">
    <div id="inverse-heading" class="panel-heading">
        <span style="color: white;" class="glyphicon glyphicon-envelope"></span>
@@ -19,6 +22,7 @@
                     <th>Subject</th>
                     <th>Message</th>
                     <th>Is Read</th>
+                    <th>Message REF.</th>
                 </tr>
             </thead>
         </table> 

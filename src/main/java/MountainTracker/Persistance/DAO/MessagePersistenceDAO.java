@@ -99,5 +99,58 @@ public class MessagePersistenceDAO implements InterfaceMessagePersistance {
       con.closeSession();
     }
   }
+
+  @Override
+  public String getUnreadMessages(User user) {
+    //Variable definition
+    String qryStr = "select count(*) from Messages where is_read is false and username_to = '" + user.getUsername() + "'";
+    Query qry; 
+    List<Message> sendedList = null;
+    
+    try {
+      con.openSession();
+
+      qry = con.session.createSQLQuery(qryStr);
+      System.out.println(qry.list().get(0).toString());
+
+      return qry.list().get(0).toString();
+    } catch(HibernateException ex) {
+      Logger.getLogger(this.getClass()).log(Level.ERROR, ex);
+    } finally {
+      con.closeSession();
+    }
+    return "";
+  }
+
+  @Override
+  public void setMessageToRead(int msgId) {
+    //Variable definition
+    String qryStr = "select a from Message a where a.messageRef = :msgId";
+    Query qry; 
+    List<Message> msgList = null;
+    Message msg;
+    Transaction trans;
+    
+    try {
+      con.openSession();
+      
+      trans = con.session.getTransaction();
+      trans.begin();
+      qry = con.session.createQuery(qryStr);
+      qry.setInteger("msgId", msgId);
+      msgList = qry.list();
+      if(msgList.size() > 0) {
+        msg = msgList.get(0);
+        msg.setIsRead(true);
+        con.session.saveOrUpdate(msg);
+        trans.commit();
+      }
+      
+    } catch(HibernateException ex) {
+      Logger.getLogger(this.getClass()).log(Level.ERROR, ex);
+    } finally {
+      con.closeSession();
+    }
+  }
   
 }

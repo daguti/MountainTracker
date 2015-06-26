@@ -53,7 +53,7 @@
         <%@include file='static/header.jsp'%>
         <div class="container-fluid" style="margin-bottom: 30px;">
             <ul class="nav nav-pills">
-                <li class="active"><a data-toggle="pill" href="#received">Received</a></li>
+                <li class="active"><a data-toggle="pill" href="#received">Received<span class="badge"></span></a></li>
                 <li><a data-toggle="pill" href="#sended">Sended</a></li>
                 <li><a data-toggle="pill" href="#new">New</a></li>
             </ul>
@@ -91,10 +91,10 @@
                         </div>
                         <div class="form-group">
                             <!-- Button -->                                        
-                            <div class="col-md-offset-3 col-md-4">
+                            <div class="col-sm-offset-3 col-sm-4">
                                 <input id="btn-send" name="submit" type="submit" value="Send" class="btn btn-info"/>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-sm-4">
                                 <a onClick="goBack()" class="btn btn-primary">Atras</a>
                             </div>
                         </div>

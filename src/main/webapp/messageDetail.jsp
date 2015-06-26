@@ -25,8 +25,6 @@
         <link rel="stylesheet" href="css/MyStyles.css"/>
         <title>MOUNTAIN TRACKER</title>
         <script src="js/WaitingDialog.js"></script>
-        <script src="js/TableLoad.js"></script>
-        <script src="js/MapsScript.js"></script>
         <script>
             $(document).ready(function() {
                 $("#userFrom").val(<%=request.getParameter("userFrom")%>);
@@ -40,20 +38,6 @@
                 $("#date").prop("disabled", true);
                 $("#subject").prop("disabled", true);
                 $("#text").prop("disabled", true);
-                
-                $.ajax({
-                    url : 'routes?detail=1&routeId=' + <%=request.getParameter("id")%>,
-                    async: false,
-                    type: "GET",
-                    dataType: "text",
-                    beforeSend: function(responseText) {
-                        waitingDialog.show();
-                    },
-                    success: function(responseText) {
-                        createMap(responseText);
-                        waitingDialog.hide();
-                    }
-                });
             });
         </script>
     </head>

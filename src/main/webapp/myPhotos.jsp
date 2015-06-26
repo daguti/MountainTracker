@@ -19,29 +19,25 @@
         <link rel="stylesheet" href="css/MyStyles.css"/>
         <title>MOUNTAIN TRACKER</title>
         <script src="js/WaitingDialog.js"></script>
-        <script src="js/MapsScript.js"></script>
+        <script src="js/photo-gallery.js"></script>
         <script>
             $(document).ready(function() {
-                waitingDialog.show();
                 $.ajax({
                     url : 'photos?mine=1',
                     async: false,
                     type: "GET",
                     dataType: "text",
+                    beforeSend: function() {
+                        waitingDialog.show();
+                    },
                     success: function(responseText) {
                         $("#photoGallery").append(responseText);
+                         waitingDialog.hide();
                     }
                 });
-                $.ajax({
-                    url : 'photos?carousel=1&mine=1',
-                    async: false,
-                    type: "GET",
-                    dataType: "text",
-                    success: function(responseText) {
-                        $("#myCarousel").append(responseText);
-                    }
+                $('li img').on('click',function(){
+                    openImageModal(this);
                 });
-                waitingDialog.hide();
             });
         </script>
     </head>

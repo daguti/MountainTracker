@@ -10,10 +10,8 @@ import MountainTracker.Beans.New;
 import MountainTracker.Beans.Photo;
 import MountainTracker.Beans.User;
 import MountainTracker.Persistance.DAO.NewsPersistanceDAO;
-import MountainTracker.Persistance.DAO.PhotoPersistanceDAO;
 import MountainTracker.Persistance.DAO.UserPersistanceDAO;
 import MountainTracker.Servlet.Photos.PhotosServlet;
-import MountainTracker.Servlet.UploadDownloadFileServlet;
 import MountainTracker.Servlet.UploadUtils;
 import java.io.File;
 import java.io.IOException;
@@ -75,8 +73,8 @@ public class NewsServlet extends HttpServlet {
         cliNew.setText(fileItemsList.get(1).getString());
         cliNew.setWriteDate(new Date());
         dao.storeNew(cliNew);
-        uploadPhotos(fileItemsList, request, response);
-        showNews(request, response, dao);
+        if(fileItemsList.size() > 6)  uploadPhotos(fileItemsList, request, response);
+        request.getRequestDispatcher("/news.jsp").forward(request, response);
       } else {
         showNews(request, response, dao);
       }
@@ -131,7 +129,7 @@ public class NewsServlet extends HttpServlet {
     for(New cliNew : newList) {
       int length = cliNew.getText().length() > 200 && request.getParameter("detail") == null ? 200 : cliNew.getText().length();
       
-      text = request.getParameter("detail") != null ? cliNew.getText() : cliNew.getText().substring(0, length - 1) + "";
+      text = request.getParameter("detail") != null ? cliNew.getText() : cliNew.getText().substring(0, length) + "";
       if(length == 200) text += "...";
       htmlRespond += newTemplate(cliNew.getTitle(), 
                                  cliNew.getWriteDate(), 
@@ -159,12 +157,14 @@ public class NewsServlet extends HttpServlet {
         List<Photo> photoList = new ArrayList<Photo>();
         for(Photo ph : imageList) photoList.add(ph);
         
-        images = "<div id=\"photoGallery\" class=\"container\" style=\"margin-bottom: 30px;\">" + 
-                  "<h2>Photos</h2>" +
-                  servlet.addImagesToGallery(photoList);
+        images = "<div class=\"row\" style=\"text-align:center; border-bottom:1px dashed black; border-top:1px dashed black;  padding:0 0 20px 0; margin-bottom:40px; margin-top:40px;\">" +
+                 "<h3 style=\"font-family:arial; font-weight:bold; font-size:30px;\">PHOTOS</h3> " +
+                 "</div>" +
+                 "<div id=\"photoGallery\" class=\"container\" style=\"margin-bottom: 30px;\">" + 
+                  servlet.addImagesToGallery(photoList) + "</div>";
       }
       return  "<div class='panel panel-inverse'>" +
-              "<a style='cursor:pointer;' onClick(openNewDetail(" + newId + "))><div id='inverse-heading' class='panel-heading' style='padding:1px 15px;'>" + "<p id='newId' style:'display:none;'>" + newId + "</p>" +
+              "<a style='cursor:pointer;' onClick(openNewDetail(" + newId + "))><div id='inverse-heading' class='panel-heading' style='padding:1px 15px;'>" + 
               "<div class='panel-inverse-title' style='font-size:30px;'>" + title + "</div>" +
               "<div style='float:right; font-size: 85%; position: relative; top:-30px; color:white;'>" + author + "</div></br>" +
               "<div style='float:right; font-size: 85%; position: relative; top:-30px; color:white;'>" + new SimpleDateFormat("dd/MM/yyyy").format(date) + "</div>" +
@@ -172,7 +172,6 @@ public class NewsServlet extends HttpServlet {
               "<div class='panel-body'>" +
               text + 
               images +
-              "</div>" + 
               "</div>" +
               "</div>";  
     } else {

@@ -31,3 +31,86 @@ and open the template in the editor.
 th.hide_me, td.hide_me {
     display: none;
 }
+.table-striped>tbody>tr:nth-of-type(odd).unread{
+    background-color:#BDF5BD
+}
+.table-striped>tbody>tr:nth-of-type(even).unread{
+    background-color:#BDF5BD
+}
+#photoGallery ul {         
+    padding:0 0 0 0;
+    margin:0 0 0 0;
+}
+#photoGallery ul li {     
+    list-style:none;
+    margin-bottom:25px;           
+}
+#photoGallery ul li img {
+    cursor: pointer;
+}
+#myModal .modal-body {
+    padding:5px !important;
+}
+#myModal .modal-content {
+    border-radius:0;
+}
+#myModal .modal-dialog img {
+    text-align:center;
+    margin:0 auto;
+}
+.controls{          
+  width:50px;
+  display:block;
+  font-size:11px;
+  padding-top:8px;
+  font-weight:bold;          
+}
+.next {
+  float:right;
+  text-align:right;
+}
+/*override modal for demo only*/
+#myModal .modal-dialog {
+    max-width:500px;
+    padding-top: 90px;
+}
+@media screen and (min-width: 768px){
+    #myModal .modal-dialog {
+        width:500px;
+        padding-top: 90px;
+    }          
+}
+@media screen and (max-width:1500px){
+    #ads {
+        display:none;
+    }
+}
+.dataTables_filter {
+     display: none;
+}
+#tableSearchBox {
+    max-width: 300px;
+    border-left: 2px solid;
+    padding-left: 5px;
+    border-top: 2px solid;
+    border-right: 2px solid;
+    margin-bottom: -15px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+}
+body {
+    background-image: url('/MountainTracker/img/background2.jpg');
+}
+#header {
+    background-image: url('/MountainTracker/img/headerImg.jpg');
+    background-size: 1500px 100px;
+    background-repeat: no-repeat;
+}
+@font-face {
+    font-family: brankovic;
+    src: url(/MountainTracker/ttf/brankovic.ttf);
+}
+#headTitle {
+    font-family: brankovic;
+    color: white;
+}

@@ -17,6 +17,12 @@
 		<property name="url" value="jdbc:mysql://localhost:3306/MountainTracker" />
 		<property name="username" value="root" />
 		<property name="password" value="root" />
+                
+                <!--
+                <property name="url" value="jdbc:mysql://mysql-dev-01.cloud.wso2.com:3306/mount_dgo4946" />
+		<property name="username" value="mount__hNf5v4T" />
+		<property name="password" value="mountaintracker" />
+                -->
 	</bean>
  
 	<!-- Hibernate session factory -->

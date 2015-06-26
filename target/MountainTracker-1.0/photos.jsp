@@ -19,41 +19,40 @@
         <link rel="stylesheet" href="css/MyStyles.css"/>
         <title>MOUNTAIN TRACKER</title>
         <script src="js/WaitingDialog.js"></script>
-        <script src="js/MapsScript.js"></script>
+        <script src="js/photo-gallery.js"></script>
         <script>
             $(document).ready(function() {
-                waitingDialog.show();
+                
                 $.ajax({
                     url : 'photos',
                     async: false,
                     type: "GET",
                     dataType: "text",
+                    beforeSend: function() {
+                      waitingDialog.show();  
+                    },
                     success: function(responseText) {
                         $("#photoGallery").append(responseText);
+                        waitingDialog.hide();
                     }
                 });
-                $.ajax({
-                    url : 'photos?carousel=1',
-                    async: false,
-                    type: "GET",
-                    dataType: "text",
-                    success: function(responseText) {
-                        $("#myCarousel").append(responseText);
-                    }
-                });
-                waitingDialog.hide();
+                $('li img').on('click',function(){
+                    openImageModal(this);
+                });	
             });
         </script>
     </head>
     <body>
         <%@include file='static/header.jsp'%>
+        <div class="row" style="text-align:center; border-bottom:1px dashed black;  padding:0 0 20px 0; margin-bottom:40px;">
+                <h3 style="font-family:arial; font-weight:bold; font-size:30px;">PHOTO GALLERY</h3>
+        </div>
         <sec:authorize access="hasRole('ROLE_USER')">
             <%@include file='upload/photoUploader.jsp'%>
+                <div class="row" style="text-align:center; border-bottom:1px dashed black;  padding:0 0 20px 0; margin-bottom:40px;"></div>
         </sec:authorize>
         <%@include file='ImageView/carousel.jsp'%>
         <div id="photoGallery" class="container" style="margin-bottom: 30px;">
-            <h2>Photo Gallery</h2>
-
         </div>
 
         <%@include file='static/footer.jsp'%>

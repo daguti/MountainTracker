@@ -60,7 +60,6 @@
         <%@include file='static/header.jsp'%>
         <div class="container-fluid" id="allNews" style="margin-bottom: 30px;">
             
-            
         </div>
         <%@include file='static/footer.jsp'%>
     </body>

@@ -60,7 +60,12 @@ public class MessageLoader extends HttpServlet {
         json.substring(0, json.lastIndexOf(","));
         out.write(json);
         out.flush();
-      }else if(request.getParameter("send") != null) {
+      } else if(request.getParameter("unread") != null) {
+        String num = dao.getUnreadMessages(user);
+        request.getSession().setAttribute("unreadMsg", num);
+        out.write(num);
+        out.flush();
+      } else if(request.getParameter("send") != null) {
         User userTo = userDao.retrieveByUserUsername(request.getParameter("userTo"));
         Message msg = new Message();
         msg.setUserFrom(user);
@@ -72,6 +77,14 @@ public class MessageLoader extends HttpServlet {
         msg.setIsRead(false);
         dao.storeMessage(msg);
         request.getRequestDispatcher("/messages.jsp").forward(request, response);
+      } else if(request.getParameter("id") != null) {
+        int num = Integer.valueOf(request.getSession().getAttribute("unreadMsg").toString());
+        num = num - 1;
+        if(num < 0) num = 0;
+        request.getSession().setAttribute("unreadMsg", num);
+        dao.setMessageToRead(Integer.valueOf(request.getParameter("id")));
+        out.write("OK");
+        out.flush();
       } else {
         if(request.getParameter("sended") != null) {
           messageList = dao.getSendedMessages(user);
@@ -87,7 +100,8 @@ public class MessageLoader extends HttpServlet {
                   + "\", \"" + new SimpleDateFormat("dd-MM-yyyy").format(msg.getSendDate()) + " " 
                   + new SimpleDateFormat("HH:mm:ss").format(date)
                   + "\", \"" + msg.getSubject() + "\", \""  + msg.getText();
-          data += request.getParameter("sended") == null ? msg.isIsRead() + "\"]" : "\"]";
+          data += request.getParameter("sended") == null ? "\", \""  + msg.isIsRead() : "";
+          data += "\", \"" + msg.getMessageRef() + "\"]";
           fst = false;
         }
         data += "]}";

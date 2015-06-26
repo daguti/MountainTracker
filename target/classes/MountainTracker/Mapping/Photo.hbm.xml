@@ -15,6 +15,7 @@
 
       <property name="image" column="IMAGE" type="binary" length="42996700" />
       <property name="desription" column="DESCRIPTION" type="string" />
+      <property name="uploadDate" column="UPLOAD_DATE" type="date" />
       <many-to-one name="user" class="MountainTracker.Beans.User" column="USERNAME"/> 
       <many-to-one name="userNew" class="MountainTracker.Beans.New" column="NEW_ID"/> 
   </class>

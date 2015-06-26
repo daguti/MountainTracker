@@ -59,9 +59,9 @@ public class PhotosServlet extends HttpServlet {
         user = userDao.retrieveByUserUsername(name);
         imageList = dao.getPhotosByUsername(user);
       }
-      if(request.getParameter("carousel") != null && imageList != null) {
+      /*if(request.getParameter("carousel") != null && imageList != null) {
         out.write(addImagesToCarousel(imageList));
-      } else if(imageList != null) {
+      } else */if(imageList != null) {
         out.write(addImagesToGallery(imageList));
       }
     } finally {
@@ -69,7 +69,7 @@ public class PhotosServlet extends HttpServlet {
     }
   }
 
-  public String addImagesToCarousel(List<Photo> imageList) {
+  /*public String addImagesToCarousel(List<Photo> imageList) {
     //Variable definition
     String html = "<ol class=\"carousel-indicators\">";
     boolean fst = true;
@@ -89,27 +89,18 @@ public class PhotosServlet extends HttpServlet {
       fst = false;
     }
     return html;
-  }
+  }*/
   
   public String addImagesToGallery(List<Photo> imageList) {
     //Variable definition
-    String html = "<div class=\"row\">";
-    int count = 0;
+    String html = "<ul class=\"row\">";
     
     for(Photo image : imageList) {
-      if(count > 0 && count % 3 == 0) {
-        html += "</div>";
-        html += "<div class=\"row\">";
-      }
-      html += "<div class=\"col-md-4\">";
-      html += "<a class=\"thumbnail\" data-toggle=\"modal\" data-target=\"#myModal\" data-local=\"#myCarousel\">";
-      html += "<img src=\"" + getBase64Image(image) + "\" style=\"width:150px;height:150px\">";
-      html += "<p>" + image.getDesription() + "</p> ";
-      html += "</a>";
-      html += "</div>";
-      count++;
+      html += "<li class=\"col-lg-2 col-md-2 col-sm-3 col-xs-4\">";
+      html += "<img class=\"img-responsive\" src=\"" + getBase64Image(image) + "\">";
+      html += "</li>";
     }
-    html += "</div>";
+    html += "</ul>";
     return html;
   }
   
