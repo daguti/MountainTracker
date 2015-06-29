@@ -23,8 +23,8 @@
         <title>MOUNTAIN TRACKER</title>
         <script src="js/FormsValidations.js"> </script>
         <script src="js/WaitingDialog.js"></script>
-        <script src="js/TableLoad.js"></script>
         <script src="js/MapsScript.js"></script>
+        <script src="js/PageLoads.js"></script>
     </head>
     <body>
         <%@include file='static/header.jsp'%>
@@ -37,6 +37,7 @@
                 <div class="row" style="text-align:center; border-bottom:1px dashed black;  padding:0 0 20px 0; margin-bottom:40px;"></div>
             </sec:authorize>
             <div class="row">
+                <script src="js/TableLoad.js"></script>
                 <%@include file='tables/routesTable.jsp'%>
             </div>
         </div>

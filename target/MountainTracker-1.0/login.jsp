@@ -22,6 +22,15 @@
         <title>MOUNTAIN TRACKER</title>
         <script src="js/FormsValidations.js"> </script>
         <script src="js/WaitingDialog.js"></script>
+        <script>
+            $(document).ready(function(){
+               if(location.href.indexOf("error") !== -1) {
+                   $('#login-alert').show();
+                   $('#loginUsername').css('border-color', 'red');
+                   $('#loginPassword').css('border-color', 'red');
+               } 
+            });
+        </script>
     </head>
     <body onload='$("#loginUsername").focus();'>
         <div class="container-fluid">
@@ -29,18 +38,14 @@
                 <%@include file='static/header.jsp'%>
             </div>
         </div>
-        <c:if test="${not empty error}">
-            <div class="error">${error}</div>
-            <script>$('#login-alert').show();</script>
-        </c:if>
-        <c:if test="${not empty msg}">
-            <div class="msg">${msg}</div>
-        </c:if>
+        <div style="display:none; text-align: center;" id="login-alert" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Invalid User or Password!</strong>
+        </div>
         <div class="container" style="margin-bottom: 30px;">    
             <div id="loginbox" style="margin-top:10px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
                 <div class="panel panel-inverse" > 
                         <div style="padding-top:30px" class="panel-body" >
-                            <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
                             <form id="loginForm" name='loginForm' novalidate="novalidate" class="form-horizontal" role="form" action="<c:url value='/login' />" method='POST'>
                                 <div style="margin-bottom: 25px" class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>

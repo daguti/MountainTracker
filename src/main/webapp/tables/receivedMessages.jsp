@@ -3,7 +3,17 @@
     .table-striped>tbody>tr:nth-of-type(even).selected{background-color:red}
 </style>
 
-Search Box : <input type="text" id="searchbox">
+<div id="tableSearchBox" style="margin-top: 20px;">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="nombre" style="padding-left: 15px;" class="control-label">Search Box: </label>
+            <div class="input-group" style="padding-left:15px;max-width:300px;">
+                <input type="text" id="searchbox" class="form-control">
+                <div class="input-group-addon"><i class="glyphicon glyphicon-search"></i></div>
+            </div>
+        </div>
+    </form>
+</div>
 
 <div class="panel panel-inverse">
    <div id="inverse-heading" class="panel-heading">

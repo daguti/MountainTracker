@@ -39,6 +39,10 @@
           <key column="USERNAME_FROM" /> 
           <one-to-many class="MountainTracker.Beans.Message" />
       </set>
+      <set name="ownerMessages" table="OWNER_MESSAGES" inverse="true" lazy="true" fetch="select">
+          <key column="USERNAME_OWNER" /> 
+          <one-to-many class="MountainTracker.Beans.Message" />
+      </set>
   </class>
 
 </hibernate-mapping>

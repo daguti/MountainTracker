@@ -21,16 +21,18 @@ public class Message {
   Date sendDate;
   long timeMilis;
   boolean isRead;
+  User owner;
   
   public Message() {
   }
 
-  public Message(User userFrom, User userTo, String subject, String text, Date sendDate) {
+  public Message(User userFrom, User userTo, String subject, String text, Date sendDate, User owner) {
     this.userFrom = userFrom;
-    this.userTo = userTo;
-    this.subject = subject;
-    this.text = text;
+    this.userTo   = userTo;
+    this.subject  = subject;
+    this.text     = text;
     this.sendDate = sendDate;
+    this.owner    = owner;
   }
 
   public int getMessageRef() {
@@ -97,4 +99,27 @@ public class Message {
     this.isRead = isRead;
   }
 
+  public User getOwner() {
+    return owner;
+  }
+
+  public void setOwner(User owner) {
+    this.owner = owner;
+  }
+  
+  public static Message CopyUserToAsOwner(Message message) {
+    //Variable definition
+    Message msg = new Message();
+    
+    msg.setIsRead(false);
+    msg.setOwner(message.getUserTo());
+    msg.setSendDate(message.getSendDate());
+    msg.setTimeMilis(message.getTimeMilis());
+    msg.setSubject(message.getSubject());
+    msg.setText(message.getText());
+    msg.setUserFrom(message.getUserFrom());
+    msg.setUserTo(message.getUserTo());
+    
+    return msg;
+  }
 }

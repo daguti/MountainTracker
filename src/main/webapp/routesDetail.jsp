@@ -27,37 +27,13 @@
         <script src="js/WaitingDialog.js"></script>
         <script src="js/TableLoad.js"></script>
         <script src="js/MapsScript.js"></script>
+        <script src="js/PageLoads.js"></script>
         <script>
             $(document).ready(function() {
-                $("#routeName").val(<%=request.getParameter("name")%>);
-                $("#description").val(<%=request.getParameter("description")%>);
-                $("#distance").val(<%=request.getParameter("distance")%>);
-                $("#totalAscend").val(<%=request.getParameter("ascend")%>);
-                $("#totalDescend").val(<%=request.getParameter("descend")%>);
-                $("#minHeight").val(<%=request.getParameter("minHeight")%>);
-                $("#maxHeight").val(<%=request.getParameter("maxHeight")%>);
-                
-                $("#routeName").prop("disabled", true);
-                $("#description").prop("disabled", true);
-                $("#distance").prop("disabled", true);
-                $("#totalAscend").prop("disabled", true);
-                $("#totalDescend").prop("disabled", true);
-                $("#minHeight").prop("disabled", true);
-                $("#maxHeight").prop("disabled", true);
-                
-                $.ajax({
-                    url : 'routes?detail=1&routeId=' + <%=request.getParameter("id")%>,
-                    async: false,
-                    type: "GET",
-                    dataType: "text",
-                    beforeSend: function(responseText) {
-                        waitingDialog.show();
-                    },
-                    success: function(responseText) {
-                        createMap(responseText);
-                        waitingDialog.hide();
-                    }
-                });
+                loadRouteDetails(<%=request.getParameter("name")%>, <%=request.getParameter("description")%>,
+                                 <%=request.getParameter("distance")%>, <%=request.getParameter("ascend")%>, 
+                                 <%=request.getParameter("descend")%>, <%=request.getParameter("minHeight")%>,
+                                 <%=request.getParameter("maxHeight")%>, <%=request.getParameter("id")%>);
             });
         </script>
     </head>

@@ -16,15 +16,21 @@
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script src="//cdn.ckeditor.com/4.4.7/full/ckeditor.js"></script>
         <link rel="stylesheet" href="css/MyStyles.css"/>
         <title>MOUNTAIN TRACKER</title>
         <script src="js/WaitingDialog.js"></script>
         <script src="js/photo-gallery.js"></script>
+        <script src="js/PageLoads.js"></script>
         <script>
             $(document).ready(function() {
                $('li img').on('click',function(){
                     openImageModal(this);
-                });        
+                });
+                CKEDITOR.disableAutoInline = true;
+                CKEDITOR.inline( 'showEditor', {
+                    removePlugins: 'toolbar'
+                } );
             });
         </script>
     </head>
@@ -35,6 +41,11 @@
         <div class="container-fluid" style="margin-bottom: 30px;">
             <%=session.getAttribute("detailNew")%>
             <%session.setAttribute("detailNew", null);%>
+            <div class="row">
+                <div class ="col-xs-offset-5 col-sm-offset-5 col-sm-1" style="margin-bottom: 20px;">
+                    <a onClick="goBack()" class="btn btn-primary">Back</a>
+                </div>
+            </div>
         </div>
         <%@include file='static/footer.jsp'%>
     </body>

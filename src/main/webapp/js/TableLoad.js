@@ -121,7 +121,8 @@ $(document).ready(function() {
                                     + "&userTo='"+$("td:eq(1)", "tbody tr.selected").text() + "'" 
                                     + "&date='" +$("td:eq(2)", "tbody tr.selected").text() + "'" 
                                     + "&subject='" +$("td:eq(3)", "tbody tr.selected").text() + "'" 
-                                    + "&text='" +$("td:eq(4)", "tbody tr.selected").text() + "'";
+                                    + "&text='" +$("td:eq(4)", "tbody tr.selected").text() + "'" 
+                                    + "&id='" + $("td:eq(6)", "tbody tr.selected").text() + "'";
                 }
             });
             
@@ -171,7 +172,8 @@ $(document).ready(function() {
                                         + "&userTo='"+$("td:eq(1)", "tbody tr.selected").text() + "'" 
                                         + "&date='" +$("td:eq(2)", "tbody tr.selected").text() + "'" 
                                         + "&subject='" +$("td:eq(3)", "tbody tr.selected").text() + "'" 
-                                        + "&text='" +$("td:eq(4)", "tbody tr.selected").text() + "'" 
+                                        + "&text='" +$("td:eq(4)", "tbody tr.selected").text() + "'"
+                                        + "&id='" + $("td:eq(6)", "tbody tr.selected").text() + "'";
         }
     });
     

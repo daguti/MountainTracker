@@ -20,36 +20,23 @@
         <title>MOUNTAIN TRACKER</title>
         <script src="js/WaitingDialog.js"></script>
         <script src="js/photo-gallery.js"></script>
-        <script>
-            $(document).ready(function() {
-                $.ajax({
-                    url : 'photos?mine=1',
-                    async: false,
-                    type: "GET",
-                    dataType: "text",
-                    beforeSend: function() {
-                        waitingDialog.show();
-                    },
-                    success: function(responseText) {
-                        $("#photoGallery").append(responseText);
-                         waitingDialog.hide();
-                    }
-                });
-                $('li img').on('click',function(){
-                    openImageModal(this);
-                });
-            });
-        </script>
+        <script src="js/PageLoads.js"></script>
     </head>
     <body>
         <%@include file='static/header.jsp'%>
         <sec:authorize access="hasRole('ROLE_USER')">
             <%@include file='upload/photoUploader.jsp'%>
         </sec:authorize>
+        <script>
+            $(document).ready(function() {
+                loadMyPhotos();
+            });
+        </script>
         <%@include file='ImageView/carousel.jsp'%>
+        <div class="row" style="text-align:center; border-bottom:1px dashed black;  padding:0 0 20px 0; margin-bottom:40px;">
+                <h3 style="font-family:arial; font-weight:bold; font-size:30px;">PHOTO GALLERY</h3>
+        </div>
         <div id="photoGallery" class="container-fluid" style="margin-bottom: 30px;">
-            <h2>Photo Gallery</h2>
-
         </div>
 
         <%@include file='static/footer.jsp'%>

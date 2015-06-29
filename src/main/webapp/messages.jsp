@@ -25,27 +25,10 @@
         <script src="js/FormsValidations.js"> </script>
         <script src="js/WaitingDialog.js"></script>
         <script src="js/TableLoad.js"></script>
-        <script src="js/MapsScript.js"></script>
+        <script src="js/PageLoads.js"></script>
         <script>
             $(document).ready(function() {
-                $('#userTo').autocomplete({
-                    source: function(request, response) {
-                      $.get( "MessageLoader?filtro='ok'", function( data ) {
-                            var result = "";
-                            var match = $("#userTo").val();
-                            var values = data.split(",");
-                            var i = 0;
-                            while(i < values.length) {
-                                if(values[i].indexOf(match) > -1) {
-                                    result += values[i] + ",";
-                                }
-                                i++;
-                            }
-                            result.substring(0, result.lastIndexOf(","));
-                            response(result.split(","));
-                      });  
-                    }
-                });
+                loadMessages();
             });
         </script>
     </head>
@@ -91,10 +74,10 @@
                         </div>
                         <div class="form-group">
                             <!-- Button -->                                        
-                            <div class="col-sm-offset-3 col-sm-4">
+                            <div class="col-xs-offset-2 col-sm-offset-4 col-xs-1">
                                 <input id="btn-send" name="submit" type="submit" value="Send" class="btn btn-info"/>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-xs-offset-2 col-xs-1">
                                 <a onClick="goBack()" class="btn btn-primary">Atras</a>
                             </div>
                         </div>

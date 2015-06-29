@@ -20,30 +20,10 @@
         <title>MOUNTAIN TRACKER</title>
         <script src="js/FormsValidations.js"> </script>
         <script src="js/WaitingDialog.js"></script>
+        <script src="js/PageLoads.js"></script>
         <script>
             $(document).ready(function() {
-                $.ajax({
-                    url : 'userStorage?profile=1',
-                    async: false,
-                    type: "GET",
-                    dataType: "text",
-                    beforeSend: function() {
-                        waitingDialog.show();
-                    },
-                    success: function(responseText) {
-                        var props = responseText.split(";");
-                        $("#username").val(props[0]);
-                        $("#password").val(props[1]);
-                        $("#nombre").val(props[2]);
-                        $("#apellidos").val(props[3]);
-                        $("#birthday").val(props[4]);
-                        $("#email").val(props[5]);
-                        $("#ciudad").val(props[6]);
-                        $("#pais").val(props[7]);
-                        waitingDialog.hide();
-                        $("#username").prop("disabled", true);
-                    }
-                });
+                loadUserProfile();
             });
         </script>
     </head>

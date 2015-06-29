@@ -25,6 +25,7 @@
         <script src="js/WaitingDialog.js"></script>
         <script src="js/TableLoad.js"></script>
         <script src="js/MapsScript.js"></script>
+        <script src="js/PageLoads.js"></script>
     </head>
     <body>
         <%@include file='static/header.jsp'%>

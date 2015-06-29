@@ -85,7 +85,10 @@ public class MessageLoader extends HttpServlet {
         dao.setMessageToRead(Integer.valueOf(request.getParameter("id")));
         out.write("OK");
         out.flush();
-      } else {
+      } else if(request.getParameter("delete") != null) {
+        dao.deleteMessage(Integer.valueOf(request.getParameter("idDel")));
+        out.write("OK");
+      }else {
         if(request.getParameter("sended") != null) {
           messageList = dao.getSendedMessages(user);
         } else {

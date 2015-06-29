@@ -28,7 +28,7 @@ public class MessagePersistenceDAO implements InterfaceMessagePersistance {
   @Override
   public List<Message> getSendedMessages(User userFrom) {
     //Variable definition
-    String qryStr = "select a from Message a where a.userFrom = :userFrom";
+    String qryStr = "select a from Message a where a.userFrom = :userFrom and a.owner = :owner";
     Query qry; 
     List<Message> sendedList = null;
     
@@ -37,6 +37,7 @@ public class MessagePersistenceDAO implements InterfaceMessagePersistance {
 
       qry = con.session.createQuery(qryStr);
       qry.setEntity("userFrom", userFrom);
+      qry.setEntity("owner", userFrom);
       sendedList = qry.list();
 
       for(Message msg : sendedList) {
@@ -55,7 +56,7 @@ public class MessagePersistenceDAO implements InterfaceMessagePersistance {
   @Override
   public List<Message> getReceivedMessages(User userTo) {
     //Variable definition
-    String qryStr = "select a from Message a where a.userTo = :userTo";
+    String qryStr = "select a from Message a where a.userTo = :userTo and a.owner = :owner";
     Query qry;
     List<Message> receivedList = null;
     
@@ -64,6 +65,7 @@ public class MessagePersistenceDAO implements InterfaceMessagePersistance {
 
       qry = con.session.createQuery(qryStr);
       qry.setEntity("userTo", userTo);
+      qry.setEntity("owner", userTo);
       receivedList = qry.list();
 
       for(Message msg : receivedList) {
@@ -89,7 +91,9 @@ public class MessagePersistenceDAO implements InterfaceMessagePersistance {
       
       trans = con.session.getTransaction();
       trans.begin();
+      message.setOwner(message.getUserFrom());
       con.session.save(message);
+      con.session.save(Message.CopyUserToAsOwner(message));
       trans.commit();
     } catch(HibernateException ex) {
       if(trans != null) trans.rollback();
@@ -103,7 +107,8 @@ public class MessagePersistenceDAO implements InterfaceMessagePersistance {
   @Override
   public String getUnreadMessages(User user) {
     //Variable definition
-    String qryStr = "select count(*) from Messages where is_read is false and username_to = '" + user.getUsername() + "'";
+    String qryStr = "select count(*) from Messages where is_read is false and username_to = '" + user.getUsername() 
+                  + "' and username_owner = '" + user.getUsername() + "'";
     Query qry; 
     List<Message> sendedList = null;
     
@@ -143,6 +148,36 @@ public class MessagePersistenceDAO implements InterfaceMessagePersistance {
         msg = msgList.get(0);
         msg.setIsRead(true);
         con.session.saveOrUpdate(msg);
+        trans.commit();
+      }
+      
+    } catch(HibernateException ex) {
+      Logger.getLogger(this.getClass()).log(Level.ERROR, ex);
+    } finally {
+      con.closeSession();
+    }
+  }
+
+  @Override
+  public void deleteMessage(int msgId) {
+    //Variable definition
+    String qryStr = "select a from Message a where a.messageRef = :msgId";
+    Query qry; 
+    List<Message> msgList = null;
+    Message msg;
+    Transaction trans;
+    
+    try {
+      con.openSession();
+      
+      trans = con.session.getTransaction();
+      trans.begin();
+      qry = con.session.createQuery(qryStr);
+      qry.setInteger("msgId", msgId);
+      msgList = qry.list();
+      if(msgList.size() > 0) {
+        msg = msgList.get(0);
+        con.session.delete(msg);
         trans.commit();
       }
       

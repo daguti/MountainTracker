@@ -103,14 +103,14 @@ body {
 }
 #header {
     background-image: url('/MountainTracker/img/headerImg.jpg');
-    background-size: 1500px 100px;
+    background-size: 1500px 100%;
     background-repeat: no-repeat;
 }
 @font-face {
     font-family: brankovic;
-    src: url(/MountainTracker/ttf/brankovic.ttf);
+    src: url('/MountainTracker/ttf/brankovic.ttf');
 }
 #headTitle {
     font-family: brankovic;
-    color: white;
+    color: rgb(37, 230, 46);
 }

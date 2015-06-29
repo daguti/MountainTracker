@@ -68,28 +68,6 @@ public class PhotosServlet extends HttpServlet {
       out.close();
     }
   }
-
-  /*public String addImagesToCarousel(List<Photo> imageList) {
-    //Variable definition
-    String html = "<ol class=\"carousel-indicators\">";
-    boolean fst = true;
-    html += "<li data-target=\"#myCarousel\" data-slide-to=\"0\" class=\"active\"></li>";
-    for(int i = 1; i< imageList.size(); i++) html += "<li data-target=\"#myCarousel\" data-slide-to=\"" + i + "\"></li>";
-    html += "</ol>";
-    html += "<div class=\"carousel-inner\">";
-    for(Photo image : imageList) {
-      if(fst)html += "<div class=\"item active\">";
-      else html += "<div class=\"item\">";
-      html += "<img src=\"" + getBase64Image(image) + "\">";
-      html += "<div class=\"carousel-caption\">";
-      html += "<p>" + image.getDesription() + "</p>";
-      html += "<p>" + image.getUser().getUsername() + "</p>";
-      html += "</div>";
-      html += "</div>";
-      fst = false;
-    }
-    return html;
-  }*/
   
   public String addImagesToGallery(List<Photo> imageList) {
     //Variable definition

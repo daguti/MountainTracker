@@ -20,4 +20,5 @@ public interface InterfaceMessagePersistance {
   public void storeMessage(Message message);
   public String getUnreadMessages(User user);
   public void setMessageToRead(int msgId);
+  public void deleteMessage(int msgId);
 }

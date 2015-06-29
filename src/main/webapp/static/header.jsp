@@ -1,38 +1,13 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+
 <sec:authorize access="hasRole('ROLE_USER')">
     <script>
         function formSubmit() {
             document.getElementById("logoutForm").submit();
         }
         $(document).ready(function() {
-            if('<%=session.getAttribute("unreadMsg")%>' !== 'null') {
-                if('<%=session.getAttribute("unreadMsg")%>' === '0') {
-                    $(".badge").hide();
-                } else {
-                    $(".badge").text(<%=session.getAttribute("unreadMsg")%>);
-                }
-            } else {
-                $.ajax({
-                    url : 'MessageLoader?unread=1',
-                    async: false,
-                    type: "GET",
-                    dataType: "text",
-                    beforeSend: function() {
-                        waitingDialog.show();
-                    },
-                    success: function(responseText) {
-                        //location.reload();
-                        if(responseText === '0') {
-                            $(".badge").hide();
-                        } else {
-                            $(".badge").text(responseText);
-                        }
-                        waitingDialog.hide();
-                    }
-                });
-            }
-            
+            checkUnreadMessages(<%=session.getAttribute("unreadMsg")%>);
         });
     </script>
 </sec:authorize>
@@ -45,14 +20,13 @@
     <div class="container-fluid">
         <div class="row" style="padding-top: 30px;">
             <div class="col-sm-7">
-                <!--<a href="index.jsp"><img src="css/img/logoAgencia.gif"/></a>-->
                 <h1 id="headTitle">MOUNTAIN TRACKER</h1>
             </div>
-            <div class="col-sm-3 col-sm-offset-1">
+            <div class="col-sm-3 col-sm-offset-2" style="padding-top: 13px;">
                 <c:if test="${pageContext.request.userPrincipal.name != null}">
-                    <h4>
-                        User : <a href="perfil.jsp">${pageContext.request.userPrincipal.name} </a>| 
-                                 <a href="javascript:formSubmit()"> Logout</a>
+                    <h4 style="color: white;">
+                        User : <a href="perfil.jsp" style="color:rgb(199, 213, 129);">${pageContext.request.userPrincipal.name} </a>| 
+                                 <a href="javascript:formSubmit()" style="color:#EA9B9B;"> Logout</a>
                     </h4>
 		</c:if>
                 <c:if test="${pageContext.request.userPrincipal.name == null}">

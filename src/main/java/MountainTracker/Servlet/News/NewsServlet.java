@@ -169,8 +169,8 @@ public class NewsServlet extends HttpServlet {
               "<div style='float:right; font-size: 85%; position: relative; top:-30px; color:white;'>" + author + "</div></br>" +
               "<div style='float:right; font-size: 85%; position: relative; top:-30px; color:white;'>" + new SimpleDateFormat("dd/MM/yyyy").format(date) + "</div>" +
               "</div></a>" +
-              "<div class='panel-body'>" +
-              text + 
+              "<div class='panel-body'>" + "<div id=\"showEditor\" contenteditable=\"false\">" +
+              text + "</div>" +
               images +
               "</div>" +
               "</div>";  
@@ -182,7 +182,8 @@ public class NewsServlet extends HttpServlet {
              "<div style='float:right; font-size: 85%; position: relative; top:-30px; color:white;'>" + new SimpleDateFormat("dd/MM/yyyy").format(date) + "</div>" +
              "</div></a>" +
              "<div class='panel-body'>" +
-              text +
+             "<div id=\"showEditor\" contenteditable=\"false\">" +
+              text + "</div>" +
              "</div>" +
              "</div>";  
     }

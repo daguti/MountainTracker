@@ -21,23 +21,15 @@
         <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/1.10.6/integration/bootstrap/3/dataTables.bootstrap.css"/>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-
         <link rel="stylesheet" href="css/MyStyles.css"/>
         <title>MOUNTAIN TRACKER</title>
         <script src="js/WaitingDialog.js"></script>
+        <script src="js/PageLoads.js"></script>
         <script>
             $(document).ready(function() {
-                $("#userFrom").val(<%=request.getParameter("userFrom")%>);
-                $("#userTo").val(<%=request.getParameter("userTo")%>);
-                $("#date").val(<%=request.getParameter("date")%>);
-                $("#subject").val(<%=request.getParameter("subject")%>);
-                $("#text").val(<%=request.getParameter("text")%>);
-                
-                $("#userFrom").prop("disabled", true);
-                $("#userTo").prop("disabled", true);
-                $("#date").prop("disabled", true);
-                $("#subject").prop("disabled", true);
-                $("#text").prop("disabled", true);
+                loadMessageDetail(<%=request.getParameter("userFrom")%>, <%=request.getParameter("userTo")%>,
+                                  <%=request.getParameter("date")%>, <%=request.getParameter("subject")%>,
+                                  <%=request.getParameter("text")%>);
             });
         </script>
     </head>
@@ -83,8 +75,12 @@
                         </div>
                         
                         <div class="form-group">
-                            <div class="col-md-offset-5 col-md-4">
-                                <a onClick="goBack()" class="btn btn-primary">Back</a>
+                            <!-- Button -->                                        
+                            <div class="col-xs-offset-2 col-sm-offset-4 col-xs-1">
+                                <a onClick="deleteMessage(<%=request.getParameter("id")%>)" name="delete" class="btn btn-danger">Delete</a>
+                            </div>
+                            <div class="col-xs-offset-2 col-xs-1">
+                                <a onClick="goBack()" class="btn btn-primary">Atras</a>
                             </div>
                         </div>
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />

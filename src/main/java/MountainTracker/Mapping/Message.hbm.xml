@@ -19,6 +19,7 @@
       <property name="isRead" column="IS_READ" type="boolean"/>
       <many-to-one name="userTo" class="MountainTracker.Beans.User" column="USERNAME_TO"/>
       <many-to-one name="userFrom" class="MountainTracker.Beans.User" column="USERNAME_FROM"/>
+      <many-to-one name="owner" class="MountainTracker.Beans.User" column="USERNAME_OWNER"/>
   </class>
 
 </hibernate-mapping>
