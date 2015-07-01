@@ -29,6 +29,7 @@ public class User {
   private Set<Message> receivedMessages;
   private Set<Message> sendedMessages;
   private Set<Message> ownerMessages;
+  private Set<Album> albumList;
   public User() {
   }
 
@@ -166,6 +167,14 @@ public class User {
 
   public void setOwnerMessages(Set<Message> ownerMessages) {
     this.ownerMessages = ownerMessages;
+  }
+
+  public Set<Album> getAlbumList() {
+    return albumList;
+  }
+
+  public void setAlbumList(Set<Album> albumList) {
+    this.albumList = albumList;
   }
   
   

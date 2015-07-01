@@ -19,7 +19,7 @@
                         Selecciona fichero GPX para importar:
                     </h3>
                     <div class="col-sm-offset-1" style="margin-bottom: 15px; width: 80%;">
-                        <input id="file" type="file">
+                        <input id="file" type="file" accept=".gpx">
                         <!--<input id="file" type="file" >-->
                     </div>
                 </div>

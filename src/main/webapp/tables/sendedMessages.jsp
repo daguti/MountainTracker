@@ -31,6 +31,7 @@
                     <th>Date</th>
                     <th>Subject</th>
                     <th>Message</th>
+                    <th>Is Read</th>
                     <th>Message REF.</th>
                 </tr>
             </thead>

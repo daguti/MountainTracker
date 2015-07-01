@@ -6,6 +6,7 @@
 
 package MountainTracker.Persistance;
 
+import MountainTracker.Beans.Album;
 import MountainTracker.Beans.Photo;
 import MountainTracker.Beans.User;
 import java.util.List;
@@ -20,5 +21,10 @@ public interface InterfacePhotoPersistance {
   public List<Photo> getPhotosByUsername(User user);
   public List<Photo> getPhotosByNew(int newId);
   public void storePhotos(List<Photo> imgList);
-  
+  public void storePhoto(Photo photo);
+  public void storeAlbum(Album album);
+  public Album getAlbumById(int id);
+  public List<Album> getUserAlbums(User user);
+  public List<Album> getAllAlbums();
+  public List<Photo> getAlbumPhotos(Album album);
 }

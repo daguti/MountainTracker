@@ -7,6 +7,7 @@
 package MountainTracker.Beans;
 
 import java.util.Date;
+import java.util.Set;
 
 /**
  *
@@ -19,7 +20,8 @@ public class Photo {
   private User user;
   private New userNew;
   private Date uploadDate;
-
+  private Set<Album>albumList;
+  
   public Photo() {
   }
 
@@ -73,6 +75,14 @@ public class Photo {
 
   public void setUploadDate(Date uploadDate) {
     this.uploadDate = uploadDate;
+  }
+
+  public Set<Album> getAlbumList() {
+    return albumList;
+  }
+
+  public void setAlbumList(Set<Album> albumList) {
+    this.albumList = albumList;
   }
  
 }

@@ -134,10 +134,12 @@ function loadAllNews() {
         success: function(responseText) {
             //location.reload(); 
             $("#allNews").append(responseText);
-            CKEDITOR.disableAutoInline = true;
-            CKEDITOR.inline( 'showEditor', {
-                removePlugins: 'toolbar'
-            } );
+            if(responseText !== "") {
+                CKEDITOR.disableAutoInline = true;
+                CKEDITOR.inline( 'showEditor', {
+                    removePlugins: 'toolbar'
+                } );
+            }
             waitingDialog.hide();
         }
     });
@@ -201,18 +203,24 @@ function loadMessages() {
     });
 }
 
-function loadMessageDetail(userFrom, userTo, date, subject, text) {
+function loadMessageDetail(userFrom, userTo, date, subject, text, isRead) {
     $("#userFrom").val(userFrom);
     $("#userTo").val(userTo);
     $("#date").val(date);
+    if(isRead === null || isRead === '') {
+        $("#isReadAll").hide();
+    } else {
+        $("#isRead").val(isRead);
+        $("#userFrom").prop("disabled", true);
+    }
     $("#subject").val(subject);
-    $("#text").val(text);
+    CKEDITOR.instances.messageText.setData(text);    
 
     $("#userFrom").prop("disabled", true);
     $("#userTo").prop("disabled", true);
     $("#date").prop("disabled", true);
     $("#subject").prop("disabled", true);
-    $("#text").prop("disabled", true);
+    //$("#text").prop("disabled", true);
 }
 
 function deleteMessage(id) {
@@ -227,6 +235,110 @@ function deleteMessage(id) {
         success: function(responseText) {
             waitingDialog.hide();
             location.href = "/MountainTracker/messages.jsp";
+        }
+    });
+}
+
+function loadMyAlbums() {
+    $.ajax({
+        url : 'AlbumLoader?mine=1',
+        async: true,
+        type: "GET",
+        dataType: "text",
+        beforeSend: function() {
+            waitingDialog.show();
+        },
+        success: function(responseText) {
+            $("#albums").append(responseText);
+            var maxWidth = Math.max.apply(null, $("#albumName").map(function () {
+                                return $(this).width();
+                            }).get());
+            var maxHeight = Math.max.apply(null, $("#albumName").map(function () {
+                                return $(this).height();
+                            }).get());
+            $("#albumListStyle").css("height", maxWidth);
+            var center = ($("#miniAlbum").height() / 2) - (maxHeight / 2);
+            $("#albumName").css("margin-top", center +"px");
+            $("#albumListStyle").css("min-width", maxWidth + 33);
+            $("#miniAlbum").css("min-width", maxWidth + 33);
+            waitingDialog.hide();
+        }
+    });
+}
+
+function openAlbumPhotos(albumId, albumName) {
+    $.ajax({
+        url : 'photos?album=1&albumId=' + albumId,
+        async: true,
+        type: "GET",
+        dataType: "text",
+        beforeSend: function() {
+            waitingDialog.show();
+        },
+        success: function(responseText) {
+            $("#albumListStyle").hide();
+            $("#albumPhotoGallery").show();
+            $("#addPhotos").show();
+            $("#backAlbums").show();
+            alert(responseText);
+            $("#albumPhotoGallery").append(responseText);
+            $("#addAlbumModal .modal-header h3").text(albumName);
+            $("#addAlbumModal .modal-header").append("<p style='display:none;'>" + albumId + "</p>");
+            waitingDialog.hide();
+        }
+    });
+}
+
+function backToAlbums() {
+    waitingDialog.show();
+    $("#albumPhotoGallery").hide();
+    $("#addPhotos").hide();
+    $("#backAlbums").hide();
+    $("#albumListStyle").show();
+    waitingDialog.hide();
+}
+
+function loadAddToAlbumModal() {
+    $.ajax({
+        url : 'photos?mine=1',
+        async: false,
+        type: "GET",
+        dataType: "text",
+        beforeSend: function() {
+          waitingDialog.show();  
+        },
+        success: function(responseText) {
+            $("#photoGallery").append(responseText);
+            $('#addAlbumModal').modal();
+            $('#addAlbumModal li').on('click', function() {
+                if($(this).hasClass('selectedImage')) {
+                    $(this).removeClass('selectedImage');
+                } else {
+                    $(this).addClass('selectedImage');
+                }
+            });
+            waitingDialog.hide();
+        }
+    });
+}
+
+function addImagesToAlbum() {
+    var images = "";
+    $(".selectedImage").each(function() {
+        images += $(this).text() + ";";
+    });
+    $.ajax({
+        url : 'AlbumLoader?photoList='+images + "&album_Id="+$("#addAlbumModal .modal-header p").text(),
+        async: false,
+        type: "GET",
+        dataType: "text",
+        beforeSend: function() {
+          waitingDialog.show();  
+        },
+        success: function() {
+            waitingDialog.hide();
+            $("#add-alert").show();
+            setTimeout(function(){location.href="/MountainTracker/myAlbums.jsp"},2000)
         }
     });
 }

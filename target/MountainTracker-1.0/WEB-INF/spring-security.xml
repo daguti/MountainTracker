@@ -9,6 +9,14 @@
 	<!-- enable use-expressions -->
 	<http create-session="always" use-expressions="true">
             <intercept-url pattern="/UploadDownloadFileServlet*" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" />
+            <intercept-url pattern="/messages.jsp" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" />
+            <intercept-url pattern="/creaModNews.jsp" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" />
+            <intercept-url pattern="/messageDetail.jsp" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" />
+            <intercept-url pattern="/myPhotos.jsp" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" />
+            <intercept-url pattern="/myRoutes.jsp" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" />
+            <intercept-url pattern="/myNews.jsp" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" />
+            <intercept-url pattern="/myAlbums.jsp" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" />
+            <intercept-url pattern="/perfil.jsp" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" />
             <intercept-url pattern="/login*" access="permitAll()" />
             <!-- access denied page -->
             <access-denied-handler error-page="/login.jsp" />

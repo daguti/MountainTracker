@@ -22,17 +22,22 @@ public class Message {
   long timeMilis;
   boolean isRead;
   User owner;
+  Date readDate;
+  long readMilis;
   
   public Message() {
   }
 
-  public Message(User userFrom, User userTo, String subject, String text, Date sendDate, User owner) {
-    this.userFrom = userFrom;
-    this.userTo   = userTo;
-    this.subject  = subject;
-    this.text     = text;
-    this.sendDate = sendDate;
-    this.owner    = owner;
+  public Message(User userFrom, User userTo, String subject, String text, Date sendDate, User owner,
+                Date readDate, long readMilis) {
+    this.userFrom  = userFrom;
+    this.userTo    = userTo;
+    this.subject   = subject;
+    this.text      = text;
+    this.sendDate  = sendDate;
+    this.owner     = owner;
+    this.readDate  = readDate;
+    this.readMilis = readMilis;
   }
 
   public int getMessageRef() {
@@ -106,6 +111,23 @@ public class Message {
   public void setOwner(User owner) {
     this.owner = owner;
   }
+
+  public Date getReadDate() {
+    return readDate;
+  }
+
+  public void setReadDate(Date readDate) {
+    this.readDate = readDate;
+  }
+
+  public long getReadMilis() {
+    return readMilis;
+  }
+
+  public void setReadMilis(long readMilis) {
+    this.readMilis = readMilis;
+  }
+
   
   public static Message CopyUserToAsOwner(Message message) {
     //Variable definition

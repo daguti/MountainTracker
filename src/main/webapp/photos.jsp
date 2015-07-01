@@ -37,7 +37,7 @@
             });
         </script>
         <%@include file='ImageView/carousel.jsp'%>
-        <div id="photoGallery" class="container" style="margin-bottom: 30px;">
+        <div id="photoGallery" class="container-fluid" style="margin-bottom: 30px;">
         </div>
 
         <%@include file='static/footer.jsp'%>

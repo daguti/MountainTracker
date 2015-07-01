@@ -60,6 +60,7 @@
                 <li><a href="perfil.jsp">My Account</a></li>
                 <li><a href="myNews.jsp">My News</a></li>
                 <li><a href="myRoutes.jsp">My Routes</a></li>
+                <li><a href="myAlbums.jsp">My Albums</a></li>
                 <li><a href="myPhotos.jsp">My Photos</a></li>
                 <li><a href="messages.jsp">Messages<span class="badge"></span></a></li>
               </ul>

@@ -7,14 +7,12 @@
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">root</property>
-    
     <!--
     <property name="hibernate.connection.url">jdbc:mysql://mysql-dev-01.cloud.wso2.com:3306/mount_dgo4946</property>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.username">mount__hNf5v4T</property>
     <property name="hibernate.connection.password">mountaintracker</property>
     -->
-    
     <property name="hibernate.hbm2ddl.auto">update</property>
     <property name="hibernate.show_sql">true</property>
     <property name="hibernate.connection.pool_size">1</property>
@@ -22,10 +20,11 @@
     <property name="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
     <!-- Resource To Map -->
     <mapping resource="MountainTracker/Mapping/Route.hbm.xml"/>
-    <mapping resource="MountainTracker/Mapping/Coordinate.hbm.xml"/> 
+    <mapping resource="MountainTracker/Mapping/Coordinate.hbm.xml"/>
     <mapping resource="MountainTracker/Mapping/User.hbm.xml"/>
     <mapping resource="MountainTracker/Mapping/New.hbm.xml"/>
     <mapping resource="MountainTracker/Mapping/Photo.hbm.xml"/>
     <mapping resource="MountainTracker/Mapping/Message.hbm.xml"/>
+    <mapping resource="MountainTracker/Mapping/Album.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

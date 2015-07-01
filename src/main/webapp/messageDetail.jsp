@@ -20,57 +20,70 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/1.10.6/integration/bootstrap/3/dataTables.bootstrap.css"/>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
         <link rel="stylesheet" href="css/MyStyles.css"/>
         <title>MOUNTAIN TRACKER</title>
         <script src="js/WaitingDialog.js"></script>
         <script src="js/PageLoads.js"></script>
         <script>
             $(document).ready(function() {
+                CKEDITOR.disableAutoInline = true;
+                CKEDITOR.inline( 'messageText', {
+                    removePlugins: 'toolbar',
+                    uiColor : '#EEE'
+                } );
                 loadMessageDetail(<%=request.getParameter("userFrom")%>, <%=request.getParameter("userTo")%>,
                                   <%=request.getParameter("date")%>, <%=request.getParameter("subject")%>,
-                                  <%=request.getParameter("text")%>);
+                                  <%=request.getParameter("text")%>, <%=request.getParameter("isRead")%>);
+                
             });
         </script>
     </head>
     <body>
         <%@include file='static/header.jsp'%>
         <div class="container-fluid" style="margin-bottom: 30px;">
-            <div class='panel panel-inverse'>
-                <div class='panel-inverse-title' style='font-size:30px;'>
-                    
+            <div class='panel panel-inverse' style="margin-left: 10%;margin-right: 10%;">
+                <div id='inverse-heading' class='panel-heading' style='padding:10px 15px;'>
+                    <div class='panel-inverse-title'>
+                        <span style="color: white;" class="glyphicon glyphicon-envelope"></span>
+                        <h4 style="display: inline;">Message</h4>
+                    </div>
                 </div>
                 <div class='panel-body'>
                     <form novalidate="novalidate" class="form-horizontal" role="form">
                         <div class="form-group">
-                            <label for="userFrom" class="col-md-3 control-label">FROM</label>
-                            <div class="col-md-9">
+                            <label for="userFrom" class="col-sm-1 control-label">FROM</label>
+                            <div class="col-sm-11">
                                 <input type="text" class="form-control" id="userFrom" name="userFrom">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="userTo" class="col-md-3 control-label">TO</label>
-                            <div class="col-md-9">
+                            <label for="userTo" class="col-sm-1 control-label">TO</label>
+                            <div class="col-sm-11">
                                 <input type="text" class="form-control" id="userTo" name="userTo">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="date" class="col-md-3 control-label">Date</label>
-                            <div class="col-md-9">
+                            <label for="date" class="col-sm-1 control-label">Date</label>
+                            <div class="col-sm-4">
                                 <input type="text" class="form-control" id="date" name="date">
+                            </div>
+                            <div class="col-sm-7" id="isReadAl">
+                                <label for="isRead" class="col-sm-4 control-label">Is Read?</label>
+                                <div class="col-sm-8" style="padding-right: 0px;">
+                                    <input type="text" class="form-control" id="isRead" name="isRead">
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="subject" class="col-md-3 control-label">Subject</label>
-                            <div class="col-md-9">
+                            <label for="subject" class="col-sm-1 control-label">Subject</label>
+                            <div class="col-sm-11">
                                 <input type="text" class="form-control" id="subject" name="subject">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="text" class="col-md-3 control-label">Text</label>
-                            <div class="col-md-9">
-                                <textarea id="text" style="width: 100%; height: 100%;">
-                                </textarea>
+                            <label for="text" class="col-sm-1 control-label">Text</label>
+                            <div class="col-sm-11" id="messageArea">
+                                <textarea id="messageText" contenteditable="false">"></textarea>
                             </div>
                         </div>
                         

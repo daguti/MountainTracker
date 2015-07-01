@@ -48,41 +48,51 @@
                     <%@include file='tables/sendedMessages.jsp'%>
                 </div>
                 <div id="new" class="tab-pane fade">
-                    <form id="sendMessage" novalidate="novalidate" class="form-horizontal" role="form" action="<c:url value='/MessageLoader?${_csrf.parameterName}=${_csrf.token}&send=1'/>" method="post">
-                        <div id="signupalert" style="display:none" class="alert alert-danger">
-                            <p>Error:</p>
-                            <span></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="userTo" class="col-md-3 control-label">User To</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control" id="userTo" name="userTo" placeholder="Ref. Titulo">
+                    <div class='panel panel-inverse' style="margin-left: 10%;margin-right: 10%;">
+                        <div id='inverse-heading' class='panel-heading' style='padding:10px 15px;'>
+                            <div class='panel-inverse-title'>
+                                <span style="color: white;" class="glyphicon glyphicon-envelope"></span>
+                                <h4 style="display: inline;">New Message</h4>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="subject" class="col-md-3 control-label">Subject</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control" id="subject" name="subject" placeholder="Ref. Titulo">
-                            </div>
+                        <div class='panel-body'>
+                            <form id="sendMessage" novalidate="novalidate" class="form-horizontal" role="form" action="<c:url value='/MessageLoader?${_csrf.parameterName}=${_csrf.token}&send=1'/>" method="post">
+                                <div id="signupalert" style="display:none" class="alert alert-danger">
+                                    <p>Error:</p>
+                                    <span></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="userTo" class="col-md-3 control-label">User To</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" id="userTo" name="userTo" placeholder="Ref. Titulo">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="subject" class="col-md-3 control-label">Subject</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" id="subject" name="subject" placeholder="Ref. Titulo">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="text" class="col-md-3 control-label">Message</label>
+                                    <div class="col-md-9">
+                                        <%@include file='editors/textEditor.jsp'%>
+                                        <input type="text" class="form-control" id="text" name="text" style="display: none;">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <!-- Button -->                                        
+                                    <div class="col-xs-offset-2 col-sm-offset-4 col-xs-1">
+                                        <input id="btn-send" name="submit" type="submit" value="Send" class="btn btn-info"/>
+                                    </div>
+                                    <div class="col-xs-offset-2 col-xs-1">
+                                        <a onClick="goBack()" class="btn btn-primary">Atras</a>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                            </form>
                         </div>
-                        <div class="form-group">
-                            <label for="text" class="col-md-3 control-label">Message</label>
-                            <div class="col-md-9">
-                                <%@include file='editors/textEditor.jsp'%>
-                                <input type="text" class="form-control" id="text" name="text" style="display: none;">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <!-- Button -->                                        
-                            <div class="col-xs-offset-2 col-sm-offset-4 col-xs-1">
-                                <input id="btn-send" name="submit" type="submit" value="Send" class="btn btn-info"/>
-                            </div>
-                            <div class="col-xs-offset-2 col-xs-1">
-                                <a onClick="goBack()" class="btn btn-primary">Atras</a>
-                            </div>
-                        </div>
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

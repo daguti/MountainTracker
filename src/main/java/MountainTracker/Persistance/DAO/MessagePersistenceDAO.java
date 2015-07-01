@@ -10,6 +10,7 @@ import MountainTracker.Beans.Message;
 import MountainTracker.Beans.User;
 import MountainTracker.Persistance.Connection.ConnectionBuilder;
 import MountainTracker.Persistance.InterfaceMessagePersistance;
+import java.util.Date;
 import java.util.List;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -130,7 +131,7 @@ public class MessagePersistenceDAO implements InterfaceMessagePersistance {
   @Override
   public void setMessageToRead(int msgId) {
     //Variable definition
-    String qryStr = "select a from Message a where a.messageRef = :msgId";
+    String qryStr = "select a from Message a where a.messageRef = :msgId or a.messageRef = :msgId2";
     Query qry; 
     List<Message> msgList = null;
     Message msg;
@@ -143,10 +144,18 @@ public class MessagePersistenceDAO implements InterfaceMessagePersistance {
       trans.begin();
       qry = con.session.createQuery(qryStr);
       qry.setInteger("msgId", msgId);
+      qry.setInteger("msgId2", msgId - 1);
       msgList = qry.list();
       if(msgList.size() > 0) {
         msg = msgList.get(0);
         msg.setIsRead(true);
+        msg.setReadDate(new Date());
+        msg.setReadMilis(System.currentTimeMillis());
+        con.session.saveOrUpdate(msg);
+        msg = msgList.get(1);
+        msg.setIsRead(true);
+        msg.setReadDate(new Date());
+        msg.setReadMilis(System.currentTimeMillis());
         con.session.saveOrUpdate(msg);
         trans.commit();
       }

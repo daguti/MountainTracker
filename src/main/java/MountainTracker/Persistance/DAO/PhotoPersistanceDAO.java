@@ -6,6 +6,7 @@
 
 package MountainTracker.Persistance.DAO;
 
+import MountainTracker.Beans.Album;
 import MountainTracker.Beans.New;
 import MountainTracker.Beans.Photo;
 import MountainTracker.Beans.User;
@@ -52,7 +53,10 @@ public class PhotoPersistanceDAO implements InterfacePhotoPersistance {
       qry.setInteger("refPhoto", refImage);
       imaegeList = qry.list();
 
-      if(imaegeList != null && imaegeList.size() > 0) return imaegeList.get(0);
+      if(imaegeList != null && imaegeList.size() > 0){
+        Hibernate.initialize(imaegeList.get(0).getAlbumList());
+        return imaegeList.get(0);
+      }
     } catch(HibernateException ex) {
       Logger.getLogger(this.getClass()).log(Level.ERROR, ex);
     } finally {
@@ -157,5 +161,143 @@ public class PhotoPersistanceDAO implements InterfacePhotoPersistance {
       con.closeSession();
     }
     return null;
+  }
+
+  @Override
+  public void storeAlbum(Album album) {
+    //Variable definition
+    Transaction trans = null;
+    
+    try {
+      con.openSession();
+      
+      trans = con.session.getTransaction();
+      trans.begin();
+      con.session.save(album);
+      trans.commit();
+      
+    } catch(HibernateException ex) {
+      if(trans != null) trans.rollback();
+      con.closeSession();
+      Logger.getLogger(this.getClass()).log(Level.ERROR, ex);
+    } finally {
+      con.closeSession();
+    }
+  }
+
+  @Override
+  public List<Album> getUserAlbums(User user) {
+    //Variable definition
+    String qryStr = "select a from Album a where a.owner = :user";
+    Query qry;
+    List<Album> albumList = null;
+    
+    try {
+      con.openSession();
+      
+      qry = con.session.createQuery(qryStr);
+      qry.setEntity("user", user);
+      albumList = qry.list();
+
+      for(Album album : albumList)Hibernate.initialize(album.getOwner());
+      return albumList;
+    } catch(HibernateException ex) {
+      Logger.getLogger(this.getClass()).log(Level.ERROR, ex);
+    } finally {
+      con.closeSession();
+    }
+    return null;
+  }
+
+  @Override
+  public List<Album> getAllAlbums() {
+    //Variable definition
+    String qryStr = "select a from Album a";
+    Query qry;
+    List<Album> albumList = null;
+    
+    try {
+      con.openSession();
+      
+      qry = con.session.createQuery(qryStr);
+      albumList = qry.list();
+
+      for(Album album : albumList)Hibernate.initialize(album.getOwner());
+      return albumList;
+    } catch(HibernateException ex) {
+      Logger.getLogger(this.getClass()).log(Level.ERROR, ex);
+    } finally {
+      con.closeSession();
+    }
+    return null;
+  }
+
+  @Override
+  public List<Photo> getAlbumPhotos(Album album) {
+    //Variable definition
+    String qryStr = "select a from Photo a join a.albumList r where r.refAlbum = :album";
+    Query qry;
+    List<Photo> imaegeList = null;
+    
+    try {
+      con.openSession();
+
+      qry = con.session.createQuery(qryStr);
+      qry.setEntity("album", album);
+      imaegeList = qry.list();
+
+      for(Photo img : imaegeList)Hibernate.initialize(img.getUser());
+      return imaegeList;
+    } catch(HibernateException ex) {
+      Logger.getLogger(this.getClass()).log(Level.ERROR, ex);
+    } finally {
+      con.closeSession();
+    }
+    return null;
+  }
+
+  @Override
+  public Album getAlbumById(int id) {
+    //Variable definition
+    String qryStr = "select a from Album a where a.refAlbum = :refAlbum";
+    Query qry;
+    List<Album> albumList = null;
+    
+    try {
+      con.openSession();
+
+      qry = con.session.createQuery(qryStr);
+      qry.setInteger("refAlbum", id);
+      albumList = qry.list();
+
+      if(albumList != null && albumList.size() > 0) return albumList.get(0);
+    } catch(HibernateException ex) {
+      Logger.getLogger(this.getClass()).log(Level.ERROR, ex);
+    } finally {
+      con.closeSession();
+    }
+    return null;
+  }
+
+  @Override
+  public void storePhoto(Photo photo) {
+    //Variable definition
+    Transaction trans = null;
+    
+    try {
+      con.openSession();
+      
+      trans = con.session.getTransaction();
+      trans.begin();
+      con.session.saveOrUpdate(photo);
+      trans.commit();
+      
+    } catch(HibernateException ex) {
+      if(trans != null) trans.rollback();
+      con.closeSession();
+      Logger.getLogger(this.getClass()).log(Level.ERROR, ex);
+    } finally {
+      con.closeSession();
+    }
   }
 }

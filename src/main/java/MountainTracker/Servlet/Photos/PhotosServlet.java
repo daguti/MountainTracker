@@ -42,15 +42,17 @@ public class PhotosServlet extends HttpServlet {
       throws ServletException, IOException {
     //Variable definition
     PhotoPersistanceDAO dao = new PhotoPersistanceDAO();
-    List<Photo> imageList;
+    List<Photo> imageList = null;
     
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
     try {
-      if(request.getParameter("mine") == null && request.getParameter("newId") == null) imageList = dao.getAllPhotos();
-      else if(request.getParameter("newId") != null) {
+      if(request.getParameter("mine") == null && request.getParameter("newId") == null 
+         && request.getParameter("album") == null) {
+        imageList = dao.getAllPhotos();
+      } else if(request.getParameter("newId") != null) {
         imageList = dao.getPhotosByNew(Integer.valueOf(request.getParameter("newId")));
-      } else {
+      } else if(request.getParameter("mine") != null) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
         UserPersistanceDAO userDao = new UserPersistanceDAO();
@@ -58,6 +60,8 @@ public class PhotosServlet extends HttpServlet {
 
         user = userDao.retrieveByUserUsername(name);
         imageList = dao.getPhotosByUsername(user);
+      } else if(request.getParameter("album") != null) {
+        imageList = dao.getAlbumPhotos(dao.getAlbumById(Integer.valueOf(request.getParameter("albumId"))));
       }
       /*if(request.getParameter("carousel") != null && imageList != null) {
         out.write(addImagesToCarousel(imageList));
@@ -76,6 +80,7 @@ public class PhotosServlet extends HttpServlet {
     for(Photo image : imageList) {
       html += "<li class=\"col-lg-2 col-md-2 col-sm-3 col-xs-4\">";
       html += "<img class=\"img-responsive\" src=\"" + getBase64Image(image) + "\">";
+      html += "<p style=\"display:none;\">" + image.getImageId() + "</p>";
       html += "</li>";
     }
     html += "</ul>";
