@@ -23,7 +23,7 @@
         <title>MOUNTAIN TRACKER</title>
         <script src="js/FormsValidations.js"> </script>
         <script src="js/WaitingDialog.js"></script>
-        <script src="js/TableLoad.js"></script>
+        <script src="js/photo-gallery.js"></script>
         <script src="js/PageLoads.js"></script>
         <script>
             $(document).ready(function() {
@@ -33,11 +33,8 @@
     </head>
     <body>
         <%@include file='static/header.jsp'%>
-        <div style="display:none; text-align: center;" id="add-alert" class="alert alert-sucess alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <strong>Photos added succesfully!</strong>
-        </div>
         <%@include file='ImageView/addToAlbum.jsp'%>
+        <%@include file='ImageView/carousel.jsp'%>
         <div class="container-fluid" style="margin-bottom: 30px;">
             <ul class="nav nav-pills" style="margin-bottom: 40px;">
                 <li class="active"><a data-toggle="pill" href="#albums">Albums<span class="badge"></span></a></li>
@@ -45,16 +42,20 @@
             </ul>
             <div class="tab-content">
                 <div id="albums" class="tab-pane fade in active">
-                    <a id="addPhotos" onClick="loadAddToAlbumModal()" class="btn btn-primary" style="display: none;">Add Images</a>
-                    <div id="albumPhotoGallery" class="container" style="margin-bottom: 30px;display: none;">
+                    <div id="albumButtons" style="display: none;" class="row">
+                        <div class="col-sm-offset-4 col-sm-4">
+                            <a id="addPhotos" onClick="loadAddToAlbumModal()" class="btn btn-primary" style="display: none;"><i style="color: white;" class="glyphicon glyphicon-plus"></i>Add Images</a>
+                            <a id="backAlbums" onClick="backToAlbums()" class="btn btn-primary" style="display: none;">Back</a>
+                        </div>
                     </div>
-                    <a id="backAlbums" onClick="backToAlbums()" class="btn btn-primary" style="display: none;">Back</a>
+                    <div id="albumPhotoGallery" class="container" style="margin-bottom: 30px;margin-top: 30px;display: none;">
+                    </div>
                 </div>
                 <div id="create" class="tab-pane fade">
                     <div class='panel panel-inverse' style="margin-left: 10%;margin-right: 10%;">
                         <div id='inverse-heading' class='panel-heading' style='padding:10px 15px;'>
                             <div class='panel-inverse-title'>
-                                <span style="color: white;" class="glyphicon glyphicon-book"></span>
+                                <i style="color: white;" class="glyphicon glyphicon-book"></i>
                                 <h4 style="display: inline;">New Album</h4>
                             </div>
                         </div>

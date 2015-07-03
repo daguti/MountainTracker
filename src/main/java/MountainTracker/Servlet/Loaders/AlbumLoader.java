@@ -105,9 +105,9 @@ public class AlbumLoader extends HttpServlet {
     //Variable definition
     String html = "<ul class=\"row\" style=\"margin-top:40px;\">";
     for(Album album : albumList) {
-      html += "<li id=\"albumListStyle\" class=\"col-lg-2 col-md-2 col-sm-2 col-xs-3\">";
-      html += "<div class=\"container-fluid\" id=\"miniAlbum\" onClick=\"openAlbumPhotos(" + album.getRefAlbum() + ",'"+ album.getAlbumName() + "')\">";
-      html += "<h4 id=\"albumName\">" + album.getAlbumName() + "</h4>";
+      html += "<li class=\"col-lg-2 col-md-2 col-sm-2 col-xs-3 albumListStyle\">";
+      html += "<div class=\"container-fluid miniAlbum\"onClick=\"openAlbumPhotos(" + album.getRefAlbum() + ",'"+ album.getAlbumName() + "')\">";
+      html += "<h4 class=\"albumName\">" + album.getAlbumName() + "</h4>";
       html += "</div>";
       html += "</li>";
     }

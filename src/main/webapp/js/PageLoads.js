@@ -12,6 +12,20 @@ function loadMyPhotos() {
              waitingDialog.hide();
         }
     });
+    $( "#accordion" ).accordion({
+        collapsible: true
+    }).sortable({
+        axis: "y",
+        handle: "h3",
+        stop: function( event, ui ) {
+          // IE doesn't register the blur when sorting
+          // so trigger focusout handlers to remove .ui-state-focus
+          ui.item.children( "h3" ).triggerHandler( "focusout" );
+ 
+          // Refresh accordion to handle new order
+          $( this ).accordion( "refresh" );
+        }
+      });
     $('li img').on('click',function(){
         openImageModal(this);
     });
@@ -60,6 +74,20 @@ function loadAllPhotos() {
             waitingDialog.hide();
         }
     });
+    $( "#accordion" ).accordion({
+        collapsible: true
+    }).sortable({
+        axis: "y",
+        handle: "h3",
+        stop: function( event, ui ) {
+          // IE doesn't register the blur when sorting
+          // so trigger focusout handlers to remove .ui-state-focus
+          ui.item.children( "h3" ).triggerHandler( "focusout" );
+ 
+          // Refresh accordion to handle new order
+          $( this ).accordion( "refresh" );
+        }
+      });
     $('li img').on('click',function(){
         openImageModal(this);
     });
@@ -250,17 +278,17 @@ function loadMyAlbums() {
         },
         success: function(responseText) {
             $("#albums").append(responseText);
-            var maxWidth = Math.max.apply(null, $("#albumName").map(function () {
+            var maxWidth = Math.max.apply(null, $(".albumName").map(function () {
                                 return $(this).width();
                             }).get());
-            var maxHeight = Math.max.apply(null, $("#albumName").map(function () {
+            var maxHeight = Math.max.apply(null, $(".albumName").map(function () {
                                 return $(this).height();
                             }).get());
-            $("#albumListStyle").css("height", maxWidth);
-            var center = ($("#miniAlbum").height() / 2) - (maxHeight / 2);
-            $("#albumName").css("margin-top", center +"px");
-            $("#albumListStyle").css("min-width", maxWidth + 33);
-            $("#miniAlbum").css("min-width", maxWidth + 33);
+            $(".albumListStyle").css("height", maxWidth);
+            var center = ($(".miniAlbum").height() / 2) - (maxHeight / 2);
+            $(".albumName").css("margin-top", center +"px");
+            $(".albumListStyle").css("min-width", maxWidth + 33);
+            $(".miniAlbum").css("min-width", maxWidth + 33);
             waitingDialog.hide();
         }
     });
@@ -277,21 +305,27 @@ function openAlbumPhotos(albumId, albumName) {
         },
         success: function(responseText) {
             $("#albumListStyle").hide();
+            $("#albumButtons").show();
             $("#albumPhotoGallery").show();
             $("#addPhotos").show();
             $("#backAlbums").show();
-            alert(responseText);
             $("#albumPhotoGallery").append(responseText);
             $("#addAlbumModal .modal-header h3").text(albumName);
             $("#addAlbumModal .modal-header").append("<p style='display:none;'>" + albumId + "</p>");
+            var a = $('li img');
+            $('li img').on('click',function(){
+                openImageModalAlbum(this);
+            });
             waitingDialog.hide();
         }
     });
+    
 }
 
 function backToAlbums() {
     waitingDialog.show();
     $("#albumPhotoGallery").hide();
+    $("#albumButtons").hide();
     $("#addPhotos").hide();
     $("#backAlbums").hide();
     $("#albumListStyle").show();

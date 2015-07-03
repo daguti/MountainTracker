@@ -12,6 +12,8 @@ import MountainTracker.Persistance.DAO.PhotoPersistanceDAO;
 import MountainTracker.Persistance.DAO.UserPersistanceDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -65,15 +67,17 @@ public class PhotosServlet extends HttpServlet {
       }
       /*if(request.getParameter("carousel") != null && imageList != null) {
         out.write(addImagesToCarousel(imageList));
-      } else */if(imageList != null) {
+      } else */
+      if(imageList != null && request.getParameter("album") == null) {
         out.write(addImagesToGallery(imageList));
+      } else if(imageList != null) {
+        out.write(addImagesToAlbumGallery(imageList));
       }
     } finally {
       out.close();
     }
   }
-  
-  public String addImagesToGallery(List<Photo> imageList) {
+  public String addImagesToAlbumGallery(List<Photo> imageList) {
     //Variable definition
     String html = "<ul class=\"row\">";
     
@@ -84,6 +88,34 @@ public class PhotosServlet extends HttpServlet {
       html += "</li>";
     }
     html += "</ul>";
+    return html;
+  }
+  public String addImagesToGallery(List<Photo> imageList) {
+    //Variable definition
+    String html = "<div id=\"accordion\">";
+    Calendar preIns = null;
+    Calendar compDate = Calendar.getInstance();
+    boolean fst = true;
+    
+    for(Photo image : imageList) {
+      compDate.setTime(image.getUploadDate());
+      if(preIns == null) {
+        preIns = Calendar.getInstance();
+      } 
+      if(preIns.get(Calendar.YEAR) != compDate.get(Calendar.YEAR) 
+          || preIns.get(Calendar.MONTH) != compDate.get(Calendar.MONTH)) {
+        if(!fst)html += "</ul></div>";
+        fst = false;
+        html += "<h3 style=\"font-family:arial; font-weight:bold; font-size:30px;\">" + new SimpleDateFormat("yyyy MMM").format(image.getUploadDate()).toUpperCase() + "</h3>";
+        html += "<div><ul class=\"row\">";
+      }
+      html += "<li class=\"col-lg-2 col-md-2 col-sm-3 col-xs-4\">";
+      html += "<img id=\"" + image.getImageId() + "\" class=\"img-responsive\" src=\"" + getBase64Image(image) + "\">";
+      html += "<p style=\"display:none;\">" + image.getImageId() + "</p>";
+      html += "</li>";
+      preIns.setTime(image.getUploadDate());
+    }
+    html += "</ul></div></div>";
     return html;
   }
   

@@ -93,17 +93,17 @@ public class PhotoPersistanceDAO implements InterfacePhotoPersistance {
   @Override
   public List<Photo> getAllPhotos() {
     //Variable definition
-    String qryStr = "select a from Photo a";
+    String qryStr = "select a from Photo a order by a.uploadDate desc";
     Query qry;
     List<Photo> imaegeList = null;
-    
     try {
       con.openSession();
 
       qry = con.session.createQuery(qryStr);
       imaegeList = qry.list();
-
-      for(Photo img : imaegeList)Hibernate.initialize(img.getUser());
+      
+      for(Photo img :  imaegeList) Hibernate.initialize(img.getUser());
+      
       return imaegeList;
     } catch(HibernateException ex) {
       Logger.getLogger(this.getClass()).log(Level.ERROR, ex);
@@ -116,7 +116,7 @@ public class PhotoPersistanceDAO implements InterfacePhotoPersistance {
   @Override
   public List<Photo> getPhotosByUsername(User user) {
     //Variable definition
-    String qryStr = "select a from Photo a where a.user = :user";
+    String qryStr = "select a from Photo a where a.user = :user order by a.uploadDate desc";
     Query qry;
     List<Photo> imaegeList = null;
     
@@ -125,9 +125,10 @@ public class PhotoPersistanceDAO implements InterfacePhotoPersistance {
 
       qry = con.session.createQuery(qryStr);
       qry.setEntity("user", user);
-      imaegeList = qry.list();
 
-      for(Photo img : imaegeList)Hibernate.initialize(img.getUser());
+      imaegeList = qry.list();
+      
+      for(Photo img :  imaegeList) Hibernate.initialize(img.getUser());
       return imaegeList;
     } catch(HibernateException ex) {
       Logger.getLogger(this.getClass()).log(Level.ERROR, ex);
@@ -151,9 +152,11 @@ public class PhotoPersistanceDAO implements InterfacePhotoPersistance {
       
       qry = con.session.createQuery(qryStr);
       qry.setEntity("newId", cliNew);
-      imaegeList = qry.list();
 
-      for(Photo img : imaegeList)Hibernate.initialize(img.getUser());
+      imaegeList = qry.list();
+      
+      for(Photo img :  imaegeList) Hibernate.initialize(img.getUser());
+      
       return imaegeList;
     } catch(HibernateException ex) {
       Logger.getLogger(this.getClass()).log(Level.ERROR, ex);
@@ -244,9 +247,11 @@ public class PhotoPersistanceDAO implements InterfacePhotoPersistance {
 
       qry = con.session.createQuery(qryStr);
       qry.setEntity("album", album);
-      imaegeList = qry.list();
+      
 
-      for(Photo img : imaegeList)Hibernate.initialize(img.getUser());
+      imaegeList = qry.list();
+      
+      for(Photo img :  imaegeList) Hibernate.initialize(img.getUser());
       return imaegeList;
     } catch(HibernateException ex) {
       Logger.getLogger(this.getClass()).log(Level.ERROR, ex);

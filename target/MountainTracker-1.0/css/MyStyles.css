@@ -148,13 +148,13 @@ body {
     border: 1px solid #CCC;
 }
 
-#albumName {
+.albumName {
     -ms-transform: rotate(-45deg); /* IE 9 */
     -webkit-transform: rotate(-45deg); /* Chrome, Safari, Opera */
     transform: rotate(-45deg);
     //margin-top: 25%;
 }
-#miniAlbum {
+.miniAlbum {
     cursor:pointer;
     height: 100%;
     background-color: rgb(215, 231, 250);
@@ -163,7 +163,7 @@ body {
     text-align: center;
 }
 
-#albumListStyle {
+.albumListStyle {
     list-style: outside none none;
     //height: 100px;
 }
