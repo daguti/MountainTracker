@@ -1,12 +1,27 @@
-<form id="signupform" class="form-horizontal" role="form" action="<c:url value='/userStorage'/>" method="post">
+<script src="js/fileinput.min.js"></script>
+<script src="js/fileinput_locale_LANG.js"></script>
+<link rel="stylesheet" href="css/fileinput.min.css"/>
+<form id="signupform" class="form-horizontal" role="form" action="<c:url value='/userStorage?${_csrf.parameterName}=${_csrf.token}'/>" method="post" enctype="multipart/form-data">
     <div id="signupalert" style="display:none" class="alert alert-danger">
         <p>Error:</p>
         <span></span>
+    </div>
+    <div class="form-group"> 
+        <div class="col-sm-12">
+            <h3 style="font-family:arial; font-weight:bold; font-size:20px;text-align: center;">
+                Selecciona Fotos importar:
+            </h3>
+            <div class="col-sm-offset-1" style="margin-bottom: 15px; width: 80%;">
+                <input id="file" name="file" type="file" accept="image/*">
+                <!--<input id="file" type="file" >-->
+            </div>
+        </div>
     </div>
     <div class="form-group">
         <label for="username" class="col-md-3 control-label">Username</label>
         <div class="col-md-9">
             <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+            <input type="text" class="form-control" id="username2" name="username2" placeholder="Username" style="display: none">
         </div>
     </div>
     <div class="form-group">

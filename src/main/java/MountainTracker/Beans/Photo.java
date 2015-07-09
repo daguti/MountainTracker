@@ -21,6 +21,7 @@ public class Photo {
   private New userNew;
   private Date uploadDate;
   private Set<Album>albumList;
+  private Set<User> userProfileList;
   
   public Photo() {
   }
@@ -84,5 +85,13 @@ public class Photo {
   public void setAlbumList(Set<Album> albumList) {
     this.albumList = albumList;
   }
- 
+
+  public Set<User> getUserProfileList() {
+    return userProfileList;
+  }
+
+  public void setUserProfileList(Set<User> userProfileList) {
+    this.userProfileList = userProfileList;
+  }
+
 }

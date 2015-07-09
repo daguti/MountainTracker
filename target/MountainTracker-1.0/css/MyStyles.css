@@ -184,3 +184,30 @@ body {
     height: 250px;
     overflow-y: auto;
 }
+#accordion {
+    margin-bottom: 30px;
+}
+.ui-state-default {
+    background-color:#000;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: -5px;
+    color: white;
+}
+.ui-state-hover {
+    background-color:#759393;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+}
+.ui-state-active {
+    background-color:#759393;
+}
+.ui-accordion-content {
+    margin-top: -15px;
+    background-color: #BACCCC;
+    margin-bottom: 10px;
+    padding: 20px 0px;
+    border-radius: 0px 0px 10px 10px;
+}

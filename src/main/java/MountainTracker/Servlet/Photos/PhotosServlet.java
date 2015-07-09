@@ -12,9 +12,13 @@ import MountainTracker.Persistance.DAO.PhotoPersistanceDAO;
 import MountainTracker.Persistance.DAO.UserPersistanceDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -41,7 +45,7 @@ public class PhotosServlet extends HttpServlet {
    * @throws IOException if an I/O error occurs
    */
   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
+      throws ServletException, IOException, ParseException {
     //Variable definition
     PhotoPersistanceDAO dao = new PhotoPersistanceDAO();
     List<Photo> imageList = null;
@@ -50,7 +54,7 @@ public class PhotosServlet extends HttpServlet {
     PrintWriter out = response.getWriter();
     try {
       if(request.getParameter("mine") == null && request.getParameter("newId") == null 
-         && request.getParameter("album") == null) {
+         && request.getParameter("album") == null && request.getParameter("date") == null) {
         imageList = dao.getAllPhotos();
       } else if(request.getParameter("newId") != null) {
         imageList = dao.getPhotosByNew(Integer.valueOf(request.getParameter("newId")));
@@ -64,12 +68,17 @@ public class PhotosServlet extends HttpServlet {
         imageList = dao.getPhotosByUsername(user);
       } else if(request.getParameter("album") != null) {
         imageList = dao.getAlbumPhotos(dao.getAlbumById(Integer.valueOf(request.getParameter("albumId"))));
+      } else if(request.getParameter("date") != null) {
+        imageList = dao.getPhotosByDate(new SimpleDateFormat("yyyy MMM").parse(request.getParameter("date")));
+        out.write(addImagesToAlbumGallery(imageList));
+        out.flush(); 
+        return;
       }
       /*if(request.getParameter("carousel") != null && imageList != null) {
         out.write(addImagesToCarousel(imageList));
       } else */
-      if(imageList != null && request.getParameter("album") == null) {
-        out.write(addImagesToGallery(imageList));
+      if(imageList != null && request.getParameter("album") == null && request.getParameter("date") == null) {
+        out.write(addMonthGalleries(imageList));
       } else if(imageList != null) {
         out.write(addImagesToAlbumGallery(imageList));
       }
@@ -90,7 +99,7 @@ public class PhotosServlet extends HttpServlet {
     html += "</ul>";
     return html;
   }
-  public String addImagesToGallery(List<Photo> imageList) {
+  public String addMonthGalleries(List<Photo> imageList) {
     //Variable definition
     String html = "<div id=\"accordion\">";
     Calendar preIns = null;
@@ -104,18 +113,27 @@ public class PhotosServlet extends HttpServlet {
       } 
       if(preIns.get(Calendar.YEAR) != compDate.get(Calendar.YEAR) 
           || preIns.get(Calendar.MONTH) != compDate.get(Calendar.MONTH)) {
-        if(!fst)html += "</ul></div>";
+        if(!fst)html += "</div>";
         fst = false;
         html += "<h3 style=\"font-family:arial; font-weight:bold; font-size:30px;\">" + new SimpleDateFormat("yyyy MMM").format(image.getUploadDate()).toUpperCase() + "</h3>";
-        html += "<div><ul class=\"row\">";
+        html += "<div style=\"height:auto;\">";
       }
+      preIns.setTime(image.getUploadDate());
+    }
+    html += "</div></div>";
+    return html;
+  }
+  public String addImagesToGallery(List<Photo> imageList) {
+    //Variable definition
+    String html = "";
+  
+    for(Photo image : imageList) {
       html += "<li class=\"col-lg-2 col-md-2 col-sm-3 col-xs-4\">";
       html += "<img id=\"" + image.getImageId() + "\" class=\"img-responsive\" src=\"" + getBase64Image(image) + "\">";
       html += "<p style=\"display:none;\">" + image.getImageId() + "</p>";
       html += "</li>";
-      preIns.setTime(image.getUploadDate());
+      
     }
-    html += "</ul></div></div>";
     return html;
   }
   
@@ -140,7 +158,11 @@ public class PhotosServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    processRequest(request, response);
+    try {
+      processRequest(request, response);
+    } catch (ParseException ex) {
+      Logger.getLogger(PhotosServlet.class.getName()).log(Level.SEVERE, null, ex);
+    }
   }
 
   /**
@@ -154,7 +176,11 @@ public class PhotosServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    processRequest(request, response);
+    try {
+      processRequest(request, response);
+    } catch (ParseException ex) {
+      Logger.getLogger(PhotosServlet.class.getName()).log(Level.SEVERE, null, ex);
+    }
   }
 
   /**

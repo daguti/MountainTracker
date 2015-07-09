@@ -27,6 +27,10 @@
                 <column name="REF_ALBUM" not-null="true" />
             </many-to-many>
       </set>
+      <set name="userProfileList" table="USER_ROUTES" inverse="true" lazy="true" fetch="select">
+          <key column="USERPROFILE" />  <!-- FK de Telefono -->
+          <one-to-many class="MountainTracker.Beans.User" />
+      </set>
   </class>
 
 </hibernate-mapping>

@@ -12,6 +12,8 @@ import MountainTracker.Beans.Photo;
 import MountainTracker.Beans.User;
 import MountainTracker.Persistance.Connection.ConnectionBuilder;
 import MountainTracker.Persistance.InterfacePhotoPersistance;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.apache.log4j.Level;
@@ -304,5 +306,34 @@ public class PhotoPersistanceDAO implements InterfacePhotoPersistance {
     } finally {
       con.closeSession();
     }
+  }
+
+  @Override
+  public List<Photo> getPhotosByDate(Date fecha) {
+    //Variable definition
+    String qryStr = "select a from Photo a";
+    Query qry;
+    List<Photo> imaegeList = new ArrayList<Photo>();
+    SimpleDateFormat fmt = new SimpleDateFormat("yyyy MMM");
+    try {
+      con.openSession();
+
+      qry = con.session.createQuery(qryStr);
+      //qry.setString("fecha", );
+      
+      for(Object obj :  qry.list()) {
+        Photo img = (Photo) obj;
+        if(fmt.format(img.getUploadDate()).equals(fmt.format(fecha))) {
+          Hibernate.initialize(img.getUser());
+          imaegeList.add(img);
+        }
+      }
+      return imaegeList;
+    } catch(HibernateException ex) {
+      Logger.getLogger(this.getClass()).log(Level.ERROR, ex);
+    } finally {
+      con.closeSession();
+    }
+    return null;
   }
 }

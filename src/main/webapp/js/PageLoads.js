@@ -13,7 +13,25 @@ function loadMyPhotos() {
         }
     });
     $( "#accordion" ).accordion({
-        collapsible: true
+        collapsible: true,
+        active : false,
+        activate: function (e, ui) {
+            if($(ui.newHeader[0]).next().html() === "") {
+                var url = "/MountainTracker/photos?date=" + $(ui.newHeader[0]).text();
+                $.ajax({
+                    url : url,
+                    async : false,
+                    dataType: "text",
+                    beforeSend: function() {
+                        waitingDialog.show();
+                    },
+                    success: function(responseText) {
+                        $(ui.newHeader[0]).next().html(responseText);
+                         waitingDialog.hide();
+                    }
+                });
+            }
+        }
     }).sortable({
         axis: "y",
         handle: "h3",
@@ -75,7 +93,28 @@ function loadAllPhotos() {
         }
     });
     $( "#accordion" ).accordion({
-        collapsible: true
+        clearStyle: true, 
+        autoHeight: false,
+        collapsible: true,
+        active : false,
+        activate: function (e, ui) {
+            if($(ui.newHeader[0]).next().html() === "") {
+                var url = "/MountainTracker/photos?date=" + $(ui.newHeader[0]).text();
+                $.ajax({
+                    url : url,
+                    async : false,
+                    dataType: "text",
+                    beforeSend: function() {
+                        waitingDialog.show();
+                    },
+                    success: function(responseText) {
+                        $(ui.newHeader[0]).next().html(responseText);
+                        $(ui.newHeader[0]).next().css("height", "auto");
+                         waitingDialog.hide();
+                    }
+                });
+            }
+        }
     }).sortable({
         axis: "y",
         handle: "h3",
@@ -87,7 +126,7 @@ function loadAllPhotos() {
           // Refresh accordion to handle new order
           $( this ).accordion( "refresh" );
         }
-      });
+      });;
     $('li img').on('click',function(){
         openImageModal(this);
     });
@@ -135,8 +174,9 @@ function loadUserProfile() {
             waitingDialog.show();
         },
         success: function(responseText) {
-            var props = responseText.split(";");
+            var props = responseText.split("$%&");
             $("#username").val(props[0]);
+            $("#username2").val(props[0]);
             $("#password").val(props[1]);
             $("#nombre").val(props[2]);
             $("#apellidos").val(props[3]);
@@ -144,6 +184,17 @@ function loadUserProfile() {
             $("#email").val(props[5]);
             $("#ciudad").val(props[6]);
             $("#pais").val(props[7]);
+            var img = "";
+            if(props.length > 8) {
+                img = "<img src='" + props[8] + "' class='file-preview-image' alt='Desert' title='Desert'>";  
+            }
+            $("#file").fileinput({
+                previewFileType: "image",
+                browseClass: "btn btn-success",
+                browseLabel: "Pick Image",
+                browseIcon: '<i class="glyphicon glyphicon-picture"></i>',
+                initialPreview: img
+            });
             waitingDialog.hide();
             $("#username").prop("disabled", true);
         }

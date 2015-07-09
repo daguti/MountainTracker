@@ -16,6 +16,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.fileupload.FileItem;
@@ -56,6 +57,7 @@ public class UploadUtils {
         System.out.println("Absolute Path at server="+file.getAbsolutePath());
         fileItem.write(file);
         img.setImage(Files.readAllBytes(Paths.get(file.getPath())));
+        img.setUploadDate(new Date());
         imgList.add(img);
       }
     }

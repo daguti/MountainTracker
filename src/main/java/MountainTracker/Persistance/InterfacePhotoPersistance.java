@@ -9,6 +9,7 @@ package MountainTracker.Persistance;
 import MountainTracker.Beans.Album;
 import MountainTracker.Beans.Photo;
 import MountainTracker.Beans.User;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,6 +19,7 @@ import java.util.List;
 public interface InterfacePhotoPersistance {
   public Photo getPhotoById(int refImage);
   public List<Photo> getAllPhotos();
+  public List<Photo> getPhotosByDate(Date fecha);
   public List<Photo> getPhotosByUsername(User user);
   public List<Photo> getPhotosByNew(int newId);
   public void storePhotos(List<Photo> imgList);

@@ -15,6 +15,7 @@ import java.util.HashSet;
 import java.util.List;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
@@ -51,7 +52,10 @@ public class UserPersistanceDAO implements InterfaceUserPersistance {
       qry.setString("username", username.trim());
       userList = qry.list();
 
-      if(userList != null && userList.size() > 0) return userList.get(0);
+      if(userList != null && userList.size() > 0) {
+        Hibernate.initialize(userList.get(0).getProfilePhoto());
+        return userList.get(0);
+      }
     } catch(HibernateException ex) {
       Logger.getLogger(this.getClass()).log(Level.ERROR, ex);
     } finally {
@@ -72,7 +76,7 @@ public class UserPersistanceDAO implements InterfaceUserPersistance {
       
       trans = con.session.getTransaction();
       trans.begin();
-      con.session.save(user);
+      con.session.saveOrUpdate(user);
       trans.commit();
       
     } catch(HibernateException ex) {

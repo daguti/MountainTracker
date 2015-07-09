@@ -30,6 +30,8 @@ public class User {
   private Set<Message> sendedMessages;
   private Set<Message> ownerMessages;
   private Set<Album> albumList;
+  private Photo profilePhoto;
+  
   public User() {
   }
 
@@ -176,7 +178,13 @@ public class User {
   public void setAlbumList(Set<Album> albumList) {
     this.albumList = albumList;
   }
-  
-  
+
+  public Photo getProfilePhoto() {
+    return profilePhoto;
+  }
+
+  public void setProfilePhoto(Photo profilePhoto) {
+    this.profilePhoto = profilePhoto;
+  }
 }
 

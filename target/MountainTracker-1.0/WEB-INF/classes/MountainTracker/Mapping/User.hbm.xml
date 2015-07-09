@@ -47,6 +47,7 @@
           <key column="ALBUM_OWNER" /> 
           <one-to-many class="MountainTracker.Beans.Album" />
       </set>
+      <many-to-one name="profilePhoto" class="MountainTracker.Beans.Photo" column="USERPROFILE"/>
   </class>
 
 </hibernate-mapping>
