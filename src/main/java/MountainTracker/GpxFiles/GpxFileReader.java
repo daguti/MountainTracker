@@ -14,7 +14,6 @@ import MountainTracker.Persistance.DAO.UserPersistanceDAO;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import javax.xml.parsers.DocumentBuilder;

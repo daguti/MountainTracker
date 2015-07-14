@@ -193,6 +193,7 @@ body {
     border-radius: 10px;
     margin-top: -5px;
     color: white;
+    cursor: pointer;
 }
 .ui-state-hover {
     background-color:#759393;

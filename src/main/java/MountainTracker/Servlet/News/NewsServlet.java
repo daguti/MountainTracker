@@ -73,7 +73,7 @@ public class NewsServlet extends HttpServlet {
         cliNew.setText(fileItemsList.get(1).getString());
         cliNew.setWriteDate(new Date());
         dao.storeNew(cliNew);
-        if(fileItemsList.size() > 6)  uploadPhotos(fileItemsList, request, response);
+        if(fileItemsList.size() >= 6)  uploadPhotos(fileItemsList, request, response);
         request.getRequestDispatcher("/news.jsp").forward(request, response);
       } else {
         showNews(request, response, dao);
@@ -160,8 +160,8 @@ public class NewsServlet extends HttpServlet {
         images = "<div class=\"row\" style=\"text-align:center; border-bottom:1px dashed black; border-top:1px dashed black;  padding:0 0 20px 0; margin-bottom:40px; margin-top:40px;\">" +
                  "<h3 style=\"font-family:arial; font-weight:bold; font-size:30px;\">PHOTOS</h3> " +
                  "</div>" +
-                 "<div id=\"photoGallery\" class=\"container\" style=\"margin-bottom: 30px;\">" + 
-                  servlet.addImagesToGallery(photoList) + "</div>";
+                 "<div id=\"photoGallery\" class=\"container\" style=\"margin-bottom: 30px;\"><ul class=\"row\">" + 
+                  servlet.addImagesToGallery(photoList) + "</ul></div>";
       }
       return  "<div class='panel panel-inverse'>" +
               "<a style='cursor:pointer;' onClick(openNewDetail(" + newId + "))><div id='inverse-heading' class='panel-heading' style='padding:1px 15px;'>" + 
@@ -173,7 +173,7 @@ public class NewsServlet extends HttpServlet {
               text + "</div>" +
               images +
               "</div>" +
-              "</div>";  
+              "</div></div>";  
     } else {
       return "<div class='panel panel-inverse'>" +
              "<a style='cursor:pointer;' href=\"#\" onClick='(openNewDetail(" + newId + "));return false;'><div id='inverse-heading' class='panel-heading' style='padding:1px 15px;'>" +
@@ -185,7 +185,7 @@ public class NewsServlet extends HttpServlet {
              "<div id=\"showEditor\" contenteditable=\"false\">" +
               text + "</div>" +
              "</div>" +
-             "</div>";  
+             "</div></div>";  
     }
   }
   

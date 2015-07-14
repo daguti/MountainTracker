@@ -27,6 +27,9 @@ function loadMyPhotos() {
                     },
                     success: function(responseText) {
                         $(ui.newHeader[0]).next().html(responseText);
+                        $('li img').on('click',function(){
+                            openImageModal(this);
+                        });
                          waitingDialog.hide();
                     }
                 });
@@ -44,9 +47,6 @@ function loadMyPhotos() {
           $( this ).accordion( "refresh" );
         }
       });
-    $('li img').on('click',function(){
-        openImageModal(this);
-    });
 }
 
 function checkUnreadMessages(messages) {
@@ -110,6 +110,9 @@ function loadAllPhotos() {
                     success: function(responseText) {
                         $(ui.newHeader[0]).next().html(responseText);
                         $(ui.newHeader[0]).next().css("height", "auto");
+                        $('li img').on('click',function(){
+                            openImageModal(this);
+                        });
                          waitingDialog.hide();
                     }
                 });
@@ -126,13 +129,11 @@ function loadAllPhotos() {
           // Refresh accordion to handle new order
           $( this ).accordion( "refresh" );
         }
-      });;
-    $('li img').on('click',function(){
-        openImageModal(this);
-    });
+      });
 }
 
 function loadRouteDetails(name, description, distance, ascend, descend, minHeight, maxHeight, id) {
+    $("#routeId").val(id);
     $("#routeName").val(name);
     $("#description").val(description);
     $("#distance").val(distance);
@@ -141,6 +142,8 @@ function loadRouteDetails(name, description, distance, ascend, descend, minHeigh
     $("#minHeight").val(minHeight);
     $("#maxHeight").val(maxHeight);
 
+    $("#download").attr("href", "routes?download=1&routeId=" + id);
+    //$("#download").attr("href", "/MountainTracker/routes");
     $("#routeName").prop("disabled", true);
     $("#description").prop("disabled", true);
     $("#distance").prop("disabled", true);
@@ -355,7 +358,7 @@ function openAlbumPhotos(albumId, albumName) {
             waitingDialog.show();
         },
         success: function(responseText) {
-            $("#albumListStyle").hide();
+            $(".albumListStyle").hide();
             $("#albumButtons").show();
             $("#albumPhotoGallery").show();
             $("#addPhotos").show();
@@ -375,11 +378,12 @@ function openAlbumPhotos(albumId, albumName) {
 
 function backToAlbums() {
     waitingDialog.show();
+    $("#albumPhotoGallery").html("");
     $("#albumPhotoGallery").hide();
     $("#albumButtons").hide();
     $("#addPhotos").hide();
     $("#backAlbums").hide();
-    $("#albumListStyle").show();
+    $(".albumListStyle").show();
     waitingDialog.hide();
 }
 

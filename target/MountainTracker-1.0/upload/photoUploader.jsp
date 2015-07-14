@@ -20,7 +20,7 @@
                         Selecciona Fotos importar:
                     </h3>
                     <div class="col-sm-offset-1" style="margin-bottom: 15px; width: 80%;">
-                        <input id="file" type="file" accept="image/*">
+                        <input id="file" name="files[]" type="file" accept="image/*" multiple>
                         <!--<input id="file" type="file" >-->
                     </div>
                 </div>

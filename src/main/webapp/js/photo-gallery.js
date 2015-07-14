@@ -1,10 +1,9 @@
 function openImageModal(image) {
-    var id = "#" + $(image).attr('id');
-    var src = $(id).attr('src');
+    var src = $(image).attr('src');
     var img = '<img src="' + src + '" class="img-responsive"/>';
 
     //start of new code new code
-    var index = $(id).parent('li').index();   
+    var index = $(image).parent('li').index();   
     //index = 0;
     var html = '';
     html += img;                

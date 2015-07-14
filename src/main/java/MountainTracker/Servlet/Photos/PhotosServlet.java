@@ -112,7 +112,7 @@ public class PhotosServlet extends HttpServlet {
         preIns = Calendar.getInstance();
       } 
       if(preIns.get(Calendar.YEAR) != compDate.get(Calendar.YEAR) 
-          || preIns.get(Calendar.MONTH) != compDate.get(Calendar.MONTH)) {
+          || preIns.get(Calendar.MONTH) != compDate.get(Calendar.MONTH) || fst) {
         if(!fst)html += "</div>";
         fst = false;
         html += "<h3 style=\"font-family:arial; font-weight:bold; font-size:30px;\">" + new SimpleDateFormat("yyyy MMM").format(image.getUploadDate()).toUpperCase() + "</h3>";

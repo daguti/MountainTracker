@@ -25,7 +25,7 @@
         <script>
             $(document).ready(function() {
                $('li img').on('click',function(){
-                    openImageModal(this);
+                    openImageModalAlbum(this);
                 });
                 CKEDITOR.disableAutoInline = true;
                 CKEDITOR.inline( 'showEditor', {

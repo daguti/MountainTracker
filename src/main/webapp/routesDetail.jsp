@@ -50,6 +50,7 @@
                             <label for="routeName" class="col-md-3 control-label">Route Name</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" id="routeName" name="routeName">
+                                <input type="text" class="form-control" id="routeId" name="routeId" style="display: none;">
                             </div>
                         </div>
                         <div class="form-group">
@@ -98,7 +99,10 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-offset-5 col-md-4">
+                            <div class="col-sm-offset-4 col-sm-2">
+                                <a href="" id="download" class="btn btn-info">Download</a>
+                            </div>
+                            <div class="col-sm-2">
                                 <a onClick="goBack()" class="btn btn-primary">Back</a>
                             </div>
                         </div>

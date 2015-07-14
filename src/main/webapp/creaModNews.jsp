@@ -23,9 +23,17 @@
         <script src="js/WaitingDialog.js"></script>
         <script src="js/MapsScript.js"></script>
         <script src="js/PageLoads.js"></script>
+        <script src="js/fileinput.min.js"></script>
+        <script src="js/fileinput_locale_LANG.js"></script>
+        <link rel="stylesheet" href="css/fileinput.min.css"/>
         <script>
             $(document).ready(function() {
-               $("#uploadBtn").hide();
+               $("#file").fileinput({
+                    previewFileType: "image",
+                    browseClass: "btn btn-success",
+                    browseLabel: "Pick Image",
+                    browseIcon: '<i class="glyphicon glyphicon-picture"></i>'
+                });
             });
         </script>
     </head>
@@ -54,7 +62,17 @@
                     </div>
                     <div class="form-group" style="border-bottom: 1px dashed black">
                         <div class="col-sm-12" style="padding-top:30px;">
-                            <%@include file='upload/photoUploader.jsp'%>
+                            <div class="form-group"> 
+                                <div class="col-sm-12">
+                                    <h3 style="font-family:arial; font-weight:bold; font-size:20px;text-align: center;">
+                                        Selecciona Fotos importar:
+                                    </h3>
+                                    <div class="col-sm-offset-1" style="margin-bottom: 15px; width: 80%;">
+                                        <input id="file" name="files[]" type="file" accept="image/*" multiple>
+                                        <!--<input id="file" type="file" >-->
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
