@@ -23,6 +23,9 @@
         <script src="js/PageLoads.js"></script>
         <script>
             $(document).ready(function() {
+                $("#btn-signup").val("Save");
+                $("#btn-signup").removeClass(".col-sm-offset-4");
+                $("#btn-signup").addClass(".col-sm-offset-5");
                 loadUserProfile();
             });
         </script>

@@ -64,7 +64,7 @@ public class RoutesTableLoader extends HttpServlet {
         }
         data +="[\"" + route.getRefRoute() + "\", \"" + route.getRouteName() + "\", \"" + route.getDescription()
                 + "\", \"" + Math.round(route.getTrackDistance() * 100) / 100 + "\", \"" + route.getTotalAscend() + "\", \"" + route.getTotalDescend() 
-              + "\", \"" + route.getMinHeight() + "\", \"" + route.getMaxHeight() + "\"]";
+              + "\", \"" + route.getMinHeight() + "\", \"" + route.getMaxHeight() + "\", \"" + route.getUser().getUsername() + "\"]";
         fst = false;
       }
       data += "]}";

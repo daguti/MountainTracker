@@ -99,6 +99,8 @@ public class UserStorageServlet extends HttpServlet {
           String name = auth.getName(); //get logged in username
           user.setUsername(name);
           redPage = "perfil.jsp";
+          user.setUsername(fileItemsList.get(i).getString());
+          i++;
         }
         user.setPass(fileItemsList.get(i).getString()); i++;
         user.setName(fileItemsList.get(i).getString()); i++; 
@@ -151,7 +153,8 @@ public class UserStorageServlet extends HttpServlet {
         if(img.getUserProfileList() != null) img.getUserProfileList().add(user);
         else {
           Set<User>set = new HashSet<User>();
-          set.add(user);
+          if(user == null) set.add(new User());
+          else set.add(user);
           img.setUserProfileList(set);
         }
         img.setUploadDate(new Date());

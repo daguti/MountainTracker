@@ -32,6 +32,7 @@
                     <th>Total Descend(m)</th>
                     <th>Min Height(m)</th>
                     <th>Max Height(m)</th>
+                    <th>Owner</th>
                 </tr>
             </thead>
         </table> 

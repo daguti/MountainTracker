@@ -1,6 +1,25 @@
 <script src="js/fileinput.min.js"></script>
 <script src="js/fileinput_locale_LANG.js"></script>
 <link rel="stylesheet" href="css/fileinput.min.css"/>
+<style>
+    .file-preview-frame {
+        border: 1px solid #DDD;
+        box-shadow: 1px 1px 5px 0px #A2958A;
+        float: left;
+        display: table;
+        text-align: center;
+        vertical-align: middle;
+        height: 160px;
+        margin: 8px;
+        padding: 6px;
+        padding-bottom: -10px;
+        margin-left: 15%;
+    }
+    img {
+        box-shadow: 0px 2px 6px 2px rgba(0, 0, 0, 0.75);
+        margin-bottom: 0px;
+    }
+</style>
 <form id="signupform" class="form-horizontal" role="form" action="<c:url value='/userStorage?${_csrf.parameterName}=${_csrf.token}'/>" method="post" enctype="multipart/form-data">
     <div id="signupalert" style="display:none" class="alert alert-danger">
         <p>Error:</p>
@@ -68,7 +87,7 @@
     </div>
     <div class="form-group">
         <!-- Button -->                                        
-        <div class="col-md-offset-3 col-md-9">
+        <div class="col-sm-offset-4 col-sm-1">
             <input id="btn-signup" name="submit" type="submit" value="Registrar" class="btn btn-info"/>
         </div>
     </div>

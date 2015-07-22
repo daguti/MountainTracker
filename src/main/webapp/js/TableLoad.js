@@ -46,7 +46,8 @@ $(document).ready(function() {
                                         + "&ascend='" +$("td:eq(4)", "tbody tr.selected").text() + "'" 
                                         + "&descend='" +$("td:eq(5)", "tbody tr.selected").text() + "'" 
                                         + "&minHeight='" +$("td:eq(6)", "tbody tr.selected").text() + "'" 
-                                        + "&maxHeight='" +$("td:eq(7)", "tbody tr.selected").text() + "'" ;
+                                        + "&maxHeight='" +$("td:eq(7)", "tbody tr.selected").text() + "'"
+                                        + "&owner='" +$("td:eq(8)", "tbody tr.selected").text() + "'";
         }
     });
     $("#searchbox").keyup(function() {

@@ -30,6 +30,10 @@
                    $('#loginPassword').css('border-color', 'red');
                } 
             });
+            $("#file").ready(function() {
+                $("h3").hide();
+                $("#file").hide();
+            });
         </script>
     </head>
     <body onload='$("#loginUsername").focus();'>

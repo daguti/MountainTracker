@@ -33,7 +33,7 @@
                 loadRouteDetails(<%=request.getParameter("name")%>, <%=request.getParameter("description")%>,
                                  <%=request.getParameter("distance")%>, <%=request.getParameter("ascend")%>, 
                                  <%=request.getParameter("descend")%>, <%=request.getParameter("minHeight")%>,
-                                 <%=request.getParameter("maxHeight")%>, <%=request.getParameter("id")%>);
+                                 <%=request.getParameter("maxHeight")%>, <%=request.getParameter("id")%>, <%=request.getParameter("owner")%>);
             });
         </script>
     </head>
@@ -45,7 +45,7 @@
                     
                 </div>
                 <div class='panel-body'>
-                    <form novalidate="novalidate" class="form-horizontal" role="form">
+                    <form novalidate="novalidate" class="form-horizontal" role="form" action="<c:url value='/routes?${_csrf.parameterName}=${_csrf.token}&modify=1'/>" method="post">
                         <div class="form-group">
                             <label for="routeName" class="col-md-3 control-label">Route Name</label>
                             <div class="col-md-9">
@@ -56,8 +56,9 @@
                         <div class="form-group">
                             <label for="description" class="col-md-3 control-label">Description</label>
                             <div class="col-md-9">
-                                <textarea id="description" style="width: 100%; height: 100%;">
+                                <textarea name="description" id="description" style="width: 100%; height: 100%;">
                                 </textarea>
+                                
                             </div>
                         </div>
                         <div class="form-group">
@@ -101,6 +102,9 @@
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-2">
                                 <a href="" id="download" class="btn btn-info">Download</a>
+                            </div>
+                            <div class="col-sm-2" id="routeUpdate">
+                                <input name="submit" type="submit" value="Update" class="btn btn-info"/>
                             </div>
                             <div class="col-sm-2">
                                 <a onClick="goBack()" class="btn btn-primary">Back</a>

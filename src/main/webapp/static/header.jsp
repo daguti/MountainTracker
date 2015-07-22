@@ -25,7 +25,7 @@
             <div class="col-sm-3 col-sm-offset-2" style="padding-top: 13px;">
                 <c:if test="${pageContext.request.userPrincipal.name != null}">
                     <h4 style="color: white;">
-                        User : <a href="perfil.jsp" style="color:rgb(199, 213, 129);">${pageContext.request.userPrincipal.name} </a>| 
+                        User : <a id="headUserName" href="perfil.jsp" style="color:rgb(199, 213, 129);">${pageContext.request.userPrincipal.name} </a>| 
                                  <a href="javascript:formSubmit()" style="color:#EA9B9B;"> Logout</a>
                     </h4>
 		</c:if>

@@ -100,6 +100,27 @@ public class RoutesServlet extends HttpServlet {
 		os.flush();
 		os.close();
 		fis.close();
+      } else if(request.getParameter("modify") != null) {
+        Route route = dao.getRoute(Integer.valueOf(request.getParameter("routeId")));
+        if(route != null) {
+          route.setRouteName(request.getParameter("routeName"));
+          route.setTotalAscend(Double.valueOf(request.getParameter("totalAscend")));
+          route.setTotalDescend(Double.valueOf(request.getParameter("totalDescend")));
+          route.setDescription(request.getParameter("description"));
+          route.setMaxHeight(Double.valueOf(request.getParameter("maxHeight")));
+          route.setMinHeight(Double.valueOf(request.getParameter("minHeight")));
+          route.setTrackDistance(Double.valueOf(request.getParameter("distance")));
+          dao.storeRoute(route);
+          request.getRequestDispatcher("/routesDetail.jsp?id='" + route.getRefRoute() + 
+                                                                   "'&name='" + route.getRouteName() + 
+                                                                   "'&description='" + route.getDescription() + 
+                                                                   "'&distance='" + route.getTrackDistance() + 
+                                                                   "'&ascend='" + route.getTotalAscend() + 
+                                                                   "'&descend='" + route.getTotalDescend() + 
+                                                                   "'&minHeight='" + route.getMinHeight() + 
+                                                                   "'&maxHeight='" + route.getMaxHeight() + 
+                                                                   "'&owner='" + route.getUser().getUsername() + "'");
+        }
       }
     } catch (ParserConfigurationException ex) {
       Logger.getLogger(RoutesServlet.class.getName()).log(Level.SEVERE, null, ex);

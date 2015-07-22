@@ -41,6 +41,7 @@ public class TrackPersistanceDAO implements InterfaceTrackPersistance {
 
       if(routeList != null && routeList.size() > 0) {
         Hibernate.initialize(routeList.get(0).getCoordinates());
+        Hibernate.initialize(routeList.get(0).getUser());
         return routeList.get(0);
       }
     } catch(HibernateException ex) {
@@ -61,7 +62,7 @@ public class TrackPersistanceDAO implements InterfaceTrackPersistance {
       
       trans = con.session.getTransaction();
       trans.begin();
-      con.session.save(route);
+      con.session.saveOrUpdate(route);
       trans.commit();
     } catch(HibernateException ex) {
       if(trans != null) trans.rollback();
@@ -109,7 +110,10 @@ public class TrackPersistanceDAO implements InterfaceTrackPersistance {
       qry.setEntity("user", user);
       routeList = qry.list();
 
-      for(Route track : routeList)Hibernate.initialize(track.getCoordinates());
+      for(Route track : routeList){
+        Hibernate.initialize(track.getCoordinates());
+        Hibernate.initialize(track.getUser());
+      }
       return routeList;
     } catch(HibernateException ex) {
       Logger.getLogger(this.getClass()).log(Level.ERROR, ex);

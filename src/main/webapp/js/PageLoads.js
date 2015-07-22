@@ -132,7 +132,7 @@ function loadAllPhotos() {
       });
 }
 
-function loadRouteDetails(name, description, distance, ascend, descend, minHeight, maxHeight, id) {
+function loadRouteDetails(name, description, distance, ascend, descend, minHeight, maxHeight, id, propietary) {
     $("#routeId").val(id);
     $("#routeName").val(name);
     $("#description").val(description);
@@ -144,14 +144,16 @@ function loadRouteDetails(name, description, distance, ascend, descend, minHeigh
 
     $("#download").attr("href", "routes?download=1&routeId=" + id);
     //$("#download").attr("href", "/MountainTracker/routes");
-    $("#routeName").prop("disabled", true);
-    $("#description").prop("disabled", true);
-    $("#distance").prop("disabled", true);
-    $("#totalAscend").prop("disabled", true);
-    $("#totalDescend").prop("disabled", true);
-    $("#minHeight").prop("disabled", true);
-    $("#maxHeight").prop("disabled", true);
-
+    if(propietary + " " !== $("#headUserName").text()) {
+        $("#routeUpdate").hide();
+        $("#routeName").prop("disabled", true);
+        $("#description").prop("disabled", true);
+        $("#distance").prop("disabled", true);
+        $("#totalAscend").prop("disabled", true);
+        $("#totalDescend").prop("disabled", true);
+        $("#minHeight").prop("disabled", true);
+        $("#maxHeight").prop("disabled", true);
+    }
     $.ajax({
         url : 'routes?detail=1&routeId=' + id,
         async: false,
